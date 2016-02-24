@@ -1,46 +1,16 @@
 package CourseData;
 
-import java.io.File;
 import java.util.ArrayList;
 
 /**
  * This is a static utility class that processes the data structure and 1. sets
  * final exam slots (hard coded due to time constraints) and 2. finds and marks
  * conflicts between classes
- * 
  * @author matt
- * 
  */
 public class Errors {
-
-	/**
-	 * for testing this class
-	 * 
-	 * @param args
-	 * @throws Exception
-	 */
-	public static void main(String[] args) throws Exception {
-
-		// **************** FOR TESTING PURPOSES ONLY **********************
-		System.out.println("+-------------------------------+");
-		System.out.println("| This code is for testing only |");
-		System.out.println("+-------------------------------+");
-
-		// Data object
-		Data tester = new Data();
-		tester.readNewCourseData(new File("test.csv"));
-
-		// Errors.setCategories(tester.classList);
-
-		System.out.println(tester.toString());
-
-		Errors.displayError(tester.classList);
-
-	}
-
 	/**
 	 * Hard coded way of setting the final exam slots
-	 * 
 	 * @param classList
 	 * @param cats
 	 * @throws Exception
@@ -193,20 +163,15 @@ public class Errors {
 
 			setCat = new Category(1730, 2400, 1945, "W", "W");
 			cats.add(setCat);
-
 		}
-
 		// loop through data object and set categories
 		for (int i = 0; i < classList.size(); i++) {
-
 			for (int j = 0; j < cats.size(); j++) {
 
 				if (cats.get(j).matches(classList.get(i))) {
 					classList.get(i).setCategory(cats.get(j));
 				}
-
 			}
-
 		}
 	}
 
@@ -216,42 +181,23 @@ public class Errors {
 	 * @param classList
 	 * @throws Exception
 	 */
-	public static void displayError(ArrayList<Class> classList)
-			throws Exception {
-
+	public static void displayError(ArrayList<Class> classList) throws Exception {
 		for (int i = 0; i < classList.size(); i++) {
-
 			for (int j = 0; j < classList.size(); j++) {
-
 				if (i == j)
 					continue;
-
 				Class a = classList.get(i);
 				Class b = classList.get(j);
 
-				if (a.getCategory() == null || b.getCategory() == null) {
-
+				if (a.getCategory() == null || b.getCategory() == null)
 					throw new Exception();
-
-				}
-
-				if (a.endTime <= b.startTime
-						&& a.getCategory() == b.getCategory()
-						&& a.getCourse() != b.getCourse()) {
-
+				if (a.endTime <= b.startTime && a.getCategory() == b.getCategory() && a.getCourse() != b.getCourse()) {
 					a.hasConflict = true;
 					b.hasConflict = true;
-
 					a.getCategory().hasConflicts = true;
-
-					System.out.println("There is a conflict!: \n     "
-							+ a.toString() + " ----- " + b.toString());
+					System.out.println(String.format("There is a conflict!: \n\t%s ----- %s", a.toString(), b.toString()));
 				}
-
 			}
-
 		}
-
 	}
-
 }

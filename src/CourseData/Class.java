@@ -13,11 +13,9 @@ public class Class implements Comparable<Class> {
 	String section; //Section of the class.
 	public int startTime; //Start time of the class.
 	public int endTime; //End time of the class.
-	Instructor instructor; //INstructor of the class.
+	Instructor instructor; //Instructor of the class.
 	
 	public boolean hasConflict = false; //Boolean that determines if there is a conflicting final.
-	
-	
 	private int meetingDays; //Days that the classes meet.
 
 	Category category; //Category of the class.
@@ -51,16 +49,13 @@ public class Class implements Comparable<Class> {
 				|| this.endTime < 0 || this.endTime > 2400
 				|| this.endTime <= this.startTime || days == "") {
 
-			System.out
-					.println("Error: Invalid or blank input sent to a Class constructor");
+			System.err.println("Error: Invalid or blank input sent to a Class constructor");
 			throw new IllegalArgumentException();
-
 		}
-
 	}
 	
 	/**
-	 * Accessor method for the course.
+	 * Accesser method for the course.
 	 * @return Course
 	 */
 	public Course getCourse() {
@@ -90,44 +85,28 @@ public class Class implements Comparable<Class> {
 	 */
 	public boolean matches(Category cat){
 		return cat.matches(this);
-		
 	}
 	
-
 	// Note: Equals does not include meeting days. A class is still equal if
 	// they have all the same properties but have different meeting days
 	/**
 	 * Checks to see if two classes are the same class.
 	 */
 	public boolean equals(Object obj) {
-
 		if (obj instanceof Class) {
-
 			Class test = (Class) obj;
-			if (test.CRN_Number.equalsIgnoreCase(this.CRN_Number)) {
-
-				return true;
-
-			} else {
-
-				return false;
-			}
-
-		} else {
-
-			return false;
+			return test.CRN_Number.equalsIgnoreCase(this.CRN_Number);
 		}
+		return false;
 	}
 
 	/**
 	 * CompareTo method to compare classes.
 	 */
 	public int compareTo(Class o) {
-
 //		return this.toString().toLowerCase()
 //				.compareTo(o.toString().toLowerCase());
-		return this.startTime - o.startTime;
-		
+		return this.startTime - o.startTime;	
 	}
 
 //	/**
@@ -145,11 +124,8 @@ public class Class implements Comparable<Class> {
 	 * ToString method that returns all the information of the class.
 	 */
 	public String toString() {
-
-		return course.toString(this.section) + " with " + instructor.toString()
-				+ " from " + this.startTime + " to " + this.endTime + " on "
-				+ this.getMeetingDays() + " with final at "+ getFinalInfo() + "(" + this.CRN_Number + ")";
-
+		return String.format("%s with %s from %d to %d on %s with final at %s(%s)", 
+				course.toString(section),instructor,startTime,endTime,getMeetingDays(),getFinalInfo(),CRN_Number);
 	}
 	
 	/**
@@ -157,13 +133,11 @@ public class Class implements Comparable<Class> {
 	 * @return
 	 */
 	public String toStringReportHTMLRow() {
-
-		return ((this.hasConflict)?("<tr style=\"font-weight:bold;\"><td>***</td>"):("<tr><td></td>")) +
-				"<td>" + course.shortName + this.section + "</td>" +
-				"<td> " + Constants.timeToString(this.startTime) + " - " + Constants.timeToString(this.endTime) + " </td> " +
-				"<td>" + this.getMeetingDays() + "</td>" +
-				"<td>" + this.instructor.lastName + ", " + this.instructor.firstName + "</td>" +
-				"<td>(" + this.CRN_Number + ")</td></tr>";
+		return String.format("%s <td>%s%s</td><td>%s - %s </td><td>%s</td><td>%s, %s</td><td>(%s)</td></tr>",
+				(hasConflict)?("<tr style=\"font-weight:bold;\"><td>***</td>"):("<tr><td></td>"),
+						course.shortName,section, Constants.timeToString(startTime),
+						Constants.timeToString(endTime), getMeetingDays(), instructor.lastName,
+						instructor.firstName, CRN_Number);
 
 	}
 	
@@ -172,9 +146,8 @@ public class Class implements Comparable<Class> {
 	 * @return String of the time and day the final for the class is unless it does not have a category.
 	 */
 	private String getFinalInfo(){
-		
 		if(this.category != null)
-			return this.getCategory().finalTime+" on "+ this.getCategory().finalDay;
+			return String.format("%s on %s", getCategory().finalTime,getCategory().finalDay);
 		else
 			return "NO FINAL SET";
 	}
@@ -183,31 +156,17 @@ public class Class implements Comparable<Class> {
 	 * Checks to see of two meeting times are at the same time
 	 */
 	public boolean matchesMeetingTime(int m){
-		
-		if( (this.meetingDays & m) == this.meetingDays){
-			
-			return true;
-			
-		}else{
-			
-			return false;
-		}
-		
+		return (this.meetingDays & m) == this.meetingDays;
 	}
-
 	
 	/**
 	 * Adds the days that the classes meets in the constructor.
 	 * @param days String of days that the classes meets.
 	 */
 	public void addMeetingDays(String days) {
-
 		for (int i = 0; i < days.length(); i++) {
-
 			char x = days.charAt(i);
-
 			switch (x) {
-
 			case 'M':
 				this.meetingDays = this.meetingDays | 16;
 				break;
@@ -226,7 +185,6 @@ public class Class implements Comparable<Class> {
 			default:
 				continue;
 			}
-
 		}
 	}
 
@@ -235,52 +193,17 @@ public class Class implements Comparable<Class> {
 	 * @return String of of the meeting days of the class.
 	 */
 	public String getMeetingDays() {
-
-		String ret = "";
-
-		if( (this.meetingDays & 16) == 16){
-			ret += "M";
-		}
-		if( (this.meetingDays & 8) == 8){
-			ret += "T";
-		}
-		if( (this.meetingDays & 4) == 4){
-			ret += "W";
-		}
-		if( (this.meetingDays & 2) == 2){
-			ret += "R";
-		}
-		if( (this.meetingDays & 1) == 1){
-			ret += "F";
-		}
-		
-		return ret;
-		//return Integer.toBinaryString(this.meetingDays);
-
+		StringBuilder ret = new StringBuilder();
+		if( (this.meetingDays & 16) == 16)
+			ret.append("M");
+		if( (this.meetingDays & 8) == 8)
+			ret.append("T");
+		if( (this.meetingDays & 4) == 4)
+			ret.append("W");
+		if( (this.meetingDays & 2) == 2)
+			ret.append("R");
+		if( (this.meetingDays & 1) == 1)
+			ret.append("F");
+		return ret.toString();
 	}
-
-	//Main method to test the Class class.
-	public static void main(String arg[]) {
-		
-		
-
-		Subject testSub = new Subject("CSE");
-		Subject testSub2 = new Subject("cSe");
-
-		Course testCourse = new Course(testSub, "Learning about Programming",
-				"101");
-
-		Course testCourse2 = new Course(testSub2, "Learning about PrOgramming",
-				"101");
-
-		Course testCourse3 = new Course(testSub, "Learning about Programming",
-				"102");
-
-		Class testClass = new Class(testCourse, new Instructor("Krump, Norm"),
-				"555111", " AB", 1200, 1330, "THJXHTX. 9");
-
-
-
-	}
-
 }
