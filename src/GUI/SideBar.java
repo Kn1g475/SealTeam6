@@ -19,8 +19,8 @@ import Main.Constants;
  * @author matt
  * 
  */
+@SuppressWarnings("serial")
 public class SideBar extends JPanel {
-
 	public JLabel aboutButton, instructionsButton, reportButton;
 
 	/**
@@ -30,12 +30,10 @@ public class SideBar extends JPanel {
 	 * @param sideButtonListener
 	 */
 	public SideBar(MouseListener sideButtonListener) {
-
-		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-		this.setBackground(Constants.MENU_BACKGROUND_COLOR);
+		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+		setBackground(Constants.MENU_BACKGROUND_COLOR);
 		// create 10 pixels of padding
-		this.setBorder(BorderFactory.createLineBorder(
-				Constants.MENU_BACKGROUND_COLOR, 10));
+		setBorder(BorderFactory.createLineBorder(Constants.MENU_BACKGROUND_COLOR, 10));
 
 		// about button
 		aboutButton = new JLabel();
@@ -78,14 +76,13 @@ public class SideBar extends JPanel {
 		teamName.setFont(Constants.SMALL_ITALIC_FONT);
 
 		// add items to side bar with proper spacing
-		this.add(reportButton);
-		this.add(Box.createVerticalStrut(Constants.SIDE_BAR_SPACING));
-		this.add(instructionsButton);
-		this.add(Box.createVerticalStrut(Constants.SIDE_BAR_SPACING));
-		this.add(aboutButton);
+		add(reportButton);
+		add(Box.createVerticalStrut(Constants.SIDE_BAR_SPACING));
+		add(instructionsButton);
+		add(Box.createVerticalStrut(Constants.SIDE_BAR_SPACING));
+		add(aboutButton);
 
-		this.add(Box.createVerticalGlue());
-		this.add(teamName);
-
+		add(Box.createVerticalGlue());
+		add(teamName);
 	}
 }

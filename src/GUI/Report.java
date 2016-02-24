@@ -27,10 +27,9 @@ import Main.Constants;
  * @author matt
  * 
  */
+@SuppressWarnings("serial")
 public class Report extends JPanel {
-
 	Report report = this;
-
 	CardLayout contentSwitcher;
 
 	/**
@@ -40,29 +39,23 @@ public class Report extends JPanel {
 	 * @param dataObject
 	 */
 	public Report(Data dataObject) {
-
-		this.setBackground(Constants.CONTENT_BACKGROUND_COLOR);
-
+		setBackground(Constants.CONTENT_BACKGROUND_COLOR);
 		if (dataObject.classList.isEmpty()) {
 			this.add(new JLabel("No data to report on"));
 			return;
 		}
-
 		// Processes the data object to ensure all data is up to date for the
 		// report
 		try {
 			dataObject.setCategories();
 			dataObject.findConflicts();
 		} catch (Exception e) {
-
-			this.add(new JLabel(
-					"An Error occured searching for conflicts within the file"));
+			this.add(new JLabel("An Error occured searching for conflicts within the file"));
 			return;
 		}
-
 		// create report content
 		contentSwitcher = new CardLayout();
-		this.setLayout(contentSwitcher);
+		setLayout(contentSwitcher);
 
 		JPanel mainReport = new JPanel();
 		mainReport.setLayout(new BoxLayout(mainReport, BoxLayout.PAGE_AXIS));
@@ -73,14 +66,12 @@ public class Report extends JPanel {
 		reportLabel.add(new JLabel(Constants.MAIN_REPORT_LABEL));
 		mainReport.add(reportLabel);
 
-		String[] days = new String[] { "M", "T", "W", "R", "F" };
-		String[] longDays = new String[] { "Monday", "Tuesday", "Wendesday",
-				"Thursday", "Friday" };
+		String[] days = { "M", "T", "W", "R", "F" };
+		String[] longDays = { "Monday", "Tuesday", "Wendesday", "Thursday", "Friday" };
 
 		// For each day of the week, get all the finals for that day and add
 		// them as time buttons. This generates the "home page" for the report
 		for (int i = 0; i < days.length; i++) {
-
 			JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
 			header.setBackground(Constants.CONTENT_BACKGROUND_COLOR);
 			JLabel dayOfWeek = new JLabel(longDays[i]);
@@ -92,33 +83,22 @@ public class Report extends JPanel {
 			JPanel finalsOfWeek = new JPanel(new FlowLayout(FlowLayout.LEFT));
 			finalsOfWeek.setBackground(Constants.CONTENT_BACKGROUND_COLOR);
 			for (Category cat : dataObject.finalsCategories) {
-
 				if (cat.finalDay.equalsIgnoreCase(days[i])) {
-
-					JButton day = new JButton(
-							Constants.timeToString(cat.finalTime)
-									+ ((cat.hasConflicts) ? "**" : ""));
-					if (cat.hasConflicts) {
+					JButton day = new JButton(String.format("%s%s", Constants.timeToString(cat.finalTime), ((cat.hasConflicts) ? "**" : "")));
+					if (cat.hasConflicts)
 						day.setBackground(Constants.FINAL_CONTAINS_CONFLICT_WARNING);
-					}
 					day.addActionListener(new ReportSwitcher());
 					day.setActionCommand(cat.toString());
 
 					finalsOfWeek.add(day);
-
 				}
-
 			}
-
 			mainReport.add(finalsOfWeek);
-
 		}
-
-		this.add(mainReport, "MAIN");
+		add(mainReport, "MAIN");
 
 		// make a panel for each final exam time and add them to the content switcher.
 		for (Category cat : dataObject.finalsCategories) {
-
 			JTextPane catPanel = new JTextPane();
 			catPanel.setEditable(false);
 			catPanel.setContentType("text/html");
@@ -129,14 +109,10 @@ public class Report extends JPanel {
 
 			Collections.sort(cat.classesInThisCategory);
 
-			for (Class c : cat.classesInThisCategory) {
-
+			for (Class c : cat.classesInThisCategory)
 				content += c.toStringReportHTMLRow();
 
-			}
-
 			content += "</table></html>";
-
 			catPanel.setText(content);
 
 			JScrollPane scrollWrapper = new JScrollPane(catPanel);
@@ -157,10 +133,8 @@ public class Report extends JPanel {
 
 			paneWrapper.add(backButtonHolder, BorderLayout.SOUTH);
 
-			this.add(paneWrapper, cat.toString());
-
+			add(paneWrapper, cat.toString());
 		}
-
 	}
 
 	/**
@@ -170,14 +144,10 @@ public class Report extends JPanel {
 	 * 
 	 */
 	public class ReportSwitcher implements ActionListener {
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
-
 			contentSwitcher.show(report, e.getActionCommand());
-
 		}
-
 	}
 
 	/**
@@ -187,14 +157,9 @@ public class Report extends JPanel {
 	 * 
 	 */
 	public class BackButtonListener implements ActionListener {
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
-
 			contentSwitcher.show(report, "MAIN");
-
 		}
-
 	}
-
 }

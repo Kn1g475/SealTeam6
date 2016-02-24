@@ -22,6 +22,7 @@ import Main.Main.ButtonListener;
  * @author matt
  * 
  */
+@SuppressWarnings("serial")
 public class TopBar extends JPanel {
 
 	public JLabel fileLabel, errorLabel;
@@ -35,10 +36,10 @@ public class TopBar extends JPanel {
 	 */
 	public TopBar(ButtonListener buttonListener) {
 
-		this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
-		this.setPreferredSize(new Dimension(0, Constants.TOP_ROW_HEIGHT));
-		this.setBackground(Constants.MENU_BACKGROUND_COLOR);
-		this.setBorder(BorderFactory.createMatteBorder(0, 0,
+		setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
+		setPreferredSize(new Dimension(0, Constants.TOP_ROW_HEIGHT));
+		setBackground(Constants.MENU_BACKGROUND_COLOR);
+		setBorder(BorderFactory.createMatteBorder(0, 0,
 				Constants.TOP_ROW_BORDER_THICKNESS, 0,
 				Constants.TOP_ROW_BORDER_COLOR));
 		
@@ -50,15 +51,13 @@ public class TopBar extends JPanel {
 		title.setIcon(new ImageIcon(img));
 		title.setFont(Constants.TITLE_FONT);
 		title.setText(Constants.TITLE);
-		this.add(title);
+		add(title);
 
-		this.add(Box.createHorizontalGlue());
-		
+		add(Box.createHorizontalGlue());
 		
 		// set up all buttons and labels
 		JPanel buttonsGroup = new JPanel();
-		buttonsGroup
-				.setLayout(new BoxLayout(buttonsGroup, BoxLayout.PAGE_AXIS));
+		buttonsGroup.setLayout(new BoxLayout(buttonsGroup, BoxLayout.PAGE_AXIS));
 		buttonsGroup.setBackground(Constants.MENU_BACKGROUND_COLOR);
 		JPanel fileButtons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		fileLabel = new JLabel();
@@ -90,7 +89,6 @@ public class TopBar extends JPanel {
 		buttonsGroup.add(fileButtons);
 		buttonsGroup.add(errorLabel);
 		
-		this.add(buttonsGroup);
+		add(buttonsGroup);
 	}
-
 }

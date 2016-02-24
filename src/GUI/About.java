@@ -13,21 +13,16 @@ import Main.Constants;
  * @author matt
  * 
  */
+@SuppressWarnings("serial")
 public class About extends JPanel {
 
 	/**
 	 * Creates the about panel
 	 */
 	public About() {
-
-		this.setBackground(Constants.CONTENT_BACKGROUND_COLOR);
-
-		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-
+		setBackground(Constants.CONTENT_BACKGROUND_COLOR);
+		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		JLabel about = new JLabel(Constants.ABOUT);
-
-		this.add(about);
-
+		add(about);
 	}
-
 }

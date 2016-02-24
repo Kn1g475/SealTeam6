@@ -13,21 +13,16 @@ import Main.Constants;
  * @author matt
  * 
  */
+@SuppressWarnings("serial")
 public class Instructions extends JPanel {
 
 	/**
 	 * Creates the instructions panel
 	 */
 	public Instructions() {
-
-		this.setBackground(Constants.CONTENT_BACKGROUND_COLOR);
-
-		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-
+		setBackground(Constants.CONTENT_BACKGROUND_COLOR);
+		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		JLabel about = new JLabel(Constants.INSTRUCTIONS);// Constants.ABOUT);
-
-		this.add(about);
-
+		add(about);
 	}
-
 }
