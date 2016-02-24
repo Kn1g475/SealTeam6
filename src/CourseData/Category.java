@@ -1,18 +1,13 @@
 package CourseData;
 
 import java.util.ArrayList;
-
 import Main.Constants;
-
 /**
  * A category represents a final exam slot. A class can match a category,
  * indicating that the class has it's final during that final exam slot
- * 
  * @author matt
- * 
  */
 public class Category {
-
 	public ArrayList<Class> classesInThisCategory;
 	ArrayList<Integer> meetingDayPatterns;
 	// start time inclusive, end time exclusive
