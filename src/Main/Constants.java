@@ -2,7 +2,6 @@ package Main;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.SystemColor;
 
 /**
  * This is the configuration class of the program. It contains constants that
@@ -83,31 +82,23 @@ public class Constants {
 	 * @return
 	 */
 	public static String timeToString(int time) {
-
 		String amPM = "AM";
-
 		// handle am/pm
-		if (time >= 1200) {
+		if (time >= 1200) 
 			amPM = "PM";
-		}
 		// handle 12 hour time format
-		if (time >= 1300) {
+		if (time >= 1300)
 			time -= 1200;
-		}
 		// handle 12am (example, 0015 needs translated to 12:15am)
-		if (time < 100) {
+		if (time < 100)
 			time += 1200;
-		}
 
 		String minutes;
-		if ((time - ((time / 100) * 100)) < 10) {
+		if ((time - ((time / 100) * 100)) < 10)
 			minutes = "0" + (time - ((time / 100) * 100));
-		} else {
+		else 
 			minutes = Integer.toString((time - ((time / 100) * 100)));
-		}
 
 		return (time / 100) + ":" + minutes + amPM;
-
 	}
-
 }
