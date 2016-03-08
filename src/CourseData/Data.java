@@ -62,7 +62,7 @@ public class Data {
 			// Checks the first line of the file to check if is a valid csv file or
 			// not
 			String line = br.readLine();
-			if (line == null || !line.equals(Constants.FIRST_LINE_OF_CSV)) {
+			if (line == null || !line.contains(Constants.FIRST_LINE_OF_CSV)) {
 				br.close();
 				return "Error: Invalid CSV File";
 			}
@@ -73,7 +73,7 @@ public class Data {
 				// parses each line of the inputed file to extract individual data
 				// while maintaining strings held within quotations
 				String lineArgs[] = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)",-1);
-				if (lineArgs.length != 14) {
+				if (lineArgs.length < 14) {
 					System.out.printf("Warning: a line in the file had an invalid number of elements, skipped: %s\n", line);
 					continue readFile;
 				}
@@ -113,7 +113,7 @@ public class Data {
 		} catch (InvalidClassException e) {
 			return e.getMessage();
 		}
-		return "Done";
+		return "Finished Parsing";
 	}
 	/**
 	 * Dumps the data structure to a string variable
