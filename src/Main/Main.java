@@ -204,21 +204,19 @@ public class Main extends JFrame {
 				}
 				String result = "";
 				switch (TopBar.state) {
-				
 				case COURSE : 
-				
 					result = dataObject.readNewCourseData(selectedFile);
 					break;
-				case REQUIREMENT :
+				case REQUIREMENT:
 				//add code
 					break;
-				case SCHEDULE : 
+				case SCHEDULE: 
 				//add code
 					break;
-				case NULL :
+				case NULL:
 				//add code	
 					break;
-				case ERROR :
+				case ERROR:
 				//add code	
 					break;
 				
