@@ -21,6 +21,9 @@ import GUI.Instructions;
 import GUI.Report;
 import GUI.SideBar;
 import GUI.TopBar;
+import javax.swing.JRadioButton;
+import java.awt.Component;
+import java.awt.Cursor;
 
 /**
  * <p>
@@ -63,9 +66,14 @@ public class Main extends JFrame {
 
 		// moves the window to the middle of the screen because it's annoying
 		// that it pops up in the corner
-		setBounds((int) ((java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2) - (Constants.MAIN_GUI_WIDTH / 2)),100, 0, 0);
+		setBounds(
+				(int) ((java.awt.Toolkit.getDefaultToolkit().getScreenSize()
+						.getWidth() / 2) - (Constants.MAIN_GUI_WIDTH / 2)),
+				100, 0, 0);
+
 		// set window size
-		setPreferredSize(new Dimension(Constants.MAIN_GUI_WIDTH,Constants.MAIN_GUI_HEIGHT));
+		setPreferredSize(new Dimension(Constants.MAIN_GUI_WIDTH,
+				Constants.MAIN_GUI_HEIGHT));
 
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
@@ -74,6 +82,7 @@ public class Main extends JFrame {
 
 		// =================== Make and add top row ======================
 		topBar = new TopBar(new ButtonListener());
+		topBar.addButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		mainPanel.add(topBar, BorderLayout.NORTH);
 
 		// =================== Make and add side bar =====================
@@ -84,7 +93,8 @@ public class Main extends JFrame {
 		// content panels
 		contentSwitcher = new CardLayout();
 		contentPanel = new JPanel(contentSwitcher);
-		contentPanel.setBorder(BorderFactory.createLineBorder(Constants.CONTENT_BACKGROUND_COLOR, 10));
+		contentPanel.setBorder(BorderFactory.createLineBorder(
+				Constants.CONTENT_BACKGROUND_COLOR, 10));
 		aboutPanel = new About();
 		instructionsPanel = new Instructions();
 
@@ -197,21 +207,24 @@ public class Main extends JFrame {
 				}
 				String result = "";
 				switch (TopBar.state) {
+				
 				case COURSE : 
+				
 					result = dataObject.readNewCourseData(selectedFile);
 					break;
-				case REQUIREMENT:
+				case REQUIREMENT :
 				//add code
 					break;
-				case SCHEDULE: 
+				case SCHEDULE : 
 				//add code
 					break;
-				case NULL:
+				case NULL :
 				//add code	
 					break;
-				case ERROR:
+				case ERROR :
 				//add code	
 					break;
+				
 				}
 				
 				if (!result.replace("Error", "").equals(result))
