@@ -21,6 +21,7 @@ import Main.Main.ButtonListener;
 import javax.swing.JRadioButton;
 
 import Main.FileState;
+import java.awt.Cursor;
 
 /**
  * The top bar of the GUI.
@@ -71,8 +72,7 @@ public class TopBar extends JPanel {
 		buttonsGroup.setLayout(new BoxLayout(buttonsGroup, BoxLayout.PAGE_AXIS));
 		buttonsGroup.setBackground(Constants.MENU_BACKGROUND_COLOR);
 		JPanel fileButtons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		fileLabel = new JLabel();
-		fileLabel.setFont(Constants.SMALL_FONT);
+		fileButtons.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 
 		addButton = new JButton("Add File");
 		addButton.setActionCommand("addButton");
@@ -102,15 +102,11 @@ public class TopBar extends JPanel {
 		fileButtons.add(requirementsRadioButton);
 		
 		scheduleRadioButton = new JRadioButton("Schedule");
+		scheduleRadioButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		scheduleRadioButton.setActionCommand("scheduleRadioButton");
 		scheduleRadioButton.setSelected(false);
 		scheduleRadioButton.addActionListener(new RadioEvent());
 		fileButtons.add(scheduleRadioButton);
-		//===========================================================
-		
-		
-		// add buttons and labels to GUI
-		fileButtons.add(fileLabel);
 
 
 		fileButtons.add(addButton);
@@ -127,6 +123,10 @@ public class TopBar extends JPanel {
 		buttonsGroup.add(errorLabel);
 
 		add(buttonsGroup);
+		fileLabel = new JLabel();
+		buttonsGroup.add(fileLabel);
+		fileLabel.setFont(Constants.SMALL_FONT);
+		fileLabel.setLocation(getX(), 50);
 	}
 	// Add functionality to the radio buttons =============================
 	private class RadioEvent implements ActionListener {
