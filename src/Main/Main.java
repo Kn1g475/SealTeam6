@@ -82,6 +82,8 @@ public class Main extends JFrame {
 
 		// =================== Make and add top row ======================
 		topBar = new TopBar(new ButtonListener());
+		topBar.submitButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		topBar.deleteButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		topBar.addButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		mainPanel.add(topBar, BorderLayout.NORTH);
 
