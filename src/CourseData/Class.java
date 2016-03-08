@@ -17,7 +17,7 @@ public class Class implements Comparable<Class> {
 	
 	public boolean hasConflict = false; //Boolean that determines if there is a conflicting final.
 	private int meetingDays; //Days that the classes meet.
-
+	String location;
 	Category category; //Category of the class.
 
 	/**
@@ -30,9 +30,7 @@ public class Class implements Comparable<Class> {
 	 * @param endTime Time that the class ends.
 	 * @param days Days that the class meets.
 	 */
-	public Class(Course course, Instructor instructor, String CRN_Number,
-			String section, int startTime, int endTime, String days) {
-
+	public Class(Course course, Instructor instructor, String CRN_Number, String section, int startTime, int endTime, String days) {
 		this.course = course;
 		this.instructor = instructor;
 		this.CRN_Number = CRN_Number;
@@ -43,15 +41,27 @@ public class Class implements Comparable<Class> {
 
 		addMeetingDays(days);
 
-		if (this.course == null || this.instructor == null
-				|| this.CRN_Number == "" || this.section == ""
-				|| this.startTime < 0 || this.startTime > 2400
-				|| this.endTime < 0 || this.endTime > 2400
+		if (this.course == null || this.instructor == null || this.CRN_Number == "" || this.section == ""
+				|| this.startTime < 0 || this.startTime > 2400 || this.endTime < 0 || this.endTime > 2400
 				|| this.endTime <= this.startTime || days == "") {
-
 			System.err.println("Error: Invalid or blank input sent to a Class constructor");
 			throw new IllegalArgumentException();
 		}
+	}
+	public Class(String[] lineArgs) {
+		this(new Course(new Subject(lineArgs[1]), lineArgs[4], lineArgs[2]),new Instructor(lineArgs[13]),lineArgs[0],
+				lineArgs[3],Integer.parseInt(lineArgs[8]),Integer.parseInt(lineArgs[9]),lineArgs[10]);
+		
+		if (lineArgs[3].contains("H "))
+			this.location = "Hamilton";
+		else if(lineArgs[3].contains("M "))
+			this.location = "MiddleTown";
+		else
+			this.location = "Oxford";
+	}
+	
+	public String getLocation() {
+		return location;
 	}
 	
 	/**

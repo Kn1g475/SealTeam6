@@ -1,7 +1,7 @@
 package CourseData;
 
 import java.util.ArrayList;
-
+import Exceptions.*;
 /**
  * This is a static utility class that processes the data structure and 1. sets
  * final exam slots (hard coded due to time constraints) and 2. finds and marks
@@ -11,21 +11,17 @@ import java.util.ArrayList;
 public class Errors {
 	/**
 	 * Hard coded way of setting the final exam slots
-	 * @param classList
+	 * @param allClassList
 	 * @param cats
 	 * @throws Exception
 	 */
-	public static void setCategories(ArrayList<Class> classList,
-			ArrayList<Category> cats) throws Exception {
-
+	public static void setCategories(ArrayList<Class> classList, ArrayList<Category> cats) {
 		if (cats.size() == 0) {
-
 			/*
 			 * +---------------------------------------------+ | Hard coding
 			 * categories for testing purposes |
 			 * +---------------------------------------------+
 			 */
-
 			Category setCat = new Category(0, 1000, 800, "T", "TR");
 			setCat.addMeetingPattern("T");
 			setCat.addMeetingPattern("R");
@@ -167,10 +163,8 @@ public class Errors {
 		// loop through data object and set categories
 		for (int i = 0; i < classList.size(); i++) {
 			for (int j = 0; j < cats.size(); j++) {
-
-				if (cats.get(j).matches(classList.get(i))) {
+				if (cats.get(j).matches(classList.get(i)))
 					classList.get(i).setCategory(cats.get(j));
-				}
 			}
 		}
 	}
@@ -178,20 +172,18 @@ public class Errors {
 	/**
 	 * method marks classes have overlapping times
 	 * 
-	 * @param classList
+	 * @param allClassList
 	 * @throws Exception
 	 */
-	public static void displayError(ArrayList<Class> classList) throws Exception {
-		for (int i = 0; i < classList.size(); i++) {
-			for (int j = 0; j < classList.size(); j++) {
-				if (i == j)
-					continue;
+	public static void displayError(ArrayList<Class> classList) throws InvalidClassException {
+		for (int i = 0; i < classList.size() - 1 ; i++) {
+			for (int j =  i + 1; j < classList.size(); j++) {
 				Class a = classList.get(i);
 				Class b = classList.get(j);
 
 				if (a.getCategory() == null || b.getCategory() == null)
-					throw new Exception();
-				if (a.endTime <= b.startTime && a.getCategory() == b.getCategory() && a.getCourse() != b.getCourse()) {
+					throw new InvalidClassException("There is a class that does not exist");
+				if (a.endTime <= b.startTime && a.getCategory().equals(b.getCategory()) && !a.getCourse().equals(b.getCourse())) {
 					a.hasConflict = true;
 					b.hasConflict = true;
 					a.getCategory().hasConflicts = true;
