@@ -72,7 +72,7 @@ public class TopBar extends JPanel {
 		buttonsGroup.setLayout(new BoxLayout(buttonsGroup, BoxLayout.PAGE_AXIS));
 		buttonsGroup.setBackground(Constants.MENU_BACKGROUND_COLOR);
 		JPanel fileButtons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		fileButtons.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+		fileButtons.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 
 		addButton = new JButton("Add File");
 		addButton.setActionCommand("addButton");
