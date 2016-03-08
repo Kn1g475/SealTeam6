@@ -21,6 +21,7 @@ import GUI.Instructions;
 import GUI.Report;
 import GUI.SideBar;
 import GUI.TopBar;
+import javax.swing.JRadioButton;
 
 /**
  * <p>
@@ -75,7 +76,7 @@ public class Main extends JFrame {
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.setBackground(Constants.CONTENT_BACKGROUND_COLOR);
-		add(mainPanel);
+		getContentPane().add(mainPanel);
 
 		// =================== Make and add top row ======================
 		topBar = new TopBar(new ButtonListener());
@@ -201,7 +202,28 @@ public class Main extends JFrame {
 					alert("No file selected or cannot read file", false);
 					return;
 				}
-				String result = dataObject.readNewCourseData(selectedFile);
+				String result = "";
+				switch (TopBar.state) {
+				
+				case COURSE : 
+				
+					result = dataObject.readNewCourseData(selectedFile);
+					break;
+				case REQUIREMENT :
+				//add code
+					break;
+				case SCHEDULE : 
+				//add code
+					break;
+				case NULL :
+				//add code	
+					break;
+				case ERROR :
+				//add code	
+					break;
+				
+				}
+				
 				if (!result.replace("Error", "").equals(result))
 					alert(result, false);
 				else {
