@@ -27,15 +27,14 @@ public class Category {
 	 * @param finalDay
 	 * @param meetingDays
 	 */
-	public Category(int startTime, int endTime, int finalTime, String finalDay,
-			String meetingDays) {
+	public Category(int startTime, int endTime, int finalTime, String finalDay, String meetingDays) {
 		hasConflicts = false;
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.finalTime = finalTime;
 		this.finalDay = finalDay;
-		this.meetingDayPatterns = new ArrayList<Integer>();
-		this.classesInThisCategory = new ArrayList<Class>();
+		this.meetingDayPatterns = new ArrayList<>();
+		this.classesInThisCategory = new ArrayList<>();
 		this.addMeetingPattern(meetingDays);
 	}
 

@@ -1,6 +1,8 @@
 package CourseData;
 
 import java.util.ArrayList;
+import java.util.Map;
+
 import Exceptions.*;
 /**
  * This is a static utility class that processes the data structure and 1. sets
@@ -191,5 +193,26 @@ public class Errors {
 				}
 			}
 		}
+	}
+
+	public static boolean checkFeasibility(Profile profile, Map<String,ArrayList<String>> requirements) {
+		boolean isFeasable = true;
+		ArrayList<Class> classes = profile.getSchedule();
+		ArrayList<Course> courses = profile.getCoursesTaken();
+		
+		Check:
+		for(Class clas : classes) {
+			if(requirements.containsKey(clas.getCourse().getShortName())) {
+				ArrayList<String> reqs = requirements.get(clas.getCourse().getShortName());
+				for(Course course : courses) {
+					if(!reqs.contains(course.getShortName())) {
+						isFeasable = false;
+						break Check;
+					}	
+				}
+			}
+		}
+		
+		return isFeasable;
 	}
 }

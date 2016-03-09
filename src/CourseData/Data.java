@@ -7,6 +7,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import Main.Constants;
 import Exceptions.*;
@@ -21,7 +23,7 @@ public class Data {
 	public ArrayList<Class> midClassList;
 	public ArrayList<Class> currentList;
 	public ArrayList<Category> finalsCategories;
-
+	private Map<String,ArrayList<String>> prerequisites;
 	/**
 	 * Creates a new empty data structure
 	 */
@@ -30,6 +32,7 @@ public class Data {
 		oxfClassList = new ArrayList<>();
 		hamClassList = new ArrayList<>();
 		midClassList = new ArrayList<>();
+		prerequisites = new HashMap<>();
 		updateCurrentList("Oxford");
 		finalsCategories = new ArrayList<>();
 	}
@@ -37,7 +40,6 @@ public class Data {
 	/**
 	 * Calls the static function that sets the categories for this data
 	 * structure
-	 * 
 	 */
 	public void setCategories() {
 		Errors.setCategories(currentList, this.finalsCategories);
@@ -51,6 +53,25 @@ public class Data {
 		Errors.displayError(currentList);
 	}
 
+	public String readNewPrereqData(File dataFile) {
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(dataFile));
+			String line = br.readLine();
+			if (line == null || !line.contains(Constants.FIRST_LINE_OF_REQ)) {
+				br.close();
+				return "Error: Invalid REQ File";
+			}	
+			br.close();
+		} catch (FileNotFoundException e) {
+			return "Error: Could not find the file";
+		} catch (IOException e) {
+			return "Error: Could not read file";
+		} 
+		
+		
+		return "Finished Successfully";
+	}
+	
 	/**
 	 * Processes a file and adds new entries to the data
 	 * @param dataFile
@@ -59,8 +80,7 @@ public class Data {
 	public String readNewCourseData(File dataFile) {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(dataFile));
-			// Checks the first line of the file to check if is a valid csv file or
-			// not
+			// Checks the first line of the file to check if is a valid csv file or not
 			String line = br.readLine();
 			if (line == null || !line.contains(Constants.FIRST_LINE_OF_CSV)) {
 				br.close();
@@ -68,10 +88,6 @@ public class Data {
 			}
 			// Read each line of the file
 			readFile: while ((line = br.readLine()) != null) {
-				// regex code acquired from stackoverflow:
-				// http://stackoverflow.com/questions/1757065/java-splitting-a-comma-separated-string-but-ignoring-commas-in-quotes
-				// parses each line of the inputed file to extract individual data
-				// while maintaining strings held within quotations
 				String lineArgs[] = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)",-1);
 				if (lineArgs.length < 14) {
 					System.out.printf("Warning: a line in the file had an invalid number of elements, skipped: %s\n", line);
@@ -85,13 +101,9 @@ public class Data {
 						continue readFile;
 					}
 					// skip the line is unable to parse numerical values in line
-					if (i == 8 || i == 9) {
-						try {
-							Integer.parseInt(lineArgs[i]);
-						} catch (NumberFormatException e) {
-							System.out.printf("Warning: unable to parse a start/end time for a line, skipped: %s\n", line);
-							continue readFile;
-						}
+					if ((i == 8 || i == 9) && !lineArgs[i].matches("\\d+")) {
+						System.out.printf("Warning: unable to parse a start/end time for a line, skipped: %s\n", line);
+						continue readFile;
 					}
 				}
 				// Note: meeting days is not part of checking equality
@@ -131,6 +143,10 @@ public class Data {
 
 		return ret.toString();
 	}
+	/**
+	 * Sorts the class into <code>ArrayList</code> based on there location
+	 * @throws InvalidClassException
+	 */
 	private void sortClasses() throws InvalidClassException{
 		for (Class clas : allClassList) {
 			if (clas.getLocation().equals("Oxford")) {
@@ -144,6 +160,11 @@ public class Data {
 			}
 		}
 	}
+	/**
+	 * Sets the Current List of classes to a list based on a location of classes
+	 * @param place - location of Miami University Campuses
+	 * @return true if successful, false if not successful
+	 */
 	public boolean updateCurrentList(String place) {
 		boolean finished = false;
 		if (place.equals("Oxford")) {

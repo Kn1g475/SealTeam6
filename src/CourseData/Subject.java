@@ -6,7 +6,7 @@ package CourseData;
 public class Subject implements Comparable<Subject> {
 
 	//String that holds the three letter subject of the course.
-	String subject;
+	private String subject;
 
 	/**
 	 * Subject constructor
@@ -24,10 +24,8 @@ public class Subject implements Comparable<Subject> {
 	 * Compares two subjects.
 	 */
 	public int compareTo(Subject o) {
-		return this.toString().toLowerCase()
-				.compareTo(o.toString().toLowerCase());
+		return this.toString().toLowerCase().compareTo(o.toString().toLowerCase());
 	}
-
 	/**
 	 * Checks if two subjects are the same.
 	 */
@@ -38,7 +36,6 @@ public class Subject implements Comparable<Subject> {
 		}
 		return false;
 	}
-
 	/**
 	 * Returns the three letter subject.
 	 */

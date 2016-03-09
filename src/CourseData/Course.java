@@ -5,9 +5,9 @@ package CourseData;
  */
 public class Course implements Comparable<Course> {
 
-	Subject subject; //Subject of the course.
-	String title; //Title of the course.
-	String courseNumber; //Number of the course.
+	private Subject subject; //Subject of the course.
+	private String title; //Title of the course.
+	private String courseNumber; //Number of the course.
 
 	public String shortName; //Combined subject and course number string.
 
@@ -25,15 +25,18 @@ public class Course implements Comparable<Course> {
 		this.subject = subject;
 		this.title = title;
 		this.courseNumber = courseNumber;
-		this.shortName = this.subject.toString() + this.courseNumber;
+		this.shortName = String.format("%s %s",subject.toString(), courseNumber);
+	}
+	
+	public String getShortName() {
+		return shortName;
 	}
 
 	/**
 	 * Compares two courses with each other.
 	 */
 	public int compareTo(Course o) {
-		return this.toString().toLowerCase()
-				.compareTo(o.toString().toLowerCase());
+		return this.toString().toLowerCase().compareTo(o.toString().toLowerCase());
 	}
 
 	/**
