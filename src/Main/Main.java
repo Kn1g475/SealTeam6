@@ -7,6 +7,8 @@ import java.awt.Dimension;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -71,7 +73,6 @@ public class Main extends JFrame {
 	JPanel reportPanel;
 	JPanel profilePanel;
 	JRadioButton rdbtnTaken, rdbtnDesired;
-	private JTextField txtFullName;
 	private JTextField txtUniqueId;
 
 	public static AddCourseState state = AddCourseState.TAKEN;
@@ -139,75 +140,63 @@ public class Main extends JFrame {
 		contentPanel.add(profilePanel,"PROFILE");
 		profilePanel.setLayout(null);
 
-		// Profile Panel===================================================
-		// Text field for students full name
-		txtFullName = new JTextField();
-		txtFullName.setBounds(83, 43, 134, 28);
-		profilePanel.add(txtFullName);
-		txtFullName.setColumns(10);
-
 		// textField for students Unique ID
 		txtUniqueId = new JTextField();
-		txtUniqueId.setBounds(280, 43, 134, 28);
+		txtUniqueId.addFocusListener(new FocusListener() {
+			public void focusGained(FocusEvent e) {
+				txtUniqueId.setText("");
+			}
+			public void focusLost(FocusEvent e) {
+				txtUniqueId.setText(txtUniqueId.getText().equals("") ? "Unique ID" : txtUniqueId.getText());
+			}
+			
+		});
+		txtUniqueId.setText("Unique ID");
+		txtUniqueId.setBounds(94, 43, 134, 28);
 		profilePanel.add(txtUniqueId);
 		txtUniqueId.setColumns(10);
 
-		// Drop down box for Major
-		JComboBox comboBox = new JComboBox();
-		comboBox.addItem("Major");
-		comboBox.addItem("Computer Science");
-		comboBox.addItem("Software Engineering");
-		comboBox.setName("Major");
-		comboBox.setBounds(455, 45, 134, 26);
-		profilePanel.add(comboBox);
-
-		// Label for the students full name
-		JLabel lblNewLabel = new JLabel("Full Name");
-		lblNewLabel.setBounds(115, 28, 69, 16);
-		profilePanel.add(lblNewLabel);
-
-		// Label for the students Unique ID
-		JLabel uniqueIDLabel = new JLabel("Unique ID");
-		uniqueIDLabel.setBounds(284, 28, 78, 16);
-		profilePanel.add(uniqueIDLabel);
-
-		//Drop down box for the students major
-		JLabel majorBox = new JLabel("Major");
-		majorBox.setBounds(456, 28, 47, 16);
-		profilePanel.add(majorBox);
-
 		// List to choose courses taken
 		List list = new List();
-		list.setBounds(94, 112, 170, 217);
+		list.setBounds(94, 112, 414, 89);
 		list.add("CSE 174 ");
 		list.add("CSE 271");
 		profilePanel.add(list);
 
 		// Scroll Bar for courses taken
 		Scrollbar scrollbar = new Scrollbar();
-		scrollbar.setBounds(249, 112, 15, 217);
+		scrollbar.setBounds(493, 112, 15, 89);
 		profilePanel.add(scrollbar);
 
 		// Label for the list of classes taken
 		JLabel classesTakenLabel = new JLabel("Classes Taken");
-		classesTakenLabel.setBounds(122, 90, 95, 16);
+		classesTakenLabel.setBounds(235, 90, 95, 16);
 		profilePanel.add(classesTakenLabel);
-
+		
 		// List for Desired Classes
 		List desiredClassesList = new List();
-		desiredClassesList.setBounds(374, 112, 167, 217);
+		desiredClassesList.setBounds(94, 266, 414, 89);
 		desiredClassesList.add("CSE 102");
 		desiredClassesList.add("CSE 278");
 		profilePanel.add(desiredClassesList);
+		
+		// Drop down box for Major
+		JComboBox comboBox = new JComboBox();
+		comboBox.addItem("Major");
+		comboBox.addItem("Computer Science");
+		comboBox.addItem("Software Engineering");
+		comboBox.setName("Major");
+		comboBox.setBounds(374, 45, 134, 26);
+		profilePanel.add(comboBox);
 
 		//scroll bar for desired classes
 		Scrollbar scrollbarDesiredClasses = new Scrollbar();
-		scrollbarDesiredClasses.setBounds(526, 112, 15, 217);
+		scrollbarDesiredClasses.setBounds(493, 266, 15, 89);
 		profilePanel.add(scrollbarDesiredClasses);
 
 		//Label for desired classes list
 		JLabel desiredClassesLabel = new JLabel("Desired Classes");
-		desiredClassesLabel.setBounds(397, 90, 106, 16);
+		desiredClassesLabel.setBounds(235, 251, 106, 16);
 		profilePanel.add(desiredClassesLabel);
 
 		// Radio buttons ================================================
@@ -232,8 +221,9 @@ public class Main extends JFrame {
 		AddButtonWindow.PARENT.getContentPane().setLayout(null);
 
 		JComboBox courseAddWindow = new JComboBox();
-		courseAddWindow.setBounds(6, 6, 102, 27);
-		courseAddWindow.addItem("Select");
+		courseAddWindow.setBounds(6, 6, 120, 27);
+		//campusBox.setBounds(x, y, width, height);
+		courseAddWindow.addItem("Course");
 		courseAddWindow.addItem("CSE 102");
 		courseAddWindow.addItem("CSE 174");
 		courseAddWindow.addItem("CSE 201");
@@ -243,18 +233,18 @@ public class Main extends JFrame {
 		AddButtonWindow.PARENT.getContentPane().add(courseAddWindow);
 
 		JComboBox campusBox = new JComboBox();
-		campusBox.setBounds(392, 6, 102, 27);
-		campusBox.addItem("Select");
+		campusBox.setBounds(335, 6, 140, 27);
+		campusBox.addItem("Location");
 		campusBox.addItem("Oxford");
 		campusBox.addItem("Hamilton");
 		campusBox.addItem("MiddleTown");
-		campusBox.addItem("Luxembourg");
+		campusBox.addItem("All");
 		AddButtonWindow.PARENT.getContentPane().add(campusBox);
 
 		List listAddWindow = new List();
 		listAddWindow.setBounds(10, 39, 480, 170);
-		listAddWindow.add("CRN ---- CourseName ---- Section ---- Professor ---- Time");
-		listAddWindow.add("57409 | CSE 201 Intro to Software Engineering | B | Ann Sobel | 11:30A.M");
+		listAddWindow.add("Location |  CRN   | CourseTitle | Section | Professor | Time");
+		listAddWindow.add("   O     |  57409 |   CSE 201   |    B    | Ann Sobel | 11:30A.M - 12:50P.M");
 		AddButtonWindow.PARENT.getContentPane().add(listAddWindow);
 
 		Scrollbar scrollbarAddWindow = new Scrollbar();
@@ -301,8 +291,8 @@ public class Main extends JFrame {
 		removeButton.setBounds(228, 408, 102, 28);
 		profilePanel.add(removeButton);
 
-		Button checkButton = new Button("CHECK THAT SHIT!!!!!!");
-		checkButton.setBounds(403, 372, 186, 34);
+		Button checkButton = new Button("Check");
+		checkButton.setBounds(413, 368, 117, 28);
 		profilePanel.add(checkButton);
 		
 		JButton profileSaveButton = new JButton("Save Profile");

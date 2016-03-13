@@ -13,10 +13,10 @@ import java.awt.Font;
  */
 public class Constants {
 
-	public static final String TEAM_NAME = "Plan B";
+	public static final String TEAM_NAME = "Seal Team 6";
 
 	public static final String FIRST_LINE_OF_CSV = "CRN,SUBJ,CRSE,SECTION,TITLE,HOURS,ENRL,MAX_ENRL,START_TIME,END_TIME,DAYS,BLDG,ROOM,INSTRUCTOR";
-	public static final String FIRST_LINE_OF_REQ = "REQUIRMENTS PAGE";
+	public static final String FIRST_LINE_OF_REQ = "REQUIREMENTS PAGE";
 	
 	public static final int MAIN_GUI_WIDTH = 800;
 	public static final int MAIN_GUI_HEIGHT = 600;
