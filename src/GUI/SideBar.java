@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import Main.Constants;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 
 /**
  * The side bar of the GUI.
@@ -26,6 +27,7 @@ public class SideBar extends JPanel {
 	public JLabel aboutButton, instructionsButton, reportButton, profileButton;
 	private Component verticalStrut;
 	private Component verticalStrut_1;
+	private JLabel lblSealTeam;
 	
 
 	/**
@@ -61,7 +63,7 @@ public class SideBar extends JPanel {
 				Constants.MAIN_FONT.getSize(), Image.SCALE_SMOOTH);
 
 		// add made by text
-		JLabel teamName = new JLabel("Made By: " + Constants.TEAM_NAME);
+		JLabel teamName = new JLabel("Made By: ");
 		teamName.setPreferredSize(new Dimension(96, 24));
 		teamName.setFont(Constants.SMALL_ITALIC_FONT);
 		
@@ -103,8 +105,12 @@ public class SideBar extends JPanel {
 		add(verticalStrut);
 		add(aboutButton);
 		
-		verticalStrut_1 = Box.createVerticalStrut(335);
+		verticalStrut_1 = Box.createVerticalStrut(325);
 		add(verticalStrut_1);
 		add(teamName);
+		
+		lblSealTeam = new JLabel(Constants.TEAM_NAME);
+		lblSealTeam.setFont(new Font("Arial", Font.ITALIC, 13));
+		add(lblSealTeam);
 	}
 }
