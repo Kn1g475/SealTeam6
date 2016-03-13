@@ -187,6 +187,7 @@ public class Main extends JFrame {
 		comboBox.addItem("Software Engineering");
 		comboBox.setName("Major");
 		comboBox.setBounds(374, 45, 134, 26);
+		comboBox.revalidate();
 		profilePanel.add(comboBox);
 
 		//scroll bar for desired classes

@@ -36,7 +36,6 @@ public class Data {
 		updateCurrentList("Oxford");
 		finalsCategories = new ArrayList<>();
 	}
-
 	/**
 	 * Calls the static function that sets the categories for this data
 	 * structure
@@ -44,7 +43,6 @@ public class Data {
 	public void setCategories() {
 		Errors.setCategories(currentList, this.finalsCategories);
 	}
-
 	/**
 	 * calls the static function that flags conflicts in the data
 	 * @throws InvlaidClassException
@@ -52,7 +50,11 @@ public class Data {
 	public void findConflicts() throws InvalidClassException {
 		Errors.displayError(currentList);
 	}
-
+	/**
+	 * Parses the requirements of courses in from a file;
+	 * @param dataFile
+	 * @return
+	 */
 	public String readNewPrereqData(File dataFile) {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(dataFile));
@@ -61,17 +63,21 @@ public class Data {
 				br.close();
 				return "Error: Invalid REQ File";
 			}	
+			while((line = br.readLine()) != null) {
+				String[] tokens = line.split(" \\| ");
+				prerequisites.put(tokens[0], new ArrayList<>());
+				for(int i = 1; i < tokens.length; i++) {
+					prerequisites.get(tokens[0]).add(tokens[i]);
+				}
+			}
 			br.close();
 		} catch (FileNotFoundException e) {
 			return "Error: Could not find the file";
 		} catch (IOException e) {
 			return "Error: Could not read file";
 		} 
-		
-		
 		return "Finished Successfully";
 	}
-	
 	/**
 	 * Processes a file and adds new entries to the data
 	 * @param dataFile
