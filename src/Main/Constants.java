@@ -16,8 +16,7 @@ public class Constants {
 	public static final String TEAM_NAME = "Plan B";
 
 	public static final String FIRST_LINE_OF_CSV = "CRN,SUBJ,CRSE,SECTION,TITLE,HOURS,ENRL,MAX_ENRL,START_TIME,END_TIME,DAYS,BLDG,ROOM,INSTRUCTOR";
-	public static final String FIRST_LINE_OF_REQ = "REQUIRMENTS PAGE";
-	
+
 	public static final int MAIN_GUI_WIDTH = 800;
 	public static final int MAIN_GUI_HEIGHT = 600;
 
@@ -55,6 +54,8 @@ public class Constants {
 
 	public static final String WINDOW_TITLE = TEAM_NAME + " - " + TITLE;
 
+	public static final String PROFILE = "<html><h1>Profile</h1>"; // 
+	
 	public static final String ABOUT = "<html><h1>About</h1>"
 			+ "<p>This program allows users at Miami University to insert a .csv file with course information "
 			+ "and will generate a final report showing when the final exam times are scheduled."
