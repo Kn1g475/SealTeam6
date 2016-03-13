@@ -40,7 +40,7 @@ public class Report extends JPanel {
 	 */
 	public Report(Data dataObject) {
 		setBackground(Constants.CONTENT_BACKGROUND_COLOR);
-		if (dataObject.classList.isEmpty()) {
+		if (dataObject.currentList.isEmpty()) {
 			this.add(new JLabel("No data to report on"));
 			return;
 		}
