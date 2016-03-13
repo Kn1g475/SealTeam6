@@ -12,6 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Main.Constants;
+import java.awt.Component;
+import java.awt.Dimension;
 
 /**
  * The side bar of the GUI.
@@ -21,7 +23,10 @@ import Main.Constants;
  */
 @SuppressWarnings("serial")
 public class SideBar extends JPanel {
-	public JLabel aboutButton, instructionsButton, reportButton;
+	public JLabel aboutButton, instructionsButton, reportButton, profileButton;
+	private Component verticalStrut;
+	private Component verticalStrut_1;
+	
 
 	/**
 	 * Creates a new side bar object, takes in a listener class so that this
@@ -37,6 +42,7 @@ public class SideBar extends JPanel {
 
 		// about button
 		aboutButton = new JLabel();
+		aboutButton.setRequestFocusEnabled(false);
 		aboutButton.setFont(Constants.MAIN_FONT);
 		Image aboutImg = new ImageIcon(Constants.ABOUT_ICON_NAME).getImage();
 		aboutImg = aboutImg.getScaledInstance(Constants.MAIN_FONT.getSize(),
@@ -45,44 +51,60 @@ public class SideBar extends JPanel {
 		aboutButton.setText("About");
 		aboutButton.addMouseListener(sideButtonListener);
 		aboutButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
-		// instructions button
-		instructionsButton = new JLabel();
-		instructionsButton.setFont(Constants.MAIN_FONT);
 		Image instructionsImg = new ImageIcon(Constants.INSTRUCTIONS_ICON_NAME)
 				.getImage();
 		instructionsImg = instructionsImg.getScaledInstance(
 				Constants.MAIN_FONT.getSize(), Constants.MAIN_FONT.getSize(),
 				Image.SCALE_SMOOTH);
-		instructionsButton.setIcon(new ImageIcon(instructionsImg));
-		instructionsButton.setText("Instructions");
-		instructionsButton.addMouseListener(sideButtonListener);
-		instructionsButton.setCursor(Cursor
-				.getPredefinedCursor(Cursor.HAND_CURSOR));
-
-		// report button
-		reportButton = new JLabel();
-		reportButton.setFont(Constants.MAIN_FONT);
 		Image reportImg = new ImageIcon(Constants.REPORT_ICON_NAME).getImage();
 		reportImg = reportImg.getScaledInstance(Constants.MAIN_FONT.getSize(),
 				Constants.MAIN_FONT.getSize(), Image.SCALE_SMOOTH);
-		reportButton.setIcon(new ImageIcon(reportImg));
-		reportButton.setText("Report");
-		reportButton.addMouseListener(sideButtonListener);
-		reportButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
 		// add made by text
 		JLabel teamName = new JLabel("Made By: " + Constants.TEAM_NAME);
+		teamName.setPreferredSize(new Dimension(96, 24));
 		teamName.setFont(Constants.SMALL_ITALIC_FONT);
-
-		// add items to side bar with proper spacing
-		add(reportButton);
+		
+		// profile button
+		profileButton = new JLabel();
+		profileButton.setFont(Constants.MAIN_FONT);
+		profileButton.setIcon(new ImageIcon(reportImg));
+		profileButton.setText("Profile");
+		profileButton.addMouseListener(sideButtonListener);
+		profileButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		
+						//add item to side bar
+						add(profileButton);
 		add(Box.createVerticalStrut(Constants.SIDE_BAR_SPACING));
-		add(instructionsButton);
+		
+				// report button
+				reportButton = new JLabel();
+				reportButton.setFont(Constants.MAIN_FONT);
+				reportButton.setIcon(new ImageIcon(reportImg));
+				reportButton.setText("Report");
+				reportButton.addMouseListener(sideButtonListener);
+				reportButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				
+						// add items to side bar with proper spacing
+						add(reportButton);
 		add(Box.createVerticalStrut(Constants.SIDE_BAR_SPACING));
+		
+				// instructions button
+				instructionsButton = new JLabel();
+				instructionsButton.setFont(Constants.MAIN_FONT);
+				instructionsButton.setIcon(new ImageIcon(instructionsImg));
+				instructionsButton.setText("Instructions");
+				instructionsButton.addMouseListener(sideButtonListener);
+				instructionsButton.setCursor(Cursor
+						.getPredefinedCursor(Cursor.HAND_CURSOR));
+				add(instructionsButton);
+		
+		verticalStrut = Box.createVerticalStrut(20);
+		add(verticalStrut);
 		add(aboutButton);
-
-		add(Box.createVerticalGlue());
+		
+		verticalStrut_1 = Box.createVerticalStrut(335);
+		add(verticalStrut_1);
 		add(teamName);
 	}
 }
