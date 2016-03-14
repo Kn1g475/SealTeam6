@@ -5,7 +5,7 @@ package CourseData;
  */
 public class Course implements Comparable<Course> {
 
-	private Subject subject; //Subject of the course.
+	private String subject; //Subject of the course.
 	private String title; //Title of the course.
 	private String courseNumber; //Number of the course.
 
@@ -17,7 +17,7 @@ public class Course implements Comparable<Course> {
 	 * @param title Title of the course.
 	 * @param courseNumber Number of the course.
 	 */
-	public Course(Subject subject, String title, String courseNumber) {
+	public Course(String subject, String title, String courseNumber) {
 		if (subject == null || title == "" || courseNumber == "") {
 			System.err.println("Error: Invalid input sent to Course constructor");
 			throw new IllegalArgumentException();

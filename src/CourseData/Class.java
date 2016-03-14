@@ -49,7 +49,7 @@ public class Class implements Comparable<Class> {
 		}
 	}
 	public Class(String[] lineArgs) {
-		this(new Course(new Subject(lineArgs[1]), lineArgs[4], lineArgs[2]),new Instructor(lineArgs[13]),lineArgs[0],
+		this(new Course(lineArgs[1], lineArgs[4], lineArgs[2]),new Instructor(lineArgs[13]),lineArgs[0],
 				lineArgs[3],Integer.parseInt(lineArgs[8]),Integer.parseInt(lineArgs[9]),lineArgs[10]);
 		
 		if (lineArgs[3].contains("H "))
