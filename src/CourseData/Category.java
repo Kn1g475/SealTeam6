@@ -9,9 +9,9 @@ import Main.Constants;
  */
 public class Category {
 	public ArrayList<Class> classesInThisCategory;
-	ArrayList<Integer> meetingDayPatterns;
+	private ArrayList<Integer> meetingDayPatterns;
 	// start time inclusive, end time exclusive
-	int startTime, endTime;
+	private int startTime, endTime;
 	// represents the time the final starts for this category.
 	public int finalTime;
 	public String finalDay;

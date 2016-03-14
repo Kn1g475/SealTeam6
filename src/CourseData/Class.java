@@ -8,17 +8,17 @@ import Main.Constants;
  */
 public class Class implements Comparable<Class> {
 
-	Course course; //Course associated with the class.
+	private Course course; //Course associated with the class.
 	public String CRN_Number; //Course registration number
-	String section; //Section of the class.
+	private String section; //Section of the class.
 	public int startTime; //Start time of the class.
 	public int endTime; //End time of the class.
-	Instructor instructor; //Instructor of the class.
+	private Instructor instructor; //Instructor of the class.
 	
 	public boolean hasConflict = false; //Boolean that determines if there is a conflicting final.
 	private int meetingDays; //Days that the classes meet.
-	String location;
-	Category category; //Category of the class.
+	private String location;
+	private Category category; //Category of the class.
 
 	/**
 	 * Constructor for the Class.
