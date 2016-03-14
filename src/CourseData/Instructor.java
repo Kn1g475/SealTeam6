@@ -4,8 +4,8 @@ package CourseData;
  * Class to handle the instructor of the class.
  */
 public class Instructor implements Comparable<Instructor> {
-	private String firstName; //First name of the instructor.
-	private String lastName; //Last name of the instructor
+	String firstName; //First name of the instructor.
+	String lastName; //Last name of the instructor
 
 	/**
 	 * Constructor for the instructor (that rhymed).
