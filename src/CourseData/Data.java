@@ -16,10 +16,10 @@ import Exceptions.*;
  * @author matt
  */
 public class Data {
-	public List<Class> allClassList;
-	public List<Class> oxfClassList;
-	public List<Class> hamClassList;
-	public List<Class> midClassList;
+	private List<Class> allClassList;
+	private List<Class> oxfClassList;
+	private List<Class> hamClassList;
+	private List<Class> midClassList;
 	public List<Class> currentList;
 	public List<Category> finalsCategories;
 	/**
