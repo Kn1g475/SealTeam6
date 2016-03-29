@@ -1,10 +1,11 @@
 package CourseData;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Profile {
-	private ArrayList<Course> takenCourses;
-	private ArrayList<Class> schedule;
+	private List<Course> takenCourses;
+	private List<Class> schedule;
 	private String uniqueID;
 	
 	public Profile() {

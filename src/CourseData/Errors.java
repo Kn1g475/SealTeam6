@@ -1,6 +1,7 @@
 package CourseData;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import Exceptions.*;
@@ -17,7 +18,7 @@ public class Errors {
 	 * @param cats
 	 * @throws Exception
 	 */
-	public static void setCategories(ArrayList<Class> classList, ArrayList<Category> cats) {
+	public static void setCategories(List<Class> classList, List<Category> cats) {
 		if (cats.size() == 0) {
 			/*
 			 * +---------------------------------------------+ | Hard coding
@@ -177,7 +178,7 @@ public class Errors {
 	 * @param allClassList
 	 * @throws Exception
 	 */
-	public static void displayError(ArrayList<Class> classList) throws InvalidClassException {
+	public static void displayError(List<Class> classList) throws InvalidClassException {
 		for (int i = 0; i < classList.size() - 1 ; i++) {
 			for (int j =  i + 1; j < classList.size(); j++) {
 				Class a = classList.get(i);

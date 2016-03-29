@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import Main.Constants;
@@ -17,12 +18,12 @@ import Exceptions.*;
  * @author matt
  */
 public class Data {
-	public ArrayList<Class> allClassList;
-	public ArrayList<Class> oxfClassList;
-	public ArrayList<Class> hamClassList;
-	public ArrayList<Class> midClassList;
-	public ArrayList<Class> currentList;
-	public ArrayList<Category> finalsCategories;
+	public List<Class> allClassList;
+	public List<Class> oxfClassList;
+	public List<Class> hamClassList;
+	public List<Class> midClassList;
+	public List<Class> currentList;
+	public List<Category> finalsCategories;
 	private Map<String,ArrayList<String>> prerequisites;
 	/**
 	 * Creates a new empty data structure
