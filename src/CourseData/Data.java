@@ -7,9 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import Main.Constants;
 import Exceptions.*;
@@ -24,7 +22,6 @@ public class Data {
 	public List<Class> midClassList;
 	public List<Class> currentList;
 	public List<Category> finalsCategories;
-	private Map<String,ArrayList<String>> prerequisites;
 	/**
 	 * Creates a new empty data structure
 	 */
@@ -33,7 +30,6 @@ public class Data {
 		oxfClassList = new ArrayList<>();
 		hamClassList = new ArrayList<>();
 		midClassList = new ArrayList<>();
-		prerequisites = new HashMap<>();
 		updateCurrentList("Oxford");
 		finalsCategories = new ArrayList<>();
 	}
@@ -51,34 +47,7 @@ public class Data {
 	public void findConflicts() throws InvalidClassException {
 		Errors.displayError(currentList);
 	}
-	/**
-	 * Parses the requirements of courses in from a file;
-	 * @param dataFile
-	 * @return
-	 */
-	public String readNewPrereqData(File dataFile) {
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(dataFile));
-			String line = br.readLine();
-			if (line == null || !line.contains(Constants.FIRST_LINE_OF_REQ)) {
-				br.close();
-				return "Error: Invalid REQ File";
-			}	
-			while((line = br.readLine()) != null) {
-				String[] tokens = line.split(" \\| ");
-				prerequisites.put(tokens[0], new ArrayList<>());
-				for(int i = 1; i < tokens.length; i++) {
-					prerequisites.get(tokens[0]).add(tokens[i]);
-				}
-			}
-			br.close();
-		} catch (FileNotFoundException e) {
-			return "Error: Could not find the file";
-		} catch (IOException e) {
-			return "Error: Could not read file";
-		} 
-		return "Finished Successfully";
-	}
+	
 	/**
 	 * Processes a file and adds new entries to the data
 	 * @param dataFile
