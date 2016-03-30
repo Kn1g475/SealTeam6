@@ -1,15 +1,16 @@
 package CourseData;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.SQLTimeoutException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
+import CourseData.Class;
 import Main.Constants;
 import Exceptions.*;
 /**
@@ -17,13 +18,12 @@ import Exceptions.*;
  * @author matt
  */
 public class Data {
-	public ArrayList<Class> allClassList;
-	public ArrayList<Class> oxfClassList;
-	public ArrayList<Class> hamClassList;
-	public ArrayList<Class> midClassList;
-	public ArrayList<Class> currentList;
-	public ArrayList<Category> finalsCategories;
-	private Map<String,ArrayList<String>> prerequisites;
+	private List<Class> allClassList;
+	private List<Class> oxfClassList;
+	private List<Class> hamClassList;
+	private List<Class> midClassList;
+	public List<Class> currentList;
+	public List<Category> finalsCategories;
 	/**
 	 * Creates a new empty data structure
 	 */
@@ -32,7 +32,6 @@ public class Data {
 		oxfClassList = new ArrayList<>();
 		hamClassList = new ArrayList<>();
 		midClassList = new ArrayList<>();
-		prerequisites = new HashMap<>();
 		updateCurrentList("Oxford");
 		finalsCategories = new ArrayList<>();
 	}
@@ -50,66 +49,35 @@ public class Data {
 	public void findConflicts() throws InvalidClassException {
 		Errors.displayError(currentList);
 	}
-	/**
-	 * Parses the requirements of courses in from a file;
-	 * @param dataFile
-	 * @return
-	 */
-	public String readNewPrereqData(File dataFile) {
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(dataFile));
-			String line = br.readLine();
-			if (line == null || !line.contains(Constants.FIRST_LINE_OF_REQ)) {
-				br.close();
-				return "Error: Invalid REQ File";
-			}	
-			while((line = br.readLine()) != null) {
-				String[] tokens = line.split(" \\| ");
-				prerequisites.put(tokens[0], new ArrayList<>());
-				for(int i = 1; i < tokens.length; i++) {
-					prerequisites.get(tokens[0]).add(tokens[i]);
-				}
-			}
-			br.close();
-		} catch (FileNotFoundException e) {
-			return "Error: Could not find the file";
-		} catch (IOException e) {
-			return "Error: Could not read file";
-		} 
-		return "Finished Successfully";
-	}
+	
 	/**
 	 * Processes a file and adds new entries to the data
 	 * @param dataFile
 	 * @return
 	 */
-	public String readNewCourseData(File dataFile) {
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(dataFile));
+	public String readNewCourseData() {
+		try (Connection data = DriverManager.getConnection("jdbc:mysql://134.53.148.193/levysj","levysj-r","q8mYPAyUAHeeByQ4");
+			 Statement stm = data.createStatement();
+			) {
 			// Checks the first line of the file to check if is a valid csv file or not
-			String line = br.readLine();
-			if (line == null || !line.contains(Constants.FIRST_LINE_OF_CSV)) {
-				br.close();
-				return "Error: Invalid CSV File";
-			}
-			// Read each line of the file
-			readFile: while ((line = br.readLine()) != null) {
-				String lineArgs[] = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)",-1);
-				if (lineArgs.length < 14) {
-					System.out.printf("Warning: a line in the file had an invalid number of elements, skipped: %s\n", line);
-					continue readFile;
+			ResultSet rset = stm.executeQuery("SELECT " + Constants.COLUMNS_IN_DATABASE + "FROM CSE_Course_Schedule_Spring_2016 WHERE 1");
+			String[] columnArgs = Constants.COLUMNS_OF_DATABASE.split(",");
+			String[] lineArgs = new String[columnArgs.length];
+			ReadRow: while (rset.next()) {
+				for(int i = 0; i < columnArgs.length; i++) {
+					lineArgs[i] = rset.getString(columnArgs[i]);
 				}
 				// for each argument, read in data
-				for (int i = 0; i < 14; i++) {
+				for (int i = 0; i < 10; i++) {
 					// skip the line if any element is blank
 					if (lineArgs[i].equals("")) {
-						System.out.printf("Warning: a line in the file had blank elements, skipped: %s\n", line);
-						continue readFile;
+						System.out.printf("Warning: a line in the file had blank elements, skipped: %s\n",dump(lineArgs));
+						continue ReadRow;
 					}
 					// skip the line is unable to parse numerical values in line
-					if ((i == 8 || i == 9) && !lineArgs[i].matches("\\d+")) {
-						System.out.printf("Warning: unable to parse a start/end time for a line, skipped: %s\n", line);
-						continue readFile;
+					if ((i == 6 || i == 7) && !lineArgs[i].matches("\\d+")) {
+						System.out.printf("Warning: unable to parse a start/end time for a line, skipped: %s\n", dump(lineArgs));
+						continue ReadRow;
 					}
 				}
 				// Note: meeting days is not part of checking equality
@@ -118,18 +86,22 @@ public class Data {
 					allClassList.add(tempClass);
 				else {
 					// if duplicate class has different meeting times, add them
-					allClassList.get(allClassList.indexOf(tempClass)).addMeetingDays(lineArgs[10]);
+					allClassList.get(allClassList.indexOf(tempClass)).addMeetingDays(lineArgs[5]);
 					System.out.printf("Note: Duplicate class detected, added meeting days and skipped: %s\n", tempClass);
 				}
 			}
 			sortClasses();
-			br.close();
-		} catch (FileNotFoundException e) {
-			return "Error: Could not find the file";
-		} catch (IOException e) {
-			return "Error: Could not read file";
+			rset.close();
+			stm.close();
+			data.close();
 		} catch (InvalidClassException e) {
 			return e.getMessage();
+		} catch(SQLTimeoutException e){
+			e.printStackTrace();
+			return "Error: Connection Timeout!!";
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return "Error: Could not connect to Database!!";
 		}
 		return "Finished Parsing";
 	}
@@ -187,5 +159,14 @@ public class Data {
 			finished = true;
 		}
 		return finished;
+	}
+	
+	private String dump(String[] array) {
+		StringBuilder br = new StringBuilder();
+		for(String ele : array) {
+			br.append(ele + '\t');
+		}
+		return br.toString();
+		
 	}
 }

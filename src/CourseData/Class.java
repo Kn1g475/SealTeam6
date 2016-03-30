@@ -49,12 +49,12 @@ public class Class implements Comparable<Class> {
 		}
 	}
 	public Class(String[] lineArgs) {
-		this(new Course(lineArgs[1], lineArgs[4], lineArgs[2]),new Instructor(lineArgs[13]),lineArgs[0],
-				lineArgs[3],Integer.parseInt(lineArgs[8]),Integer.parseInt(lineArgs[9]),lineArgs[10]);
+		this(new Course(lineArgs[1], lineArgs[4], lineArgs[2]),new Instructor(lineArgs[9]),lineArgs[0],
+				lineArgs[3],Integer.parseInt(lineArgs[6]),Integer.parseInt(lineArgs[7]),lineArgs[5]);
 		
-		if (lineArgs[3].contains("H "))
+		if (lineArgs[0].contains("H "))
 			this.location = "Hamilton";
-		else if(lineArgs[3].contains("M "))
+		else if(lineArgs[0].contains("M "))
 			this.location = "MiddleTown";
 		else
 			this.location = "Oxford";
