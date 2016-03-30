@@ -1,0 +1,5 @@
+To get database stuff working in your eclipse build. 
+Right click on the project. 
+Move cursor on to Build path and click on add external Library.
+Locate mysql-connector-java-5.1.38-bin.jar and add it.
+Enjoy the sweet database capabilities.
