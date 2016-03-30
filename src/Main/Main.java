@@ -436,7 +436,7 @@ public class Main extends JFrame {
 
 				case COURSE : 
 
-					result = dataObject.readNewCourseData(selectedFile);
+					result = dataObject.readNewCourseData();
 					break;
 				case REQUIREMENT :
 					//add code
