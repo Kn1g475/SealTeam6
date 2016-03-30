@@ -12,11 +12,14 @@ public class Requirement {
 	private boolean instructorPermission;
 	private String type;
 	
-	public Requirement(String uniqueId, Course course, String prequisties, boolean senoirLevel, int hours, boolean instructorPermission, String type) {
+	public Requirement(String uniqueId, Course course, String prequisities, boolean senoirLevel, int hours, boolean instructorPermission, String type) {
 		this.uniqueId = uniqueId;
 		this.course = course;
 		
-		prequisites = new ArrayList<>();
+		this.prequisites = new ArrayList<>();
+		String[] args = prequisities.split("\\|");
+		for (String arg : args)
+			this.prequisites.add(arg);
 		
 		this.seniorLevel = seniorLevel;
 		this.hours = hours;
