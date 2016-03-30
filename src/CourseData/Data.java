@@ -1,13 +1,8 @@
 package CourseData;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLTimeoutException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import CourseData.Class;
@@ -56,45 +51,13 @@ public class Data {
 	 * @return
 	 */
 	public String readNewCourseData() {
-		try (Connection data = DriverManager.getConnection("jdbc:mysql://134.53.148.193/levysj","levysj-r","q8mYPAyUAHeeByQ4");
-			 Statement stm = data.createStatement();
-			) {
-			// Checks the first line of the file to check if is a valid csv file or not
-			ResultSet rset = stm.executeQuery("SELECT " + Constants.COLUMNS_IN_DATABASE + "FROM CSE_Course_Schedule_Spring_2016 WHERE 1");
-			String[] columnArgs = Constants.COLUMNS_OF_DATABASE.split(",");
-			String[] lineArgs = new String[columnArgs.length];
-			ReadRow: while (rset.next()) {
-				for(int i = 0; i < columnArgs.length; i++) {
-					lineArgs[i] = rset.getString(columnArgs[i]);
-				}
-				// for each argument, read in data
-				for (int i = 0; i < 10; i++) {
-					// skip the line if any element is blank
-					if (lineArgs[i].equals("")) {
-						System.out.printf("Warning: a line in the file had blank elements, skipped: %s\n",dump(lineArgs));
-						continue ReadRow;
-					}
-					// skip the line is unable to parse numerical values in line
-					if ((i == 6 || i == 7) && !lineArgs[i].matches("\\d+")) {
-						System.out.printf("Warning: unable to parse a start/end time for a line, skipped: %s\n", dump(lineArgs));
-						continue ReadRow;
-					}
-				}
-				// Note: meeting days is not part of checking equality
-				Class tempClass = new Class(lineArgs);
-				if(!allClassList.contains(tempClass))
-					allClassList.add(tempClass);
-				else {
-					// if duplicate class has different meeting times, add them
-					allClassList.get(allClassList.indexOf(tempClass)).addMeetingDays(lineArgs[5]);
-					System.out.printf("Note: Duplicate class detected, added meeting days and skipped: %s\n", tempClass);
-				}
-			}
+		try{
+			DatabaseConnector connector= new DatabaseConnector("SELECT " + Constants.COLUMNS_IN_DATABASE + "FROM CSE_Course_Schedule_Spring_2016 WHERE 1");
+			allClassList = connector.getClasses();
 			sortClasses();
-			rset.close();
-			stm.close();
-			data.close();
+			connector.close();
 		} catch (InvalidClassException e) {
+			e.printStackTrace();
 			return e.getMessage();
 		} catch(SQLTimeoutException e){
 			e.printStackTrace();
@@ -104,22 +67,6 @@ public class Data {
 			return "Error: Could not connect to Database!!";
 		}
 		return "Finished Parsing";
-	}
-	/**
-	 * Dumps the data structure to a string variable
-	 */
-	public String toString() {
-		StringBuilder ret = new StringBuilder();
-
-		ret.append("\n+----------------------------+\n");
-		ret.append("|         Data Output        |\n");
-		ret.append("+----------------------------+\n");
-
-		Collections.sort(allClassList);
-		ret.append(String.format("Classes:\t%s\n", allClassList));
-		ret.append(String.format("Class Count: %d\n", allClassList.size()));
-
-		return ret.toString();
 	}
 	/**
 	 * Sorts the class into <code>ArrayList</code> based on there location
@@ -161,12 +108,4 @@ public class Data {
 		return finished;
 	}
 	
-	private String dump(String[] array) {
-		StringBuilder br = new StringBuilder();
-		for(String ele : array) {
-			br.append(ele + '\t');
-		}
-		return br.toString();
-		
-	}
 }

@@ -12,7 +12,7 @@ public class Requirement {
 	private boolean instructorPermission;
 	private String type;
 	
-	public Requirement(String uniqueId, Course course, String prequisities, boolean senoirLevel, int hours, boolean instructorPermission, String type) {
+	public Requirement(String uniqueId, Course course, String prequisities, boolean seniorLevel, int hours, boolean instructorPermission, String type) {
 		this.uniqueId = uniqueId;
 		this.course = course;
 		
@@ -29,6 +29,6 @@ public class Requirement {
 	
 	public Requirement(String[] Args) {
 		this(Args[0],new Course( Args[1], Args[2],Args[3]), Args[4], 
-				Args[5].equals("1") ? true:false, Integer.parseInt(Args[6]), Args[7].equals("1") ? true : false, Args[8]); 
+				Args[5].equals("1") ? true : false, Integer.parseInt(Args[6]), Args[7].equals("1") ? true : false, Args[8]); 
 	}
 }
