@@ -18,6 +18,7 @@ public class Data {
 	private List<Class> hamClassList;
 	private List<Class> midClassList;
 	public List<Class> currentList;
+	private List<Requirement> degreeRequirements;
 	public List<Category> finalsCategories;
 	/**
 	 * Creates a new empty data structure
@@ -27,6 +28,7 @@ public class Data {
 		oxfClassList = new ArrayList<>();
 		hamClassList = new ArrayList<>();
 		midClassList = new ArrayList<>();
+		degreeRequirements = new ArrayList();
 		updateCurrentList("Oxford");
 		finalsCategories = new ArrayList<>();
 	}
@@ -44,7 +46,24 @@ public class Data {
 	public void findConflicts() throws InvalidClassException {
 		Errors.displayError(currentList);
 	}
-	
+	public String readNewRequirementData() {
+		try{
+			DatabaseConnector connector= new DatabaseConnector();
+			degreeRequirements.addAll(connector.getRequrements("SELECT " + Constants.COLUMNS_IN_DATABASE + "FROM CSE_Requirements WHERE 1"));
+			sortClasses();
+			connector.close();
+		} catch (InvalidClassException e) {
+			e.printStackTrace();
+			return e.getMessage();
+		} catch(SQLTimeoutException e){
+			e.printStackTrace();
+			return "Error: Connection Timeout!!";
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return "Error: Could not connect to Database!!";
+		}
+		return "Finished Parsing";
+	}
 	/**
 	 * Processes a file and adds new entries to the data
 	 * @param dataFile
@@ -52,8 +71,8 @@ public class Data {
 	 */
 	public String readNewCourseData() {
 		try{
-			DatabaseConnector connector= new DatabaseConnector("SELECT " + Constants.COLUMNS_IN_DATABASE + "FROM CSE_Course_Schedule_Spring_2016 WHERE 1");
-			allClassList = connector.getClasses();
+			DatabaseConnector connector= new DatabaseConnector();
+			allClassList.addAll(connector.getClasses("SELECT " + Constants.COLUMNS_IN_DATABASE + "FROM CSE_Course_Schedule_Spring_2016 WHERE 1"));
 			sortClasses();
 			connector.close();
 		} catch (InvalidClassException e) {

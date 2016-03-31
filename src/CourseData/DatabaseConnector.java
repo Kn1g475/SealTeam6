@@ -19,14 +19,13 @@ public class DatabaseConnector {
 	private Connection connector;
 	private Statement statement;
 	private ResultSet resultSet;
-	
-	public DatabaseConnector(String sqlStatement) throws SQLException{
+	public DatabaseConnector() throws SQLException{
 		connector = DriverManager.getConnection("jdbc:mysql://134.53.148.193/levysj","levysj-r","q8mYPAyUAHeeByQ4");
 		statement = connector.createStatement();
-		resultSet = statement.executeQuery(sqlStatement);
 	}
 	
-	public List<Requirement> getRequrements() throws SQLException {
+	public List<Requirement> getRequrements(String SQLStatement) throws SQLException {
+		resultSet = statement.executeQuery(SQLStatement);
 		String[] columnNames = Constants.COLUMNS_OF_REQUIREMENTS.split(",");
 		String[] rowArgs = new String[columnNames.length];
 		List<Requirement> requirements = new ArrayList<>();
@@ -41,10 +40,12 @@ public class DatabaseConnector {
 			
 			requirements.add(new Requirement(rowArgs));
 		}
+		resultSet.close();
 		return requirements;
 	}
 	
-	public List<Class> getClasses() throws SQLException{
+	public List<Class> getClasses(String SQLStatement) throws SQLException{
+		resultSet = statement.executeQuery(SQLStatement);
 		String[] columnNames = Constants.COLUMNS_OF_DATABASE.split(",");
 		String[] rowArgs = new String[columnNames.length];
 		List<Class> classes = new ArrayList<>();
@@ -76,11 +77,11 @@ public class DatabaseConnector {
 				System.out.printf("Note: Duplicate class detected, added meeting days and skipped: %s\n", tempClass);
 			}
 		}
+		resultSet.close();
 		return classes;
 	}
 	
 	public void close() throws SQLException{
-		resultSet.close();
 		statement.close();
 		connector.close();
 	}
