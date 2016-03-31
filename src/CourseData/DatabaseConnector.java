@@ -72,8 +72,9 @@ public class DatabaseConnector {
 			if(rowArgs[10].equals("2")){
 				labs.add(tempClass);
 				System.out.printf("Note: Lab detected: %s\n", dump(rowArgs));
+			} else {
+				classes.add(tempClass);
 			}
-			classes.add(tempClass);
 		}
 		//Adds labs to their respective classes.
 		for(Class lab : labs) {
