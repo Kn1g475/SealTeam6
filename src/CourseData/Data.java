@@ -127,4 +127,12 @@ public class Data {
 		return finished;
 	}
 	
+	public List<Requirement> getMajorRequirements(String major) {
+		List<Requirement> majorRequirements = new ArrayList<>();
+		for (Requirement req : degreeRequirements) {
+			if (req.getUniqueId().contains(major))
+					majorRequirements.add(req);
+		}
+		return majorRequirements;
+	}
 }

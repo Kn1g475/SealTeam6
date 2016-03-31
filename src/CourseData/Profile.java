@@ -14,8 +14,9 @@ public class Profile {
 		schedule = new ArrayList<>();	
 	}
 	
-	public Profile(Data data) {
+	public Profile(Data data,String major) {
 		super();
+		this.major = data.getMajorRequirements(major);
 	}
 	/**
 	 * Gets a copy of the taken courses
@@ -63,4 +64,20 @@ public class Profile {
 	public boolean removeClass(Class clas) {
 		return schedule.remove(clas);
 	}
+	
+	
+	public boolean checkFeasibility() {
+		return !checkTimeOverlap() || !checkPreReq();
+	}
+	
+	private boolean checkTimeOverlap() {
+		return false;
+	}
+	
+	private boolean checkPreReq() {
+		return false;
+	}
+	
+	
+	
 }
