@@ -13,6 +13,8 @@ public class Class implements Comparable<Class> {
 	private String section; //Section of the class.
 	public int startTime; //Start time of the class.
 	public int endTime; //End time of the class.
+	private Class lab;
+	
 	private Instructor instructor; //Instructor of the class.
 	
 	public boolean hasConflict = false; //Boolean that determines if there is a conflicting final.
@@ -38,7 +40,7 @@ public class Class implements Comparable<Class> {
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.meetingDays = 0;
-
+		this.lab = null;
 		addMeetingDays(days);
 
 		if (this.course == null || this.instructor == null || this.CRN_Number == "" || this.section == ""
@@ -58,6 +60,11 @@ public class Class implements Comparable<Class> {
 			this.location = "MiddleTown";
 		else
 			this.location = "Oxford";
+	}
+	
+	public void addLab(Class lab) {
+		this.lab = lab;
+		addMeetingDays(lab.getMeetingDays());
 	}
 	
 	public String getLocation() {
@@ -114,21 +121,8 @@ public class Class implements Comparable<Class> {
 	 * CompareTo method to compare classes.
 	 */
 	public int compareTo(Class o) {
-//		return this.toString().toLowerCase()
-//				.compareTo(o.toString().toLowerCase());
 		return this.startTime - o.startTime;	
 	}
-
-//	/**
-//	 * ToString methods that returns a string without meeting days.
-//	 * @return String without meeting days.
-//	 */
-//	public String toStringWithOutMeetingDays() {
-//
-//		return course.shortName + this.section + " from " + this.startTime + " to " + this.endTime + " ("
-//				+ this.CRN_Number + ")";
-//
-//	}
 
 	/**
 	 * ToString method that returns all the information of the class.

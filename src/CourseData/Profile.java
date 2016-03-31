@@ -7,10 +7,19 @@ public class Profile {
 	private List<Course> takenCourses;
 	private List<Class> schedule;
 	private String uniqueID;
+	private List<Requirement> major;
+	private int hours;
+	private String curYear;
 	
 	public Profile() {
 		takenCourses = new ArrayList<>();
-		schedule = new ArrayList<>();	
+		schedule = new ArrayList<>();
+	}
+	public Profile(String curYear, int hours, List<Requirement> major) {
+		this();
+		this.hours = hours;
+		this.major = major;
+		this.curYear = curYear;
 	}
 	/**
 	 * Gets a copy of the taken courses
@@ -58,4 +67,25 @@ public class Profile {
 	public boolean removeClass(Class clas) {
 		return schedule.remove(clas);
 	}
+	
+	
+	public boolean checkFeasibility() {
+		return !checkTimeOverlap() || !checkPreReq();
+	}
+	
+	private boolean checkTimeOverlap() {
+		return false;
+	}
+	
+	private boolean checkPreReq() {
+		for (Class clas : schedule) {
+			for(Requirement req : major) {
+				
+			}
+		}
+		return false;
+	}
+	
+	
+	
 }
