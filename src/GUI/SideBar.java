@@ -28,7 +28,11 @@ public class SideBar extends JPanel {
 	private Component verticalStrut;
 	private Component verticalStrut_1;
 	private JLabel lblSealTeam;
-	
+	public JLabel scheduleButton;
+	private Component verticalStrut_2;
+	private Component verticalStrut_3;
+	private Component verticalStrut_4;
+
 
 	/**
 	 * Creates a new side bar object, takes in a listener class so that this
@@ -54,7 +58,7 @@ public class SideBar extends JPanel {
 		aboutButton.addMouseListener(sideButtonListener);
 		aboutButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Image instructionsImg = new ImageIcon(Constants.INSTRUCTIONS_ICON_NAME)
-				.getImage();
+		.getImage();
 		instructionsImg = instructionsImg.getScaledInstance(
 				Constants.MAIN_FONT.getSize(), Constants.MAIN_FONT.getSize(),
 				Image.SCALE_SMOOTH);
@@ -66,7 +70,7 @@ public class SideBar extends JPanel {
 		JLabel teamName = new JLabel("Made By: ");
 		teamName.setPreferredSize(new Dimension(96, 24));
 		teamName.setFont(Constants.SMALL_ITALIC_FONT);
-		
+
 		// profile button
 		profileButton = new JLabel();
 		profileButton.setFont(Constants.MAIN_FONT);
@@ -74,41 +78,49 @@ public class SideBar extends JPanel {
 		profileButton.setText("Profile");
 		profileButton.addMouseListener(sideButtonListener);
 		profileButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		
-						//add item to side bar
-						add(profileButton);
+
+		//add item to side bar
+		add(profileButton);
 		add(Box.createVerticalStrut(Constants.SIDE_BAR_SPACING));
-		
-				// report button
-				reportButton = new JLabel();
-				reportButton.setFont(Constants.MAIN_FONT);
-				reportButton.setIcon(new ImageIcon(reportImg));
-				reportButton.setText("Report");
-				reportButton.addMouseListener(sideButtonListener);
-				reportButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-				
-						// add items to side bar with proper spacing
-						add(reportButton);
+
+		// instructions button
+		instructionsButton = new JLabel();
+		instructionsButton.setFont(Constants.MAIN_FONT);
+		instructionsButton.setIcon(new ImageIcon(instructionsImg));
+		instructionsButton.setText("Instructions");
+		instructionsButton.addMouseListener(sideButtonListener);
+
+		//Schedule Button
+		scheduleButton = new JLabel();
+		scheduleButton.setFont(Constants.MAIN_FONT);
+		scheduleButton.setIcon(new ImageIcon(reportImg));
+		scheduleButton.setText("Schedule");
+		scheduleButton.addMouseListener(sideButtonListener);
+		// add items to side bar with proper spacing
+		add(scheduleButton);
+		verticalStrut_4 = Box.createVerticalStrut(Constants.SIDE_BAR_SPACING);
+		add(verticalStrut_4);
+		//===================================
+
+		// report button
+		reportButton = new JLabel();
+		reportButton.setFont(Constants.MAIN_FONT);
+		reportButton.setIcon(new ImageIcon(reportImg));
+		reportButton.setText("Report");
+		add(reportButton);
+		reportButton.addMouseListener(sideButtonListener);
+
 		add(Box.createVerticalStrut(Constants.SIDE_BAR_SPACING));
-		
-				// instructions button
-				instructionsButton = new JLabel();
-				instructionsButton.setFont(Constants.MAIN_FONT);
-				instructionsButton.setIcon(new ImageIcon(instructionsImg));
-				instructionsButton.setText("Instructions");
-				instructionsButton.addMouseListener(sideButtonListener);
-				instructionsButton.setCursor(Cursor
-						.getPredefinedCursor(Cursor.HAND_CURSOR));
-				add(instructionsButton);
-		
-		verticalStrut = Box.createVerticalStrut(20);
-		add(verticalStrut);
+		add(instructionsButton);
+
+		add(Box.createVerticalStrut(Constants.SIDE_BAR_SPACING));
+		//		add(verticalStrut);
 		add(aboutButton);
-		
-		verticalStrut_1 = Box.createVerticalStrut(325);
+
+		verticalStrut_1 = Box.createVerticalStrut(275);
 		add(verticalStrut_1);
 		add(teamName);
-		
+
 		lblSealTeam = new JLabel(Constants.TEAM_NAME);
 		lblSealTeam.setFont(new Font("Arial", Font.ITALIC, 13));
 		add(lblSealTeam);

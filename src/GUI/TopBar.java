@@ -65,48 +65,33 @@ public class TopBar extends JPanel {
 		title.setText(Constants.TITLE);
 		add(title);
 
-		add(Box.createHorizontalGlue());
+		//add(Box.createHorizontalGlue());
 
 		// set up all buttons and labels
 		JPanel buttonsGroup = new JPanel();
 		buttonsGroup.setLayout(new BoxLayout(buttonsGroup, BoxLayout.PAGE_AXIS));
 		buttonsGroup.setBackground(Constants.MENU_BACKGROUND_COLOR);
-		JPanel fileButtons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		JPanel fileButtons = new JPanel();
+		add(fileButtons);
 		fileButtons.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-
-		addButton = new JButton("Add File");
-		addButton.setActionCommand("addButton");
-		addButton.addActionListener(buttonListener);
-
-		deleteButton = new JButton("Remove");
-		deleteButton.setActionCommand("deleteButton");
-		deleteButton.setEnabled(false);
-		deleteButton.addActionListener(buttonListener);
-
-		submitButton = new JButton("Submit");
-		submitButton.setActionCommand("submitButton");
-		submitButton.setEnabled(false);
-		submitButton.addActionListener(buttonListener);
-
-		// Radio button =========================================
-		courseRadioButton = new JRadioButton("Course");
-		courseRadioButton.setActionCommand("courseRadioButton");
-		courseRadioButton.setSelected(true);
-		courseRadioButton.addActionListener(new RadioEvent());
-		fileButtons.add(courseRadioButton);
-
-		requirementsRadioButton = new JRadioButton("Requirements");
-		requirementsRadioButton.setActionCommand("requirementsRadioButton");
-		requirementsRadioButton.setSelected(false);
-		requirementsRadioButton.addActionListener(new RadioEvent());
-		fileButtons.add(requirementsRadioButton);
 		
-		scheduleRadioButton = new JRadioButton("Schedule");
-		scheduleRadioButton.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-		scheduleRadioButton.setActionCommand("scheduleRadioButton");
-		scheduleRadioButton.setSelected(false);
-		scheduleRadioButton.addActionListener(new RadioEvent());
-		fileButtons.add(scheduleRadioButton);
+				addButton = new JButton("Add File");
+				addButton.setBounds(86, 5, 95, 29);
+				addButton.setActionCommand("addButton");
+				addButton.addActionListener(buttonListener);
+				
+						deleteButton = new JButton("Remove");
+						deleteButton.setBounds(239, 5, 93, 29);
+						deleteButton.setActionCommand("deleteButton");
+						deleteButton.setEnabled(false);
+						deleteButton.addActionListener(buttonListener);
+						
+								submitButton = new JButton("Submit");
+								submitButton.setBounds(386, 5, 88, 29);
+								submitButton.setActionCommand("submitButton");
+								submitButton.setEnabled(false);
+								submitButton.addActionListener(buttonListener);
+		fileButtons.setLayout(null);
 
 
 		fileButtons.add(addButton);
@@ -118,8 +103,6 @@ public class TopBar extends JPanel {
 		errorLabel.setFont(Constants.SMALL_FONT);
 		errorLabel.setForeground(Color.RED);
 		errorLabel.setBackground(Constants.MENU_BACKGROUND_COLOR);
-
-		buttonsGroup.add(fileButtons);
 		buttonsGroup.add(errorLabel);
 
 		add(buttonsGroup);
@@ -128,32 +111,5 @@ public class TopBar extends JPanel {
 		fileLabel.setFont(Constants.SMALL_FONT);
 		fileLabel.setLocation(getX(), 50);
 	}
-	// Add functionality to the radio buttons =============================
-	private class RadioEvent implements ActionListener {
-
-		public void actionPerformed(ActionEvent e) {
-			
-			if(e.getActionCommand().equalsIgnoreCase("courseRadioButton")){
-				state = FileState.COURSE;
-				courseRadioButton.setSelected(true);
-				requirementsRadioButton.setSelected(false);
-				scheduleRadioButton.setSelected(false);
-			}
-			
-			if(e.getActionCommand().equalsIgnoreCase("requirementsRadioButton")){
-				state = FileState.REQUIREMENT;
-				requirementsRadioButton.setSelected(true);
-				courseRadioButton.setSelected(false);
-				scheduleRadioButton.setSelected(false);
-				
-			}
-			if(e.getActionCommand().equalsIgnoreCase("scheduleRadioButton")){
-				state = FileState.SCHEDULE;
-				scheduleRadioButton.setSelected(true);
-				courseRadioButton.setSelected(false);
-				requirementsRadioButton.setSelected(false);
-			}
-		}
-		
-	}
+	
 }

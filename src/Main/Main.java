@@ -1,4 +1,4 @@
- package Main;
+package Main;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -25,6 +25,7 @@ import GUI.AddButtonWindow;
 import GUI.Instructions;
 import GUI.Profile;
 import GUI.Report;
+import GUI.Schedule;
 import GUI.SideBar;
 import GUI.TopBar;
 
@@ -45,6 +46,7 @@ import javax.swing.JLabel;
 import java.awt.List;
 import java.awt.Scrollbar;
 import java.awt.Button;
+
 
 /**
  * <p>
@@ -69,6 +71,7 @@ public class Main extends JFrame {
 	SideBar sideBar;
 
 	JPanel aboutPanel;
+	JPanel schedulePanel;
 	JPanel instructionsPanel;
 	JPanel reportPanel;
 	JPanel profilePanel;
@@ -121,21 +124,21 @@ public class Main extends JFrame {
 		sideBar = new SideBar(new SideButtonListener());
 		mainPanel.add(sideBar, BorderLayout.WEST);
 
-		// set up Content Switcher to allow side bar to rotate through
-		// content panels
+		// set up Content Switcher to allow side bar to rotate through content panels
 		contentSwitcher = new CardLayout();
 		contentPanel = new JPanel(contentSwitcher);
 		contentPanel.setBorder(BorderFactory.createLineBorder(
 				Constants.CONTENT_BACKGROUND_COLOR, 10));
 
 		profilePanel = new Profile();
+		schedulePanel = new Schedule(); 
 		aboutPanel = new About();
 		instructionsPanel = new Instructions();
 
 
-		// Add initial blank panel when program first starts
-		JPanel newProfilePanel = new JPanel();
+
 		// Profile Panel===================================================
+		JPanel newProfilePanel = new JPanel();
 		newProfilePanel.setBackground(Constants.CONTENT_BACKGROUND_COLOR);
 		contentPanel.add(profilePanel,"PROFILE");
 		profilePanel.setLayout(null);
@@ -149,7 +152,7 @@ public class Main extends JFrame {
 			public void focusLost(FocusEvent e) {
 				txtUniqueId.setText(txtUniqueId.getText().equals("") ? "Unique ID" : txtUniqueId.getText());
 			}
-			
+
 		});
 		txtUniqueId.setText("Unique ID");
 		txtUniqueId.setBounds(94, 43, 134, 28);
@@ -172,14 +175,14 @@ public class Main extends JFrame {
 		JLabel classesTakenLabel = new JLabel("Classes Taken");
 		classesTakenLabel.setBounds(235, 90, 95, 16);
 		profilePanel.add(classesTakenLabel);
-		
+
 		// List for Desired Classes
 		List desiredClassesList = new List();
 		desiredClassesList.setBounds(94, 266, 414, 89);
 		desiredClassesList.add("CSE 102");
 		desiredClassesList.add("CSE 278");
 		profilePanel.add(desiredClassesList);
-		
+
 		// Drop down box for Major
 		JComboBox comboBox = new JComboBox();
 		comboBox.addItem("Major");
@@ -216,57 +219,10 @@ public class Main extends JFrame {
 		rdbtnDesired.addActionListener(new RadioEvent());
 		profilePanel.add(rdbtnDesired);
 
-		// addButtonWindow ================================================
+		// ========================!addButtonWindow!====================================
 		AddButtonWindow.PARENT.getContentPane().setPreferredSize(new Dimension(300, 300));
 		AddButtonWindow.PARENT.setResizable(false);
 		AddButtonWindow.PARENT.getContentPane().setLayout(null);
-
-		JComboBox courseAddWindow = new JComboBox();
-		courseAddWindow.setBounds(6, 6, 120, 27);
-		//campusBox.setBounds(x, y, width, height);
-		courseAddWindow.addItem("Course");
-		courseAddWindow.addItem("CSE 102");
-		courseAddWindow.addItem("CSE 174");
-		courseAddWindow.addItem("CSE 201");
-		courseAddWindow.addItem("CSE 271");
-		courseAddWindow.addItem("CSE 274");
-		courseAddWindow.addItem("CSE 278");
-		AddButtonWindow.PARENT.getContentPane().add(courseAddWindow);
-
-		JComboBox campusBox = new JComboBox();
-		campusBox.setBounds(335, 6, 140, 27);
-		campusBox.addItem("Location");
-		campusBox.addItem("Oxford");
-		campusBox.addItem("Hamilton");
-		campusBox.addItem("MiddleTown");
-		campusBox.addItem("All");
-		AddButtonWindow.PARENT.getContentPane().add(campusBox);
-
-		List listAddWindow = new List();
-		listAddWindow.setBounds(10, 39, 480, 170);
-		listAddWindow.add("Location |  CRN   | CourseTitle | Section | Professor | Time");
-		listAddWindow.add("   O     |  57409 |   CSE 201   |    B    | Ann Sobel | 11:30A.M - 12:50P.M");
-		AddButtonWindow.PARENT.getContentPane().add(listAddWindow);
-
-		Scrollbar scrollbarAddWindow = new Scrollbar();
-		scrollbarAddWindow.setBounds(250, 39, 15, 170);
-		AddButtonWindow.PARENT.getContentPane().add(scrollbarAddWindow);
-
-		//Accept button in the pop up window
-		Button acceptWindowButton = new Button("Accept");
-		acceptWindowButton.setBounds(9, 215, 84, 28);
-		AddButtonWindow.PARENT.getContentPane().add(acceptWindowButton);
-
-		// Cancel button in pop up window
-		Button cancelWindowButton = new Button("Cancel");
-		cancelWindowButton.setBounds(408, 215, 84, 28);
-		cancelWindowButton.setActionCommand("cancelWindowButton");
-		cancelWindowButton.addActionListener(new ButtonListener());
-		AddButtonWindow.PARENT.getContentPane().add(cancelWindowButton);
-
-		Label courseLabel = new Label("Full Course Name");
-		courseLabel.setBounds(190, 10, 117, 17);
-		AddButtonWindow.PARENT.getContentPane().add(courseLabel);
 
 		// Create a new window when the add button is clicked
 		Button addButton = new Button("Add");
@@ -287,6 +243,65 @@ public class Main extends JFrame {
 		addButton.setBounds(228, 368, 102, 28);
 		profilePanel.add(addButton);
 
+
+		JComboBox courseAddWindow = new JComboBox();
+		courseAddWindow.setBounds(6, 6, 120, 27);
+
+		//HARD CODE For courses===========================
+		courseAddWindow.addItem("Course");
+		courseAddWindow.addItem("CSE 102");
+		courseAddWindow.addItem("CSE 174");
+		courseAddWindow.addItem("CSE 201");
+		courseAddWindow.addItem("CSE 271");
+		courseAddWindow.addItem("CSE 274");
+		courseAddWindow.addItem("CSE 278");
+		AddButtonWindow.PARENT.getContentPane().add(courseAddWindow);
+		//================================
+		
+		//HARD CODE for the location box=============
+		JComboBox campusBox = new JComboBox();
+		campusBox.setBounds(335, 6, 140, 27);
+		campusBox.addItem("Location");
+		campusBox.addItem("Oxford");
+		campusBox.addItem("Hamilton");
+		campusBox.addItem("MiddleTown");
+		campusBox.addItem("All");
+		AddButtonWindow.PARENT.getContentPane().add(campusBox);
+		//============================================
+		
+		//HARD CODE for the course box=============================
+		List listAddWindow = new List();
+		listAddWindow.setBounds(10, 39, 480, 170);
+		listAddWindow.add("Location |  CRN   | CourseTitle | Section | Professor | Time");
+		listAddWindow.add("   O     |  57409 |   CSE 201   |    B    | Ann Sobel | 11:30A.M - 12:50P.M");
+		AddButtonWindow.PARENT.getContentPane().add(listAddWindow);
+		//==========================================================
+		
+		//Add the scroll bar for the courses box
+		Scrollbar scrollbarAddWindow = new Scrollbar();
+		scrollbarAddWindow.setBounds(250, 39, 15, 170);
+		AddButtonWindow.PARENT.getContentPane().add(scrollbarAddWindow);
+
+		//Accept button in the pop up window
+		Button acceptWindowButton = new Button("Accept");
+		acceptWindowButton.setBounds(9, 215, 84, 28);
+		acceptWindowButton.setActionCommand("acceptWindowButton");//Exits out of the add button window
+		acceptWindowButton.addActionListener(new ButtonListener());
+		AddButtonWindow.PARENT.getContentPane().add(acceptWindowButton);
+
+		// Cancel button in pop up window
+		Button cancelWindowButton = new Button("Cancel");
+		cancelWindowButton.setBounds(408, 215, 84, 28);
+		cancelWindowButton.setActionCommand("cancelWindowButton");
+		cancelWindowButton.addActionListener(new ButtonListener());
+		AddButtonWindow.PARENT.getContentPane().add(cancelWindowButton);
+
+		Label courseLabel = new Label("Full Course Name");
+		courseLabel.setBounds(190, 10, 117, 17);
+		AddButtonWindow.PARENT.getContentPane().add(courseLabel);
+
+
+
 		Button removeButton = new Button("Remove");
 		removeButton.setBackground(Color.WHITE);
 		removeButton.setBounds(228, 408, 102, 28);
@@ -295,14 +310,17 @@ public class Main extends JFrame {
 		Button checkButton = new Button("Check");
 		checkButton.setBounds(413, 368, 117, 28);
 		profilePanel.add(checkButton);
-		
+
 		JButton profileSaveButton = new JButton("Save Profile");
 		profileSaveButton.setBounds(413, 408, 117, 29);
 		profilePanel.add(profileSaveButton);
-		contentPanel.add(newProfilePanel, "BLANK");
+
+		contentPanel.add(schedulePanel,"SCHEDULE"); //Schedule panel
 		contentPanel.add(aboutPanel, "ABOUT");
 		contentPanel.add(instructionsPanel, "INSTRUCTIONS");
+
 		mainPanel.add(contentPanel, BorderLayout.CENTER);
+		//END PROFILE PANEL===================================
 
 		// pack and display the main GUI
 		pack();
@@ -381,11 +399,16 @@ public class Main extends JFrame {
 			// add button clicked, find add file to file loader
 
 			if(e.getActionCommand().equalsIgnoreCase("cancelWindowButton")){
-			
-				AddButtonWindow.PARENT.setVisible(false);
 				
+				AddButtonWindow.PARENT.setVisible(false);
+			
 			}
 
+			if(e.getActionCommand().equalsIgnoreCase("acceptWindowButton")){
+			
+				AddButtonWindow.PARENT.setVisible(false);
+			
+			}
 			if(e.getActionCommand().equalsIgnoreCase("addWindowButton")){
 				String result = "";
 				switch (state) {
@@ -432,26 +455,7 @@ public class Main extends JFrame {
 					return;
 				}
 				String result = "";
-				switch (TopBar.state) {
-
-				case COURSE : 
-
-					result = dataObject.readNewCourseData();
-					break;
-				case REQUIREMENT :
-					//add code
-					break;
-				case SCHEDULE : 
-					//add code
-					break;
-				case NULL :
-					//add code	
-					break;
-				case ERROR :
-					//add code	
-					break;
-
-				}
+				result = dataObject.readNewCourseData();
 
 				if (!result.replace("Error", "").equals(result))
 					alert(result, false);
@@ -499,6 +503,8 @@ public class Main extends JFrame {
 			clearAlert();
 			if (e.getSource() == sideBar.profileButton)
 				contentSwitcher.show(contentPanel, "PROFILE");
+			if(e.getSource() == sideBar.scheduleButton)
+				contentSwitcher.show(contentPanel, "SCHEDULE");
 			if (e.getSource() == sideBar.aboutButton)
 				contentSwitcher.show(contentPanel, "ABOUT");
 			if (e.getSource() == sideBar.instructionsButton)
