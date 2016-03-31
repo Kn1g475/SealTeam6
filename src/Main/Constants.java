@@ -30,7 +30,7 @@ public class Constants {
 	public static final Color CONTENT_BACKGROUND_COLOR = Color.WHITE;
 
 	// TITLE INFORMATION
-	public static final String TITLE = "Conflict Catcher";
+	public static final String TITLE = "Schedule Builder";
 	public static final Font TITLE_FONT = new Font("Arial", Font.PLAIN,
 			TOP_ROW_HEIGHT / 2);;
 	public static final String MIAMI_ICON_NAME = "img/PlanB.png";
