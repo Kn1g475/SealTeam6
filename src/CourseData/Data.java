@@ -28,7 +28,7 @@ public class Data {
 		oxfClassList = new ArrayList<>();
 		hamClassList = new ArrayList<>();
 		midClassList = new ArrayList<>();
-		degreeRequirements = new ArrayList();
+		degreeRequirements = new ArrayList<>();
 		updateCurrentList("Oxford");
 		finalsCategories = new ArrayList<>();
 	}

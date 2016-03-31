@@ -7,10 +7,15 @@ public class Profile {
 	private List<Course> takenCourses;
 	private List<Class> schedule;
 	private String uniqueID;
+	private List<Requirement> major;
 	
 	public Profile() {
 		takenCourses = new ArrayList<>();
 		schedule = new ArrayList<>();	
+	}
+	
+	public Profile(Data data) {
+		super();
 	}
 	/**
 	 * Gets a copy of the taken courses

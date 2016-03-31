@@ -49,7 +49,7 @@ public class DatabaseConnector {
 		String[] columnNames = Constants.COLUMNS_OF_DATABASE.split(",");
 		String[] rowArgs = new String[columnNames.length];
 		List<Class> classes = new ArrayList<>();
-		
+		List<Class> labs = new ArrayList<>();
 		ReadRow: while (resultSet.next()) {
 			for (int i = 0; i < columnNames.length; i++) {
 				rowArgs[i] = resultSet.getString(columnNames[i]);
@@ -69,13 +69,15 @@ public class DatabaseConnector {
 			}
 			// Note: meeting days is not part of checking equality
 			Class tempClass = new Class(rowArgs);
-			if(classes.contains(tempClass))
-				classes.add(tempClass);
-			else {
-				// if duplicate class has different meeting times, add them
-				classes.get(classes.indexOf(tempClass)).addMeetingDays(rowArgs[5]);
-				System.out.printf("Note: Duplicate class detected, added meeting days and skipped: %s\n", tempClass);
+			if(rowArgs[10].equals("2")){
+				labs.add(tempClass);
+				System.out.printf("Note: Lab detected: %s\n", dump(rowArgs));
 			}
+			classes.add(tempClass);
+		}
+		//Adds labs to their respective classes.
+		for(Class lab : labs) {
+			classes.get(classes.indexOf(lab)).addLab(lab);
 		}
 		resultSet.close();
 		return classes;
