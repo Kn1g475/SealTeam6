@@ -12,9 +12,9 @@ import Exceptions.InvalidClassException;
 import Main.Constants;
 
 public class DatabaseConnector {
-	private final String USER_NAME = "levysj-r";
-	private final String PASSWORD = "q8mYPAyUAHeeByQ4";
-	private final String DATABASE = "jdbc:mysql://134.53.148.193/levysj";
+	private static final String USER_NAME = "levysj-r";
+	private static final String PASSWORD = "q8mYPAyUAHeeByQ4";
+	private static final String DATABASE = "jdbc:mysql://134.53.148.193/levysj";
 	
 	private Connection connector;
 	private Statement statement;
