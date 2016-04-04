@@ -14,9 +14,9 @@ public class Class implements Comparable<Class> {
 	public int startTime; //Start time of the class.
 	public int endTime; //End time of the class.
 	private Class lab;
-	
+
 	private Instructor instructor; //Instructor of the class.
-	
+
 	public boolean hasConflict = false; //Boolean that determines if there is a conflicting final.
 	private int meetingDays; //Days that the classes meet.
 	private String location;
@@ -53,7 +53,7 @@ public class Class implements Comparable<Class> {
 	public Class(String[] lineArgs) {
 		this(new Course(lineArgs[1], lineArgs[4], lineArgs[2]),new Instructor(lineArgs[9]),lineArgs[0],
 				lineArgs[3],Integer.parseInt(lineArgs[6]),Integer.parseInt(lineArgs[7]),lineArgs[5]);
-		
+
 		if (lineArgs[0].contains("H "))
 			this.location = "Hamilton";
 		else if(lineArgs[0].contains("M "))
@@ -61,16 +61,50 @@ public class Class implements Comparable<Class> {
 		else
 			this.location = "Oxford";
 	}
-	
+
+	public boolean doesOverlap(Class test) {
+		if(this.dayOverlap(test.meetingDays))
+			return false;
+		else {
+			if(getLab() != null && test.getLab() != null) {
+				return (test.startTime >= this.startTime && test.startTime <= this.endTime) 
+						|| (test.endTime >= this.startTime && test.endTime <= this.endTime)
+						|| (test.getLab().startTime >= this.startTime && test.getLab().startTime <= this.endTime)
+						|| (test.getLab().endTime >= this.startTime && test.getLab().endTime <= this.endTime)
+						|| (test.startTime >= this.getLab().startTime && test.startTime <= this.getLab().endTime)
+						|| (test.endTime >= this.getLab().startTime && test.endTime <= this.getLab().endTime)
+						|| (test.getLab().startTime >= getLab().startTime && test.getLab().startTime <= getLab().endTime)
+						|| (test.getLab().endTime >= getLab().startTime && test.getLab().endTime <= getLab().endTime);
+			} else if(getLab() == null && test.getLab() != null) {
+				return (test.startTime >= this.startTime && test.startTime <= this.endTime) 
+						|| (test.endTime >= this.startTime && test.endTime <= this.endTime)
+						|| (test.getLab().startTime >= this.startTime && test.getLab().startTime <= this.endTime)
+						|| (test.getLab().endTime >= startTime && test.getLab().endTime <= endTime);
+			} else if(getLab() != null && test.getLab() == null) {
+				return (test.startTime >= this.startTime && test.startTime <= this.endTime) 
+						|| (test.endTime >= this.startTime && test.endTime <= this.endTime)
+						|| (test.startTime >= this.getLab().startTime && test.startTime <= this.getLab().endTime)
+						|| (test.endTime >= this.getLab().startTime && test.endTime <= this.getLab().endTime);
+			} else {
+				return (test.startTime >= this.startTime && test.startTime <= this.endTime) 
+						|| (test.endTime >= this.startTime && test.endTime <= this.endTime);
+			}
+		}
+	}
+
+	public Class getLab() {
+		return lab;
+	}
+
 	public void addLab(Class lab) {
 		this.lab = lab;
 		addMeetingDays(lab.getMeetingDays());
 	}
-	
+
 	public String getLocation() {
 		return location;
 	}
-	
+
 	/**
 	 * Accesser method for the course.
 	 * @return Course
@@ -94,7 +128,7 @@ public class Class implements Comparable<Class> {
 	public Category getCategory() {
 		return this.category;
 	}
-	
+
 	/**
 	 * Checks if the times and days of the category matches with the class.
 	 * @param cat
@@ -103,7 +137,7 @@ public class Class implements Comparable<Class> {
 	public boolean matches(Category cat){
 		return cat.matches(this);
 	}
-	
+
 	// Note: Equals does not include meeting days. A class is still equal if
 	// they have all the same properties but have different meeting days
 	/**
@@ -131,7 +165,7 @@ public class Class implements Comparable<Class> {
 		return String.format("%s with %s from %d to %d on %s with final at %s(%s)", 
 				course.toString(section),instructor,startTime,endTime,getMeetingDays(),getFinalInfo(),CRN_Number);
 	}
-	
+
 	/**
 	 * ToString method that returns all information except for the infor of the final.
 	 * @return
@@ -144,7 +178,7 @@ public class Class implements Comparable<Class> {
 						instructor.firstName, CRN_Number);
 
 	}
-	
+
 	/**
 	 * Gets the final meeting times of the class if the class has a category.
 	 * @return String of the time and day the final for the class is unless it does not have a category.
@@ -155,7 +189,7 @@ public class Class implements Comparable<Class> {
 		else
 			return "NO FINAL SET";
 	}
-	
+
 	/**
 	 * Checks to see of two meeting times are at the same time
 	 */
@@ -163,6 +197,9 @@ public class Class implements Comparable<Class> {
 		return (this.meetingDays & m) == this.meetingDays;
 	}
 	
+	private boolean dayOverlap (int m) {
+		return (this.meetingDays & m) != 0;
+	}
 	/**
 	 * Adds the days that the classes meets in the constructor.
 	 * @param days String of days that the classes meets.
