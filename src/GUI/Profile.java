@@ -88,7 +88,7 @@ public class Profile extends JPanel {
 		currentSemesterBox.addItem("Select Current Semester");
 		add(currentSemesterBox);
 		
-		JLabel lblNewLabel = new JLabel("Create Your Own Profile!");
+		JLabel lblNewLabel = new JLabel("Create Your Own Profile");
 		lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 27));
 		lblNewLabel.setBounds(169, 20, 341, 64);
 		add(lblNewLabel);
