@@ -25,117 +25,76 @@ import java.awt.event.FocusListener;
 @SuppressWarnings("serial")
 public class Profile extends JPanel {
 	private AddCourseState state = AddCourseState.TAKEN;
-	private JTextField txtUniqueId;
-	private JRadioButton rdbtnTaken, rdbtnDesired;
+	private JTextField uniqueIDTextField;
 	/**
 	 * Creates the profile panel
 	 */
 	public Profile() {
+		setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		//Create a blank profile panel
 		setBackground(Constants.CONTENT_BACKGROUND_COLOR);
 		setLayout(null);
-		JLabel about = new JLabel(Constants.PROFILE);// Constants.ABOUT);
-		add(about);
-
-		// textField for students Unique ID
-		txtUniqueId = new JTextField();
-		txtUniqueId.addFocusListener(new FocusListener() {
+		
+		uniqueIDTextField = new JTextField();
+		uniqueIDTextField.setText("Unique ID");
+		uniqueIDTextField.addFocusListener(new FocusListener() {
 			public void focusGained(FocusEvent e) {
-				txtUniqueId.setText("");
+				uniqueIDTextField.setText("");
 			}
 			public void focusLost(FocusEvent e) {
-				txtUniqueId.setText(txtUniqueId.getText().equals("") ? "Unique ID" : txtUniqueId.getText());
+				uniqueIDTextField.setText(uniqueIDTextField.getText().equals("") ? "Unique ID" : uniqueIDTextField.getText());
+				revalidate();
 			}
 
 		});
-		txtUniqueId.setText("Unique ID");
-		txtUniqueId.setBounds(94, 43, 134, 28);
-		add(txtUniqueId);
-		txtUniqueId.setColumns(10);
-
-		// List to choose courses taken
-		List list = new List();
-		list.setBounds(94, 112, 414, 89);
-		list.add("CSE 174 ");
-		list.add("CSE 271");
-		add(list);
-
-		// Scroll Bar for courses taken
-		Scrollbar scrollbar = new Scrollbar();
-		scrollbar.setBounds(493, 112, 15, 89);
-		add(scrollbar);
-
-		// Label for the list of classes taken
-		JLabel classesTakenLabel = new JLabel("Classes Taken");
-		classesTakenLabel.setBounds(235, 90, 95, 16);
-		add(classesTakenLabel);
-
-		// List for Desired Classes
-		List desiredClassesList = new List();
-		desiredClassesList.setBounds(94, 266, 414, 89);
-		desiredClassesList.add("CSE 102");
-		desiredClassesList.add("CSE 278");
-		add(desiredClassesList);
-
-		// Drop down box for Major
-		JComboBox comboBox = new JComboBox();
-		comboBox.addItem("Major");
-		comboBox.addItem("Computer Science");
-		comboBox.addItem("Software Engineering");
-		comboBox.setName("Major");
-		comboBox.setBounds(374, 45, 134, 26);
-		comboBox.revalidate();
-		add(comboBox);
-
-		//scroll bar for desired classes
-		Scrollbar scrollbarDesiredClasses = new Scrollbar();
-		scrollbarDesiredClasses.setBounds(493, 266, 15, 89);
-		add(scrollbarDesiredClasses);
-
-		//Label for desired classes list
-		JLabel desiredClassesLabel = new JLabel("Desired Classes");
-		desiredClassesLabel.setBounds(235, 251, 106, 16);
-		add(desiredClassesLabel);
-
-		// Radio buttons ================================================
-		rdbtnTaken = new JRadioButton("Taken");
-		rdbtnTaken.setBounds(61, 368, 78, 28);
-		rdbtnTaken.setActionCommand("rdbtnTaken");
-		rdbtnTaken.setSelected(true);
-		rdbtnTaken.addActionListener(new RadioEvent());
-		add(rdbtnTaken);
-
-
-		rdbtnDesired = new JRadioButton("Desired");
-		rdbtnDesired.setBounds(61, 408, 80, 26);
-		rdbtnDesired.setActionCommand("rdbtnDesired");
-		rdbtnDesired.setSelected(false);
-		rdbtnDesired.addActionListener(new RadioEvent());
-		add(rdbtnDesired);
+		uniqueIDTextField.setBounds(250, 96, 150, 28);
+		add(uniqueIDTextField);
+		
+		uniqueIDTextField.setColumns(10);
+		
+		JComboBox majorBox = new JComboBox();
+		majorBox.setBackground(Color.WHITE);
+		majorBox.setToolTipText("");
+		majorBox.setBounds(39, 147, 203, 27);
+		majorBox.addItem("Select Your Major");
+		majorBox.addItem("Computer Science");
+		majorBox.addItem("Software Engineering");
+		add(majorBox);
+		
+		JComboBox statusBox = new JComboBox();
+		statusBox.setBounds(400, 147, 140, 27);
+		statusBox.addItem("Current Year");
+		statusBox.addItem("First Year");
+		statusBox.addItem("Second Year");
+		statusBox.addItem("Thrid Year");
+		statusBox.addItem("Fourth Year +");
+		add(statusBox);
+		
+		JSpinner spinner = new JSpinner();
+		spinner.setBounds(409, 233, 131, 28);
+		add(spinner);
+		
+		Label hoursLabel = new Label("Hours:");
+		hoursLabel.setAlignment(Label.RIGHT);
+		hoursLabel.setFont(new Font("Arial", Font.PLAIN, 17));
+		
+		hoursLabel.setBounds(329, 237, 70, 28);
+		add(hoursLabel);
+		
+		JComboBox currentSemesterBox = new JComboBox();
+		currentSemesterBox.setBounds(39, 233, 203, 28);
+		currentSemesterBox.addItem("Select Current Semester");
+		add(currentSemesterBox);
+		
+		JLabel lblNewLabel = new JLabel("Create Your Own Profile!");
+		lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 27));
+		lblNewLabel.setBounds(169, 20, 341, 64);
+		add(lblNewLabel);
 
 		// ========================!addButtonWindow!====================================
 		AddButtonWindow.PARENT.getContentPane().setPreferredSize(new Dimension(300, 300));
 		AddButtonWindow.PARENT.setResizable(false);
 		AddButtonWindow.PARENT.getContentPane().setLayout(null);
-
-		// Create a new window when the add button is clicked
-		Button addButton = new Button("Add");
-		addButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				AddButtonWindow.PARENT.setPreferredSize(new Dimension(500, 275));
-				AddButtonWindow.PARENT.setTitle("Add Course");
-				AddButtonWindow.PARENT.setLocation(450, 275);
-				AddButtonWindow.PARENT.pack();
-				AddButtonWindow.PARENT.setVisible(true);
-
-			}
-		});
-
-
-		addButton.setBackground(Color.WHITE);
-		addButton.setBounds(228, 368, 102, 28);
-		add(addButton);
 
 
 		JComboBox courseAddWindow = new JComboBox();
@@ -194,41 +153,8 @@ public class Profile extends JPanel {
 		courseLabel.setBounds(190, 10, 117, 17);
 		AddButtonWindow.PARENT.getContentPane().add(courseLabel);
 
-
-
-		Button removeButton = new Button("Remove");
-		removeButton.setBackground(Color.WHITE);
-		removeButton.setBounds(228, 408, 102, 28);
-		add(removeButton);
-
-		Button checkButton = new Button("Check");
-		checkButton.setBounds(413, 368, 117, 28);
-		add(checkButton);
-
-		JButton profileSaveButton = new JButton("Save Profile");
-		profileSaveButton.setBounds(413, 408, 117, 29);
-		add(profileSaveButton);
-
 		//END PROFILE PANEL===================================
 
-	}
-
-	private class RadioEvent implements ActionListener {
-
-		public void actionPerformed(ActionEvent e) {
-			if(e.getActionCommand().equalsIgnoreCase("rdbtnTaken")){
-				state = AddCourseState.TAKEN;
-				rdbtnTaken.setSelected(true);
-				rdbtnDesired.setSelected(false);
-			}
-
-			if(e.getActionCommand().equalsIgnoreCase("rdbtnDesired")){
-				state = AddCourseState.DESIRED;
-				rdbtnDesired.setSelected(true);
-				rdbtnTaken.setSelected(false);
-			}
-
-		}
 	}
 
 	private class ButtonEvent implements ActionListener {
