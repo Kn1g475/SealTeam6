@@ -2,18 +2,31 @@
 package GUI;
 
 
-import javax.swing.*;
 
-import java.awt.*;
+
+
 
 import Main.AddCourseState;
 import Main.Constants;
 
+import java.awt.Button;
 import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Label;
+import java.awt.List;
+import java.awt.Scrollbar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 
 /**
  * This panel one of the content windows that get switched by the Main GUI. Its

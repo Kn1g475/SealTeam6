@@ -29,8 +29,8 @@ import Main.Constants;
  */
 @SuppressWarnings("serial")
 public class Report extends JPanel {
-	Report report = this;
-	CardLayout contentSwitcher;
+	private Report report = this;
+	private CardLayout contentSwitcher;
 
 	/**
 	 * A new report is generated from a given data object. Any changes to the
@@ -143,7 +143,7 @@ public class Report extends JPanel {
 	 * @author matt
 	 * 
 	 */
-	public class ReportSwitcher implements ActionListener {
+	private class ReportSwitcher implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			contentSwitcher.show(report, e.getActionCommand());
@@ -156,7 +156,7 @@ public class Report extends JPanel {
 	 * @author matt
 	 * 
 	 */
-	public class BackButtonListener implements ActionListener {
+	private class BackButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			contentSwitcher.show(report, "MAIN");

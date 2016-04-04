@@ -266,7 +266,7 @@ public class Main extends JFrame {
 	 */
 
 	
-	public class SideButtonListener extends MouseAdapter {
+	private class SideButtonListener extends MouseAdapter {
 		/**
 		 * Takes the action of a mouse click on a side bar button. Includes
 		 * logic to determine which label was clicked and respond appropriately.
