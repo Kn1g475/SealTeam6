@@ -29,6 +29,14 @@ import Main.Constants;
 public class Profile extends JPanel {
 	private AddCourseState state = AddCourseState.TAKEN;
 	private JTextField uniqueIDTextField;
+	JComboBox majorBox, statusBox, courseAddWindow, campusBox;
+	JSpinner spinner;
+	Label hoursLabel;
+	List listAddWindow;
+	Scrollbar scrollbarAddWindow;
+	Button acceptWindowButton, cancelWindowButton;
+	
+	
 	/**
 	 * Creates the profile panel
 	 */
@@ -55,7 +63,7 @@ public class Profile extends JPanel {
 		
 		uniqueIDTextField.setColumns(10);
 		
-		JComboBox majorBox = new JComboBox();
+		majorBox = new JComboBox();
 		majorBox.setToolTipText("");
 		majorBox.setBounds(39, 147, 203, 27);
 		majorBox.addItem("Select Your Major");
@@ -63,7 +71,7 @@ public class Profile extends JPanel {
 		majorBox.addItem("Software Engineering");
 		add(majorBox);
 		
-		JComboBox statusBox = new JComboBox();
+		statusBox = new JComboBox();
 		statusBox.setBounds(400, 147, 140, 27);
 		statusBox.addItem("Current Year");
 		statusBox.addItem("First Year");
@@ -72,11 +80,11 @@ public class Profile extends JPanel {
 		statusBox.addItem("Fourth Year +");
 		add(statusBox);
 		
-		JSpinner spinner = new JSpinner();
+		spinner = new JSpinner();
 		spinner.setBounds(409, 233, 131, 28);
 		add(spinner);
 		
-		Label hoursLabel = new Label("Hours:");
+		hoursLabel = new Label("Hours:");
 		hoursLabel.setAlignment(Label.RIGHT);
 		hoursLabel.setFont(new Font("Arial", Font.PLAIN, 17));
 		
@@ -99,7 +107,7 @@ public class Profile extends JPanel {
 		AddButtonWindow.PARENT.getContentPane().setLayout(null);
 
 
-		JComboBox courseAddWindow = new JComboBox();
+		courseAddWindow = new JComboBox();
 		courseAddWindow.setBounds(6, 6, 120, 27);
 
 		//HARD CODE For courses===========================
@@ -114,7 +122,7 @@ public class Profile extends JPanel {
 		//================================
 
 		//HARD CODE for the location box=============
-		JComboBox campusBox = new JComboBox();
+		campusBox = new JComboBox();
 		campusBox.setBounds(335, 6, 140, 27);
 		campusBox.addItem("Location");
 		campusBox.addItem("Oxford");
@@ -125,7 +133,7 @@ public class Profile extends JPanel {
 		//============================================
 
 		//HARD CODE for the course box=============================
-		List listAddWindow = new List();
+		listAddWindow = new List();
 		listAddWindow.setBounds(10, 39, 480, 170);
 		listAddWindow.add("Location |  CRN   | CourseTitle | Section | Professor | Time");
 		listAddWindow.add("   O     |  57409 |   CSE 201   |    B    | Ann Sobel | 11:30A.M - 12:50P.M");
@@ -133,19 +141,19 @@ public class Profile extends JPanel {
 		//==========================================================
 
 		//Add the scroll bar for the courses box
-		Scrollbar scrollbarAddWindow = new Scrollbar();
+		scrollbarAddWindow = new Scrollbar();
 		scrollbarAddWindow.setBounds(250, 39, 15, 170);
 		AddButtonWindow.PARENT.getContentPane().add(scrollbarAddWindow);
 
 		//Accept button in the pop up window
-		Button acceptWindowButton = new Button("Accept");
+		acceptWindowButton = new Button("Accept");
 		acceptWindowButton.setBounds(9, 215, 84, 28);
 		acceptWindowButton.setActionCommand("acceptWindowButton");//Exits out of the add button window
 		acceptWindowButton.addActionListener(new ButtonEvent());
 		AddButtonWindow.PARENT.getContentPane().add(acceptWindowButton);
 
 		// Cancel button in pop up window
-		Button cancelWindowButton = new Button("Cancel");
+		cancelWindowButton = new Button("Cancel");
 		cancelWindowButton.setBounds(408, 215, 84, 28);
 		cancelWindowButton.setActionCommand("cancelWindowButton");
 		cancelWindowButton.addActionListener(new ButtonEvent());
