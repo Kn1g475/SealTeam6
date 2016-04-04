@@ -2,31 +2,21 @@
 package GUI;
 
 
-
-
-
-
-import Main.AddCourseState;
-import Main.Constants;
-
-import java.awt.Button;
-import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.ComponentOrientation;
 import java.awt.Label;
-import java.awt.List;
-import java.awt.Scrollbar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
+import javax.swing.*;
+
+import java.awt.*;
+
+import com.sun.prism.paint.Color;
+
+import Main.AddCourseState;
+import Main.Constants;
 
 /**
  * This panel one of the content windows that get switched by the Main GUI. Its
@@ -66,7 +56,6 @@ public class Profile extends JPanel {
 		uniqueIDTextField.setColumns(10);
 		
 		JComboBox majorBox = new JComboBox();
-		majorBox.setBackground(Color.WHITE);
 		majorBox.setToolTipText("");
 		majorBox.setBounds(39, 147, 203, 27);
 		majorBox.addItem("Select Your Major");
