@@ -25,16 +25,16 @@ public class Profile {
 	 * Gets a copy of the taken courses
 	 * @return - a copy of the current taken courses
 	 */
-	public ArrayList<Course> getCoursesTaken() {
-		ArrayList<Course> copy = new ArrayList<>(takenCourses);
+	public List<Course> getCoursesTaken() {
+		List<Course> copy = new ArrayList<>(takenCourses);
 		return copy;
 	}
 	/**
 	 * Gets a copy of the schedule
 	 * @return - a copy of the current schedule
 	 */
-	public ArrayList<Class> getSchedule() {
-		ArrayList<Class> copy = new ArrayList<>(schedule);
+	public List<Class> getSchedule() {
+		List<Class> copy = new ArrayList<>(schedule);
 		return copy;
 	}
 	/**
@@ -48,8 +48,13 @@ public class Profile {
 	 * Adds a Class to a schedule
 	 * @param clas
 	 */
-	public void addClass(Class clas) {
-		schedule.add(clas);
+	public boolean addClass(Class clas) {
+		boolean check = false;
+		if (!checkTimeOverlap(clas)) {
+			schedule.add(clas);
+			check = true;
+		} 
+		return check;
 	}
 	/**
 	 * Removes a Course that has been taken
@@ -70,11 +75,18 @@ public class Profile {
 	
 	
 	public boolean checkFeasibility() {
-		return !checkTimeOverlap() || !checkPreReq();
+		return !checkPreReq();
 	}
 	
-	private boolean checkTimeOverlap() {
-		return false;
+	private boolean checkTimeOverlap(Class add) {
+		boolean test = false;
+		for (Class clas : schedule) {
+			if(clas.doesOverlap(add)) {
+				test = true;
+				break;
+			}
+		}
+		return test;
 	}
 	
 	private boolean checkPreReq() {
