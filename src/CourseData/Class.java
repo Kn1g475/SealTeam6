@@ -63,20 +63,33 @@ public class Class implements Comparable<Class> {
 	}
 
 	public boolean doesOverlap(Class test) {
-		if(!this.matchesMeetingTime(test.meetingDays))
+		if(this.dayOverlap(test.meetingDays))
 			return false;
 		else {
 			if(getLab() != null && test.getLab() != null) {
-
+				return (test.startTime >= this.startTime && test.startTime <= this.endTime) 
+						|| (test.endTime >= this.startTime && test.endTime <= this.endTime)
+						|| (test.getLab().startTime >= this.startTime && test.getLab().startTime <= this.endTime)
+						|| (test.getLab().endTime >= this.startTime && test.getLab().endTime <= this.endTime)
+						|| (test.startTime >= this.getLab().startTime && test.startTime <= this.getLab().endTime)
+						|| (test.endTime >= this.getLab().startTime && test.endTime <= this.getLab().endTime)
+						|| (test.getLab().startTime >= getLab().startTime && test.getLab().startTime <= getLab().endTime)
+						|| (test.getLab().endTime >= getLab().startTime && test.getLab().endTime <= getLab().endTime);
 			} else if(getLab() == null && test.getLab() != null) {
-
-			}else if(getLab() != null && test.getLab() == null) {
-
+				return (test.startTime >= this.startTime && test.startTime <= this.endTime) 
+						|| (test.endTime >= this.startTime && test.endTime <= this.endTime)
+						|| (test.getLab().startTime >= this.startTime && test.getLab().startTime <= this.endTime)
+						|| (test.getLab().endTime >= startTime && test.getLab().endTime <= endTime);
+			} else if(getLab() != null && test.getLab() == null) {
+				return (test.startTime >= this.startTime && test.startTime <= this.endTime) 
+						|| (test.endTime >= this.startTime && test.endTime <= this.endTime)
+						|| (test.startTime >= this.getLab().startTime && test.startTime <= this.getLab().endTime)
+						|| (test.endTime >= this.getLab().startTime && test.endTime <= this.getLab().endTime);
 			} else {
-				
+				return (test.startTime >= this.startTime && test.startTime <= this.endTime) 
+						|| (test.endTime >= this.startTime && test.endTime <= this.endTime);
 			}
 		}
-		return false;
 	}
 
 	public Class getLab() {
@@ -183,7 +196,10 @@ public class Class implements Comparable<Class> {
 	public boolean matchesMeetingTime(int m){
 		return (this.meetingDays & m) == this.meetingDays;
 	}
-
+	
+	private boolean dayOverlap (int m) {
+		return (this.meetingDays & m) != 0;
+	}
 	/**
 	 * Adds the days that the classes meets in the constructor.
 	 * @param days String of days that the classes meets.
