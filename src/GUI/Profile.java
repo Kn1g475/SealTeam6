@@ -82,6 +82,7 @@ public class Profile extends JPanel {
 		
 		spinner = new JSpinner();
 		spinner.setBounds(409, 233, 131, 28);
+		spinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 		add(spinner);
 		
 		hoursLabel = new Label("Hours:");
