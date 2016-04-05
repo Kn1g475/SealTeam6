@@ -98,6 +98,8 @@ public class Profile {
 		return false;
 	}
 	
-	
+	public boolean isFilledIn() {
+		return !uniqueID.isEmpty() && !curYear.isEmpty() && !major.isEmpty();
+	}
 	
 }

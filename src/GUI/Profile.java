@@ -24,6 +24,7 @@ import java.awt.event.FocusListener;
  */
 @SuppressWarnings("serial")
 public class Profile extends JPanel {
+	private CourseData.Profile prof;
 	private JTextField uniqueIDTextField;
 	JComboBox majorBox, statusBox, currentSemesterBox;
 	JSpinner spinner;
@@ -96,6 +97,9 @@ public class Profile extends JPanel {
 		add(profileTitleLabel);
 
 		
+	}
+	public CourseData.Profile getProfile() {
+		return prof;
 	}
 }
 
