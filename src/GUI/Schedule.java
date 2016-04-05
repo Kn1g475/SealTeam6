@@ -1,9 +1,11 @@
 package GUI;
 
 import javax.swing.BoxLayout;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import Main.AddCourseState;
 import Main.Constants;
 
 import javax.swing.JList;
@@ -12,7 +14,12 @@ import javax.swing.JButton;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
 
+import java.awt.Button;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Label;
+import java.awt.List;
+import java.awt.Scrollbar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -22,11 +29,16 @@ import java.awt.event.ActionListener;
 
 @SuppressWarnings("serial")
 public class Schedule extends JPanel{
-
+	private AddCourseState state = AddCourseState.TAKEN;
 	JList coursesTakenList, coursesDesiredList;
 	JLabel coursesTakenLabel, coursesDesiredLabel;
 	JRadioButton takenRadioButton, desiredRadioButton;
 	JButton addButton, removeButton, checkButton, saveButton;
+	JComboBox courseAddWindow, campusBox;
+	List listAddWindow;
+	Scrollbar scrollbarAddWindow;
+	Button acceptWindowButton, cancelWindowButton;
+	
 
 
 
@@ -69,6 +81,7 @@ public class Schedule extends JPanel{
 
 		addButton = new JButton("Add");
 		addButton.setBounds(249, 349, 117, 29);
+		addButton.addActionListener(new ButtonEvent());
 		add(addButton);
 
 		removeButton = new JButton("Remove");
@@ -82,16 +95,59 @@ public class Schedule extends JPanel{
 		saveButton = new JButton("Save");
 		saveButton.setBounds(463, 408, 117, 29);
 		add(saveButton);
+
+
+	}
+
+	private class ButtonEvent implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			AddClassWindow classWindow = new AddClassWindow();
+			AddCoursesWindow courseWindow = new AddCoursesWindow();
+//			
+//			win.show();
+			
+			if(e.getActionCommand().equalsIgnoreCase("Add")){
+				if (desiredRadioButton.isSelected()){
+					
+					classWindow.show();
+				}
+				if(takenRadioButton.isSelected()){
+					courseWindow.show();
+				}
+
+	
+				
+//				String result = "";
+//				switch (state) {
+//
+//				case TAKEN : 
+//					//add code
+//					break;
+//				case DESIRED :
+//					//add code
+//					break;
+//				case NULL :
+//					//add code	
+//					break;
+//				case ERROR :
+//					//add code	
+//					break;
+//				}
+			}	
+		}
 	}
 	private class RadioButton implements ActionListener {
 
-		
+
 		public void actionPerformed(ActionEvent e) {
 			if(e.getActionCommand().equalsIgnoreCase("Taken")) {
 				takenRadioButton.setSelected(true);
 				desiredRadioButton.setSelected(false);
 			}
 			if(e.getActionCommand().equalsIgnoreCase("Desired")) {
+				
 				desiredRadioButton.setSelected(true);
 				takenRadioButton.setSelected(false);
 			}
