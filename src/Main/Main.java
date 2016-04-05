@@ -74,7 +74,7 @@ public class Main extends JFrame {
 	JPanel schedulePanel;
 	JPanel instructionsPanel;
 	JPanel reportPanel;
-	JPanel profilePanel;
+	Profile profilePanel;
 	
 	
 
@@ -136,7 +136,7 @@ public class Main extends JFrame {
 		instructionsPanel = new Instructions();
 
 		contentPanel.add(profilePanel,"PROFILE");
-		contentPanel.add(schedulePanel,"SCHEDULE"); //Schedule panel
+		contentPanel.add(schedulePanel,"SCHEDULE"); 
 		contentPanel.add(aboutPanel, "ABOUT");
 		contentPanel.add(instructionsPanel, "INSTRUCTIONS");
 
@@ -277,12 +277,14 @@ public class Main extends JFrame {
 			if (e.getSource() == sideBar.profileButton)
 				contentSwitcher.show(contentPanel, "PROFILE");
 			if(e.getSource() == sideBar.scheduleButton)
+				if(profilePanel.allSelected() == true)
 				contentSwitcher.show(contentPanel, "SCHEDULE");
 			if (e.getSource() == sideBar.aboutButton)
 				contentSwitcher.show(contentPanel, "ABOUT");
 			if (e.getSource() == sideBar.instructionsButton)
 				contentSwitcher.show(contentPanel, "INSTRUCTIONS");
 			if (e.getSource() == sideBar.reportButton)
+				if(profilePanel.allSelected() == true)
 				contentSwitcher.show(contentPanel, "REPORT");
 		}
 	}

@@ -52,7 +52,6 @@ public class Profile extends JPanel {
 		});
 		uniqueIDTextField.setBounds(250, 96, 150, 28);
 		add(uniqueIDTextField);
-		
 		uniqueIDTextField.setColumns(10);
 		
 		majorBox = new JComboBox();
@@ -88,13 +87,31 @@ public class Profile extends JPanel {
 		currentSemesterBox = new JComboBox();
 		currentSemesterBox.setBounds(39, 233, 203, 28);
 		currentSemesterBox.addItem("Select Current Semester");
+		currentSemesterBox.addItem("Fall 2016");
 		add(currentSemesterBox);
 		
-		profileTitleLabel = new JLabel("Create Your Own Profile!");
+		profileTitleLabel = new JLabel("Create Your Own Profile");
 		profileTitleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 27));
 		profileTitleLabel.setBounds(169, 20, 341, 64);
 		add(profileTitleLabel);
 
+		
+	}
+	
+	public boolean allSelected(){
+		
+		
+		String uniqueID = uniqueIDTextField.getText();
+		String major =  (String) majorBox.getSelectedItem();
+		String status = (String) statusBox.getSelectedItem();
+		String currentSemester = (String) currentSemesterBox.getSelectedItem();
+		
+		
+		if(uniqueID.equals("") || uniqueID.equals("uniqueID")) return false;
+		if(major.equals(majorBox.getItemAt(0))) return false;
+		if(status.equals(statusBox.getItemAt(0))) return false;
+		if(currentSemester.equals(currentSemesterBox.getItemAt(0))) return false;
+		else return true; 
 		
 	}
 }
