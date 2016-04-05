@@ -21,7 +21,7 @@ import javax.swing.JPanel;
 
 import CourseData.Data;
 import GUI.About;
-import GUI.AddButtonWindow;
+import GUI.AddClassWindow;
 import GUI.Instructions;
 import GUI.Profile;
 import GUI.Report;
@@ -266,7 +266,7 @@ public class Main extends JFrame {
 	 */
 
 	
-	private class SideButtonListener extends MouseAdapter {
+	public class SideButtonListener extends MouseAdapter {
 		/**
 		 * Takes the action of a mouse click on a side bar button. Includes
 		 * logic to determine which label was clicked and respond appropriately.
