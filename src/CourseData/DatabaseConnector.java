@@ -20,7 +20,7 @@ public class DatabaseConnector {
 	private Statement statement;
 	private ResultSet resultSet;
 	public DatabaseConnector() throws SQLException{
-		connector = DriverManager.getConnection("DATABASE","USER_NAME","PASSWORD");
+		connector = DriverManager.getConnection(DATABASE,USER_NAME,PASSWORD);
 		statement = connector.createStatement();
 	}
 	

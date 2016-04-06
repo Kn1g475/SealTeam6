@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 
 import CourseData.Course;
 import CourseData.Data;
+import CourseData.Class;
 import Main.Constants;
 
 /**
@@ -31,29 +32,26 @@ import Main.Constants;
  */
 @SuppressWarnings("serial")
 public class MainGUI extends JFrame {
-
+	Data data;
 	File selectedFile;
 	
-	List<Class> currentSemester;
-	List<Course> courses;
+	
+	private List<Course> courses;
 	
 	private JPanel mainPanel;
 
 	private CardLayout contentSwitcher;
 	private JPanel contentPanel;
 
-	TopBar topBar;
-	SideBar sideBar;
+	private TopBar topBar;
+	private SideBar sideBar;
 
-	JPanel aboutPanel;
-	Schedule schedulePanel;
-	JPanel instructionsPanel;
-	JPanel reportPanel;
-	ProfileGUI profilePanel;
+	private JPanel aboutPanel;
+	private Schedule schedulePanel;
+	private JPanel instructionsPanel;
+	private JPanel reportPanel;
+	private ProfileGUI profilePanel;
 	
-	
-
-	public String semester;
 
 	/**
 	 * The main constructor. Creates the GUI and initializes the program.
@@ -61,9 +59,8 @@ public class MainGUI extends JFrame {
 	 * @throws Exception
 	 */
 	public MainGUI() {
-		semester = "";
+		data = new Data();
 		
-		currentSemester = new ArrayList<>();
 		courses = new ArrayList<>();
 		
 		
@@ -221,7 +218,6 @@ public class MainGUI extends JFrame {
 					return;
 				}
 				String result = "";
-				//result = dataObject.readNewCourseData();
 
 				if (!result.replace("Error", "").equals(result))
 					alert(result, false);
@@ -259,6 +255,9 @@ public class MainGUI extends JFrame {
 					schedulePanel.getProfile().setMajor(profilePanel.major);
 					schedulePanel.getProfile().setUniqueID(profilePanel.uniqueId);
 					schedulePanel.getProfile().setHours(profilePanel.hours);
+					data.readNewCourseData(profilePanel.semester);
+					//data.readNewRequirementData();
+					schedulePanel.classes = data.currentList;
 					contentSwitcher.show(contentPanel, "SCHEDULE");
 				}
 			if (e.getSource() == sideBar.aboutButton)

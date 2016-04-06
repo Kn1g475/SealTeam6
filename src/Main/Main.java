@@ -5,7 +5,7 @@ import GUI.MainGUI;
 
 public class Main{
 	public static void main(String[] args) {
-		Data data = new Data();
-		new MainGUI();
+		MainGUI win = new MainGUI();
+		
 	}// end main
 }

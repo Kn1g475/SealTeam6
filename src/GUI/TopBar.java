@@ -27,14 +27,11 @@ import java.awt.Cursor;
  */
 @SuppressWarnings("serial")
 public class TopBar extends JPanel {
-	
+
 	public static FileState state = FileState.COURSE;
-	
+
 	public JLabel fileLabel, errorLabel;
 	public JButton addButton, submitButton, deleteButton;
-	private JRadioButton scheduleRadioButton;
-	private JRadioButton requirementsRadioButton;
-	private JRadioButton courseRadioButton;
 
 	/**
 	 * Creates a new top bar object, takes in a listener class so that this
@@ -70,23 +67,23 @@ public class TopBar extends JPanel {
 		JPanel fileButtons = new JPanel();
 		add(fileButtons);
 		fileButtons.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-		
-				addButton = new JButton("Add File");
-				addButton.setBounds(86, 5, 95, 29);
-				addButton.setActionCommand("addButton");
-				addButton.addActionListener(buttonListener);
-				
-						deleteButton = new JButton("Remove");
-						deleteButton.setBounds(239, 5, 93, 29);
-						deleteButton.setActionCommand("deleteButton");
-						deleteButton.setEnabled(false);
-						deleteButton.addActionListener(buttonListener);
-						
-								submitButton = new JButton("Submit");
-								submitButton.setBounds(386, 5, 88, 29);
-								submitButton.setActionCommand("submitButton");
-								submitButton.setEnabled(false);
-								submitButton.addActionListener(buttonListener);
+
+		addButton = new JButton("Add File");
+		addButton.setBounds(86, 5, 95, 29);
+		addButton.setActionCommand("addButton");
+		addButton.addActionListener(buttonListener);
+
+		deleteButton = new JButton("Remove");
+		deleteButton.setBounds(239, 5, 93, 29);
+		deleteButton.setActionCommand("deleteButton");
+		deleteButton.setEnabled(false);
+		deleteButton.addActionListener(buttonListener);
+
+		submitButton = new JButton("Submit");
+		submitButton.setBounds(386, 5, 88, 29);
+		submitButton.setActionCommand("submitButton");
+		submitButton.setEnabled(false);
+		submitButton.addActionListener(buttonListener);
 		fileButtons.setLayout(null);
 
 
@@ -107,5 +104,5 @@ public class TopBar extends JPanel {
 		fileLabel.setFont(Constants.SMALL_FONT);
 		fileLabel.setLocation(getX(), 50);
 	}
-	
+
 }

@@ -114,7 +114,7 @@ public class ProfileGUI extends JPanel {
 				curYear.equals(statusBox.getItemAt(0)) || semester.equals(currentSemesterBox.getItemAt(0))) 
 			return false;
 		else {
-			
+			semester = "CSE_Course_Schedule_" + semester.replace(" ", "_");
 			return true; 
 		}
 	}

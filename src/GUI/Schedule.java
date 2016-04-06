@@ -14,6 +14,8 @@ import javax.swing.JButton;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
 
+import CourseData.Course;
+import CourseData.Class;
 import CourseData.Profile;
 
 import java.awt.Button;
@@ -23,11 +25,14 @@ import java.awt.Scrollbar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import java.util.ArrayList;
+
 @SuppressWarnings("serial")
 public class Schedule extends JPanel{
 	private Profile profile;
 	private AddCourseState state = AddCourseState.TAKEN;
-	JList coursesTakenList, coursesDesiredList;
+	JList<Course> coursesTakenList;
+	JList<Class> coursesDesiredList;
 	JLabel coursesTakenLabel, coursesDesiredLabel;
 	JRadioButton takenRadioButton, desiredRadioButton;
 	JButton addButton, removeButton, checkButton, saveButton;
@@ -36,9 +41,14 @@ public class Schedule extends JPanel{
 	Scrollbar scrollbarAddWindow;
 	Button acceptWindowButton, cancelWindowButton;
 	
+	public java.util.List<Course> courses;
+	public java.util.List<Class> classes;
 
 	public Schedule() {
 		profile = new Profile();
+		courses = new ArrayList<>();
+		classes = new ArrayList<>();
+		
 		setBorder(new CompoundBorder());
 		setBackground(Constants.CONTENT_BACKGROUND_COLOR);
 		setLayout(null);
@@ -100,18 +110,14 @@ public class Schedule extends JPanel{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			AddClassWindow classWindow = new AddClassWindow();
-			AddCoursesWindow courseWindow = new AddCoursesWindow();
-//			
-//			win.show();
-			
 			if(e.getActionCommand().equalsIgnoreCase("Add")){
 				if (desiredRadioButton.isSelected()){
-					
-					classWindow.show();
+					AddClassWindow classWindow = new AddClassWindow(classes);
+					if (classWindow.selected != null && !profile.getCoursesTaken().contains(classWindow.selected))
+						profile.addClass(classWindow.selected);
 				}
 				if(takenRadioButton.isSelected()){
-					courseWindow.show();
+					AddCoursesWindow courseWindow = new AddCoursesWindow();
 				}
 			}	
 		}

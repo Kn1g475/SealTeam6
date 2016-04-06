@@ -47,7 +47,7 @@ public class Data {
 	public String readNewRequirementData() {
 		try{
 			DatabaseConnector connector= new DatabaseConnector();
-			degreeRequirements.addAll(connector.getRequrements("SELECT " + Constants.COLUMNS_IN_DATABASE + "FROM CSE_Requirements WHERE 1"));
+			degreeRequirements.addAll(connector.getRequrements("SELECT " + Constants.COLUMNS_IN_REQUIREMENTS + "FROM CSE_Requirements WHERE 1"));
 			sortClasses();
 			connector.close();
 		} catch (InvalidClassException e) {
@@ -67,12 +67,13 @@ public class Data {
 	 * @param dataFile
 	 * @return
 	 */
-	public String readNewCourseData() {
+	public String readNewCourseData(String table) {
 		try{
 			DatabaseConnector connector= new DatabaseConnector();
-			allClassList.addAll(connector.getClasses("SELECT " + Constants.COLUMNS_IN_DATABASE + "FROM CSE_Course_Schedule_Spring_2016 WHERE 1"));
+			allClassList.addAll(connector.getClasses("SELECT " + Constants.COLUMNS_IN_DATABASE + "FROM " + table + " WHERE 1"));
 			sortClasses();
 			connector.close();
+			setCategories();
 		} catch (InvalidClassException e) {
 			e.printStackTrace();
 			return e.getMessage();

@@ -18,7 +18,7 @@ public class Course implements Comparable<Course> {
 	 * @param courseNumber Number of the course.
 	 */
 	public Course(String subject, String title, String courseNumber) {
-		if (subject == null || title == "" || courseNumber == "") {
+		if (subject == "" /*|| title == ""*/ || courseNumber == "") {
 			System.err.println("Error: Invalid input sent to Course constructor");
 			throw new IllegalArgumentException();
 		}
