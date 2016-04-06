@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collections;
+import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -17,7 +18,7 @@ import javax.swing.JTextPane;
 
 import CourseData.Category;
 import CourseData.Class;
-import CourseData.Data;
+import CourseData.Profile;
 import Main.Constants;
 
 /**
@@ -38,17 +39,16 @@ public class Report extends JPanel {
 	 * 
 	 * @param dataObject
 	 */
-	public Report(Data dataObject) {
+	public Report(Profile profile) {
 		setBackground(Constants.CONTENT_BACKGROUND_COLOR);
-		if (dataObject.currentList.isEmpty()) {
+		if (profile.getSchedule().isEmpty()) {
 			this.add(new JLabel("No data to report on"));
 			return;
 		}
 		// Processes the data object to ensure all data is up to date for the
 		// report
 		try {
-			dataObject.setCategories();
-			dataObject.findConflicts();
+			profile.findConflicts();
 		} catch (Exception e) {
 			this.add(new JLabel("An Error occured searching for conflicts within the file"));
 			return;
@@ -82,7 +82,7 @@ public class Report extends JPanel {
 
 			JPanel finalsOfWeek = new JPanel(new FlowLayout(FlowLayout.LEFT));
 			finalsOfWeek.setBackground(Constants.CONTENT_BACKGROUND_COLOR);
-			for (Category cat : dataObject.finalsCategories) {
+			/*for (Category cat : dataObject.finalsCategories) {
 				if (cat.finalDay.equalsIgnoreCase(days[i])) {
 					JButton day = new JButton(String.format("%s%s", Constants.timeToString(cat.finalTime), ((cat.hasConflicts) ? "**" : "")));
 					if (cat.hasConflicts)
@@ -92,13 +92,13 @@ public class Report extends JPanel {
 
 					finalsOfWeek.add(day);
 				}
-			}
+			}*/
 			mainReport.add(finalsOfWeek);
 		}
 		add(mainReport, "MAIN");
 
 		// make a panel for each final exam time and add them to the content switcher.
-		for (Category cat : dataObject.finalsCategories) {
+		/*for (Category cat : dataObject.finalsCategories) {
 			JTextPane catPanel = new JTextPane();
 			catPanel.setEditable(false);
 			catPanel.setContentType("text/html");
@@ -134,7 +134,7 @@ public class Report extends JPanel {
 			paneWrapper.add(backButtonHolder, BorderLayout.SOUTH);
 
 			add(paneWrapper, cat.toString());
-		}
+		}*/
 	}
 
 	/**

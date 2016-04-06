@@ -1,19 +1,21 @@
 
 package GUI;
 
-
-import javax.swing.*;
-
-import java.awt.*;
-
-import Main.AddCourseState;
 import Main.Constants;
 
-import java.awt.CardLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Color;
+import java.awt.ComponentOrientation;
+import java.awt.Font;
+import java.awt.Label;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 
 /**
  * This panel one of the content windows that get switched by the Main GUI. Its
@@ -24,11 +26,14 @@ import java.awt.event.FocusListener;
  */
 @SuppressWarnings("serial")
 public class ProfileGUI extends JPanel {
+	
+	public String semester, major, uniqueId, curYear;
+	public int hours;
 	private JTextField uniqueIDTextField;
-	JComboBox majorBox, statusBox, currentSemesterBox;
-	JSpinner spinner;
-	Label hoursLabel;
-	JLabel profileTitleLabel;
+	private JComboBox<String> majorBox, statusBox, currentSemesterBox;
+	private JSpinner spinner;
+	private Label hoursLabel;
+	private JLabel profileTitleLabel;
 	/**
 	 * Creates the profile panel
 	 */
@@ -54,7 +59,7 @@ public class ProfileGUI extends JPanel {
 		add(uniqueIDTextField);
 		uniqueIDTextField.setColumns(10);
 		
-		majorBox = new JComboBox();
+		majorBox = new JComboBox<>();
 		majorBox.setBackground(Color.WHITE);
 		majorBox.setToolTipText("");
 		majorBox.setBounds(39, 147, 203, 27);
@@ -63,7 +68,7 @@ public class ProfileGUI extends JPanel {
 		majorBox.addItem("Software Engineering");
 		add(majorBox);
 		
-		statusBox = new JComboBox();
+		statusBox = new JComboBox<>();
 		statusBox.setBounds(400, 147, 140, 27);
 		statusBox.addItem("Current Year");
 		statusBox.addItem("First Year");
@@ -84,10 +89,10 @@ public class ProfileGUI extends JPanel {
 		hoursLabel.setBounds(329, 237, 70, 28);
 		add(hoursLabel);
 		
-		currentSemesterBox = new JComboBox();
+		currentSemesterBox = new JComboBox<>();
 		currentSemesterBox.setBounds(39, 233, 203, 28);
 		currentSemesterBox.addItem("Select Current Semester");
-		currentSemesterBox.addItem("Fall 2016");
+		currentSemesterBox.addItem("Spring 2016");
 		add(currentSemesterBox);
 		
 		profileTitleLabel = new JLabel("Create Your Own ProfileGUI");
@@ -99,20 +104,19 @@ public class ProfileGUI extends JPanel {
 	}
 	
 	public boolean allSelected(){
+		uniqueId = uniqueIDTextField.getText();
+		major = (String) majorBox.getSelectedItem();
+		curYear = (String) statusBox.getSelectedItem();
+		semester = (String) currentSemesterBox.getSelectedItem();
+		hours = (int)spinner.getValue();
 		
-		
-		String uniqueID = uniqueIDTextField.getText();
-		String major =  (String) majorBox.getSelectedItem();
-		String status = (String) statusBox.getSelectedItem();
-		String currentSemester = (String) currentSemesterBox.getSelectedItem();
-		
-		
-		if(uniqueID.equals("") || uniqueID.equals("uniqueID")) return false;
-		if(major.equals(majorBox.getItemAt(0))) return false;
-		if(status.equals(statusBox.getItemAt(0))) return false;
-		if(currentSemester.equals(currentSemesterBox.getItemAt(0))) return false;
-		else return true; 
-		
+		if (uniqueId.equals("") || uniqueId.equals("uniqueID") || major.equals(majorBox.getItemAt(0)) ||
+				curYear.equals(statusBox.getItemAt(0)) || semester.equals(currentSemesterBox.getItemAt(0))) 
+			return false;
+		else {
+			
+			return true; 
+		}
 	}
 }
 

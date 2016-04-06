@@ -1,6 +1,6 @@
 package GUI;
 
-import javax.swing.BoxLayout;
+
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -14,21 +14,18 @@ import javax.swing.JButton;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
 
+import CourseData.Profile;
+
 import java.awt.Button;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Label;
 import java.awt.List;
 import java.awt.Scrollbar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
-
-
-
 @SuppressWarnings("serial")
 public class Schedule extends JPanel{
+	private Profile profile;
 	private AddCourseState state = AddCourseState.TAKEN;
 	JList coursesTakenList, coursesDesiredList;
 	JLabel coursesTakenLabel, coursesDesiredLabel;
@@ -40,10 +37,8 @@ public class Schedule extends JPanel{
 	Button acceptWindowButton, cancelWindowButton;
 	
 
-
-
-
 	public Schedule() {
+		profile = new Profile();
 		setBorder(new CompoundBorder());
 		setBackground(Constants.CONTENT_BACKGROUND_COLOR);
 		setLayout(null);
@@ -98,7 +93,9 @@ public class Schedule extends JPanel{
 
 
 	}
-
+	public Profile getProfile() {
+		return profile;
+	}
 	private class ButtonEvent implements ActionListener {
 
 		@Override
@@ -116,25 +113,6 @@ public class Schedule extends JPanel{
 				if(takenRadioButton.isSelected()){
 					courseWindow.show();
 				}
-
-	
-				
-//				String result = "";
-//				switch (state) {
-//
-//				case TAKEN : 
-//					//add code
-//					break;
-//				case DESIRED :
-//					//add code
-//					break;
-//				case NULL :
-//					//add code	
-//					break;
-//				case ERROR :
-//					//add code	
-//					break;
-//				}
 			}	
 		}
 	}

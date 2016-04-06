@@ -3,23 +3,25 @@ package CourseData;
 import java.util.ArrayList;
 import java.util.List;
 
+import Exceptions.InvalidClassException;
+
 public class Profile {
 	private List<Course> takenCourses;
 	private List<Class> schedule;
 	private String uniqueID;
-	private List<Requirement> major;
+	private String major;
+	private List<Requirement> majorReq;
 	private int hours;
 	private String curYear;
 	
 	public Profile() {
 		takenCourses = new ArrayList<>();
 		schedule = new ArrayList<>();
-	}
-	public Profile(String curYear, int hours, List<Requirement> major) {
-		this();
-		this.hours = hours;
-		this.major = major;
-		this.curYear = curYear;
+		majorReq = new ArrayList<>();
+		hours = 0;
+		curYear = "";
+		uniqueID = "";
+		major = "";
 	}
 	/**
 	 * Gets a copy of the taken courses
@@ -42,7 +44,8 @@ public class Profile {
 	 * @param course
 	 */
 	public void addCourse(Course course) {
-		takenCourses.add(course);
+		if(!takenCourses.contains(course))
+			takenCourses.add(course);
 	}
 	/**
 	 * Adds a Class to a schedule
@@ -56,6 +59,8 @@ public class Profile {
 		} 
 		return check;
 	}
+	
+	
 	/**
 	 * Removes a Course that has been taken
 	 * @param course
@@ -71,6 +76,32 @@ public class Profile {
 	 */
 	public boolean removeClass(Class clas) {
 		return schedule.remove(clas);
+	}
+	
+	
+	public String getUniqueID() {
+		return uniqueID;
+	}
+	public void setUniqueID(String uniqueID) {
+		this.uniqueID = uniqueID;
+	}
+	public String getMajor() {
+		return major;
+	}
+	public void setMajor(String major) {
+		this.major = major;
+	}
+	public int getHours() {
+		return hours;
+	}
+	public void setHours(int hours) {
+		this.hours = hours;
+	}
+	public String getCurYear() {
+		return curYear;
+	}
+	public void setCurYear(String curYear) {
+		this.curYear = curYear;
 	}
 	
 	
@@ -91,7 +122,7 @@ public class Profile {
 	
 	private boolean checkPreReq() {
 		for (Class clas : schedule) {
-			for(Requirement req : major) {
+			for(Requirement req : majorReq) {
 				
 			}
 		}
@@ -102,4 +133,32 @@ public class Profile {
 		return !uniqueID.isEmpty() && !curYear.isEmpty() && !major.isEmpty();
 	}
 	
+	public void findConflicts() throws InvalidClassException{
+		displayError(schedule);
+	}
+	
+
+	/**
+	 * method marks classes have overlapping times
+	 * 
+	 * @param allClassList
+	 * @throws Exception
+	 */
+	private static void displayError(List<Class> classList) throws InvalidClassException {
+		for (int i = 0; i < classList.size() - 1 ; i++) {
+			for (int j =  i + 1; j < classList.size(); j++) {
+				Class a = classList.get(i);
+				Class b = classList.get(j);
+
+				if (a.getCategory() == null || b.getCategory() == null)
+					throw new InvalidClassException("There is a class that does not exist");
+				if (a.endTime <= b.startTime && a.getCategory().equals(b.getCategory()) && !a.getCourse().equals(b.getCourse())) {
+					a.hasConflict = true;
+					b.hasConflict = true;
+					a.getCategory().hasConflicts = true;
+					System.out.println(String.format("There is a conflict!: \n\t%s ----- %s", a.toString(), b.toString()));
+				}
+			}
+		}
+	}
 }

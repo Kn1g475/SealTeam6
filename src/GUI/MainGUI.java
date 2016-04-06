@@ -9,22 +9,16 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import CourseData.Course;
 import CourseData.Data;
-import GUI.About;
-import GUI.AddClassWindow;
-import GUI.Instructions;
-import GUI.ProfileGUI;
-import GUI.Report;
-import GUI.Schedule;
-import GUI.SideBar;
-import GUI.TopBar;
 import Main.Constants;
 
 /**
@@ -39,8 +33,10 @@ import Main.Constants;
 public class MainGUI extends JFrame {
 
 	File selectedFile;
-	Data dataObject;
-
+	
+	List<Class> currentSemester;
+	List<Course> courses;
+	
 	private JPanel mainPanel;
 
 	private CardLayout contentSwitcher;
@@ -50,14 +46,14 @@ public class MainGUI extends JFrame {
 	SideBar sideBar;
 
 	JPanel aboutPanel;
-	JPanel schedulePanel;
+	Schedule schedulePanel;
 	JPanel instructionsPanel;
 	JPanel reportPanel;
 	ProfileGUI profilePanel;
 	
 	
 
-	
+	public String semester;
 
 	/**
 	 * The main constructor. Creates the GUI and initializes the program.
@@ -65,8 +61,12 @@ public class MainGUI extends JFrame {
 	 * @throws Exception
 	 */
 	public MainGUI() {
-		dataObject = new Data();
-
+		semester = "";
+		
+		currentSemester = new ArrayList<>();
+		courses = new ArrayList<>();
+		
+		
 		setTitle(Constants.WINDOW_TITLE);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -161,7 +161,7 @@ public class MainGUI extends JFrame {
 	private void fileReport() {
 		if (reportPanel != null)
 			contentSwitcher.removeLayoutComponent(reportPanel);
-		reportPanel = new Report(dataObject);
+		reportPanel = new Report(schedulePanel.getProfile());
 		contentPanel.add(reportPanel, "REPORT");
 		contentSwitcher.show(contentPanel, "REPORT");
 	}
@@ -172,7 +172,7 @@ public class MainGUI extends JFrame {
 	private void fileInitialReport() {
 		if (reportPanel != null)
 			contentSwitcher.removeLayoutComponent(reportPanel);
-		reportPanel = new Report(dataObject);
+		reportPanel = new Report(schedulePanel.getProfile());
 		contentPanel.add(reportPanel, "REPORT");
 	}
 
@@ -221,7 +221,7 @@ public class MainGUI extends JFrame {
 					return;
 				}
 				String result = "";
-				result = dataObject.readNewCourseData();
+				//result = dataObject.readNewCourseData();
 
 				if (!result.replace("Error", "").equals(result))
 					alert(result, false);
@@ -254,8 +254,13 @@ public class MainGUI extends JFrame {
 			if (e.getSource() == sideBar.profileButton)
 				contentSwitcher.show(contentPanel, "PROFILE");
 			if(e.getSource() == sideBar.scheduleButton)
-				if(profilePanel.allSelected() == true)
-				contentSwitcher.show(contentPanel, "SCHEDULE");
+				if (profilePanel.allSelected() == true) {
+					schedulePanel.getProfile().setCurYear(profilePanel.curYear);
+					schedulePanel.getProfile().setMajor(profilePanel.major);
+					schedulePanel.getProfile().setUniqueID(profilePanel.uniqueId);
+					schedulePanel.getProfile().setHours(profilePanel.hours);
+					contentSwitcher.show(contentPanel, "SCHEDULE");
+				}
 			if (e.getSource() == sideBar.aboutButton)
 				contentSwitcher.show(contentPanel, "ABOUT");
 			if (e.getSource() == sideBar.instructionsButton)
