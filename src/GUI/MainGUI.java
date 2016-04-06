@@ -19,7 +19,6 @@ import javax.swing.JPanel;
 
 import CourseData.Course;
 import CourseData.Data;
-import CourseData.Class;
 import Main.Constants;
 
 /**
@@ -34,7 +33,6 @@ import Main.Constants;
 public class MainGUI extends JFrame {
 	Data data;
 	File selectedFile;
-	
 	
 	private List<Course> courses;
 	

@@ -36,7 +36,7 @@ public class Schedule extends JPanel{
 	JLabel coursesTakenLabel, coursesDesiredLabel;
 	JRadioButton takenRadioButton, desiredRadioButton;
 	JButton addButton, removeButton, checkButton, saveButton;
-	JComboBox courseAddWindow, campusBox;
+	JComboBox<String> courseAddWindow, campusBox;
 	List listAddWindow;
 	Scrollbar scrollbarAddWindow;
 	Button acceptWindowButton, cancelWindowButton;
@@ -77,7 +77,6 @@ public class Schedule extends JPanel{
 		takenRadioButton.addActionListener(new RadioButton());
 		add(takenRadioButton);
 
-
 		desiredRadioButton = new JRadioButton("Desired");
 		desiredRadioButton.setBounds(20, 409, 141, 23);
 		desiredRadioButton.addActionListener(new RadioButton());
@@ -100,14 +99,11 @@ public class Schedule extends JPanel{
 		saveButton = new JButton("Save");
 		saveButton.setBounds(463, 408, 117, 29);
 		add(saveButton);
-
-
 	}
 	public Profile getProfile() {
 		return profile;
 	}
 	private class ButtonEvent implements ActionListener {
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(e.getActionCommand().equalsIgnoreCase("Add")){
@@ -123,15 +119,12 @@ public class Schedule extends JPanel{
 		}
 	}
 	private class RadioButton implements ActionListener {
-
-
 		public void actionPerformed(ActionEvent e) {
 			if(e.getActionCommand().equalsIgnoreCase("Taken")) {
 				takenRadioButton.setSelected(true);
 				desiredRadioButton.setSelected(false);
 			}
 			if(e.getActionCommand().equalsIgnoreCase("Desired")) {
-				
 				desiredRadioButton.setSelected(true);
 				takenRadioButton.setSelected(false);
 			}

@@ -17,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JList;
+import javax.swing.JScrollPane;
 import javax.swing.border.LineBorder;
 
 @SuppressWarnings("serial")
@@ -52,10 +53,10 @@ public class AddClassWindow extends JDialog{
         for (Class clas : classes)
         	list.addElement(clas);
         courseToAdd = new JList<>(list);
-        courseToAdd.setBorder(new LineBorder(new Color(0, 0, 0)));
-        courseToAdd.setBounds(16, 45, 465, 151);
-        
-		getContentPane().add(courseToAdd);
+        JScrollPane pane = new JScrollPane(courseToAdd);
+        pane.setBorder(new LineBorder(new Color(0, 0, 0)));
+        pane.setBounds(16, 45, 465, 151);
+		getContentPane().add(pane);
         
         cancelButton = new Button("Cancel");
         cancelButton.setBounds(417, 215, 77, 28);
