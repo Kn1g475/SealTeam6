@@ -17,6 +17,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import CourseData.Category;
 import CourseData.Course;
 import CourseData.Data;
 import Main.Constants;
@@ -31,10 +32,10 @@ import Main.Constants;
  */
 @SuppressWarnings("serial")
 public class MainGUI extends JFrame {
-	Data data;
 	File selectedFile;
 	
 	private List<Course> courses;
+	private List<Category> cat;
 	
 	private JPanel mainPanel;
 
@@ -57,10 +58,8 @@ public class MainGUI extends JFrame {
 	 * @throws Exception
 	 */
 	public MainGUI() {
-		data = new Data();
-		
 		courses = new ArrayList<>();
-		
+		cat = new ArrayList<>();
 		
 		setTitle(Constants.WINDOW_TITLE);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -253,9 +252,10 @@ public class MainGUI extends JFrame {
 					schedulePanel.getProfile().setMajor(profilePanel.major);
 					schedulePanel.getProfile().setUniqueID(profilePanel.uniqueId);
 					schedulePanel.getProfile().setHours(profilePanel.hours);
-					data.readNewCourseData(profilePanel.semester);
+					
 					//data.readNewRequirementData();
-					schedulePanel.classes = data.currentList;
+					schedulePanel.classes = Data.readNewCourseData(profilePanel.semester);
+					Data.setCategories(schedulePanel.classes, cat);
 					contentSwitcher.show(contentPanel, "SCHEDULE");
 				}
 			if (e.getSource() == sideBar.aboutButton)

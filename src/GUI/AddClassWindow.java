@@ -38,7 +38,6 @@ public class AddClassWindow extends JDialog{
         getContentPane().setLayout(null);
         setSize(600,275);
         
-        
         comboBox = new JComboBox<>();
         comboBox.setBounds(10, 6, 102, 27);
         getContentPane().add(comboBox);
