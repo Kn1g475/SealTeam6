@@ -10,6 +10,7 @@ import Main.Constants;
 
 import javax.swing.JList;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
@@ -53,19 +54,21 @@ public class Schedule extends JPanel{
 		setBackground(Constants.CONTENT_BACKGROUND_COLOR);
 		setLayout(null);
 
-		coursesTakenList = new JList();
-		coursesTakenList.setBorder(new LineBorder(new Color(0, 0, 0)));
-		coursesTakenList.setBounds(20, 51, 602, 106);
-		add(coursesTakenList);
+		coursesTakenList = new JList<>();
+		JScrollPane coursePane = new JScrollPane(coursesTakenList);
+		coursePane.setBorder(new LineBorder(new Color(0, 0, 0)));
+		coursePane.setBounds(20, 51, 602, 106);
+		add(coursePane);
 
 		coursesTakenLabel = new JLabel("Courses Taken");
 		coursesTakenLabel.setBounds(20, 23, 104, 16);
 		add(coursesTakenLabel);
 
-		coursesDesiredList = new JList();
-		coursesDesiredList.setBorder(new LineBorder(new Color(0, 0, 0)));
-		coursesDesiredList.setBounds(20, 202, 601, 106);
-		add(coursesDesiredList);
+		coursesDesiredList = new JList<>();
+		JScrollPane classesPane = new JScrollPane(coursesDesiredList);
+		classesPane.setBorder(new LineBorder(new Color(0, 0, 0)));
+		classesPane.setBounds(20, 202, 601, 106);
+		add(classesPane);
 
 		coursesDesiredLabel = new JLabel("Courses Desired");
 		coursesDesiredLabel.setBounds(20, 186, 104, 16);

@@ -36,7 +36,7 @@ public class AddClassWindow extends JDialog{
 		setLocation(new Point(400, 300));
         setResizable(false);
         getContentPane().setLayout(null);
-        setSize(500,275);
+        setSize(600,275);
         
         
         comboBox = new JComboBox<>();
@@ -55,11 +55,11 @@ public class AddClassWindow extends JDialog{
         courseToAdd = new JList<>(list);
         JScrollPane pane = new JScrollPane(courseToAdd);
         pane.setBorder(new LineBorder(new Color(0, 0, 0)));
-        pane.setBounds(16, 45, 465, 151);
+        pane.setBounds(16, 45, 565, 151);
 		getContentPane().add(pane);
         
         cancelButton = new Button("Cancel");
-        cancelButton.setBounds(417, 215, 77, 28);
+        cancelButton.setBounds(517, 215, 77, 28);
         cancelButton.setActionCommand("cancelWindowButton");
         cancelButton.addActionListener(new ButtonEvent());
         getContentPane().add(cancelButton);

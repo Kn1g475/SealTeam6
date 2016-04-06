@@ -162,10 +162,13 @@ public class Class implements Comparable<Class> {
 	 * ToString method that returns all the information of the class.
 	 */
 	public String toString() {
-		return String.format("%s with %s from %d to %d on %s with final at %s(%s)", 
-				course.toString(section),instructor,startTime,endTime,getMeetingDays(),getFinalInfo(),CRN_Number);
+		return String.format("%s:\t%s\t%s\t%d - %d\t%s", CRN_Number,
+				course.toString(section),instructor,startTime,endTime,getMeetingDays());
 	}
-
+	public String output() {
+		return String.format("%s with %s from %d to %d on %s with final at %s(%s)", 
+				course.toString(section),instructor,startTime,endTime,getMeetingDays(),getFinalInfo(),CRN_Number); 
+	}
 	/**
 	 * ToString method that returns all information except for the infor of the final.
 	 * @return
