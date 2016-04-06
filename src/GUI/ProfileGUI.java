@@ -23,7 +23,7 @@ import java.awt.event.FocusListener;
  * 
  */
 @SuppressWarnings("serial")
-public class Profile extends JPanel {
+public class ProfileGUI extends JPanel {
 	private JTextField uniqueIDTextField;
 	JComboBox majorBox, statusBox, currentSemesterBox;
 	JSpinner spinner;
@@ -32,7 +32,7 @@ public class Profile extends JPanel {
 	/**
 	 * Creates the profile panel
 	 */
-	public Profile() {
+	public ProfileGUI() {
 		setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		//Create a blank profile panel
 		setBackground(Constants.CONTENT_BACKGROUND_COLOR);
@@ -90,7 +90,7 @@ public class Profile extends JPanel {
 		currentSemesterBox.addItem("Fall 2016");
 		add(currentSemesterBox);
 		
-		profileTitleLabel = new JLabel("Create Your Own Profile");
+		profileTitleLabel = new JLabel("Create Your Own ProfileGUI");
 		profileTitleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 27));
 		profileTitleLabel.setBounds(169, 20, 341, 64);
 		add(profileTitleLabel);
