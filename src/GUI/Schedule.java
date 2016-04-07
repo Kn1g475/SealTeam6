@@ -2,6 +2,8 @@ package GUI;
 
 
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -9,8 +11,10 @@ import Main.AddCourseState;
 import Main.Constants;
 
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
@@ -21,6 +25,7 @@ import CourseData.Profile;
 
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.Dialog.ModalityType;
 import java.awt.List;
 import java.awt.Scrollbar;
 import java.awt.event.ActionEvent;
@@ -30,8 +35,10 @@ import java.util.ArrayList;
 
 @SuppressWarnings("serial")
 public class Schedule extends JPanel{
-	private Profile profile;
-	private AddCourseState state = AddCourseState.TAKEN;
+	JFrame us;
+	Profile profile;
+	private DefaultListModel<Class> classList;
+	private DefaultListModel<Course> courseList;
 	JList<Course> coursesTakenList;
 	JList<Class> coursesDesiredList;
 	JLabel coursesTakenLabel, coursesDesiredLabel;
@@ -45,16 +52,18 @@ public class Schedule extends JPanel{
 	public java.util.List<Course> courses;
 	public java.util.List<Class> classes;
 
-	public Schedule() {
-		profile = new Profile();
+	public Schedule(Profile prof) {
+		profile = prof;
+		us = (JFrame) this.getParent();
 		courses = new ArrayList<>();
 		classes = new ArrayList<>();
 		
 		setBorder(new CompoundBorder());
 		setBackground(Constants.CONTENT_BACKGROUND_COLOR);
 		setLayout(null);
-
-		coursesTakenList = new JList<>();
+		
+		courseList = new DefaultListModel<>();
+		coursesTakenList = new JList<>(courseList);
 		JScrollPane coursePane = new JScrollPane(coursesTakenList);
 		coursePane.setBorder(new LineBorder(new Color(0, 0, 0)));
 		coursePane.setBounds(20, 51, 602, 106);
@@ -63,8 +72,8 @@ public class Schedule extends JPanel{
 		coursesTakenLabel = new JLabel("Courses Taken");
 		coursesTakenLabel.setBounds(20, 23, 104, 16);
 		add(coursesTakenLabel);
-
-		coursesDesiredList = new JList<>();
+		classList = new DefaultListModel<>();
+		coursesDesiredList = new JList<>(classList);
 		JScrollPane classesPane = new JScrollPane(coursesDesiredList);
 		classesPane.setBorder(new LineBorder(new Color(0, 0, 0)));
 		classesPane.setBounds(20, 202, 601, 106);
@@ -102,21 +111,29 @@ public class Schedule extends JPanel{
 		saveButton = new JButton("Save");
 		saveButton.setBounds(463, 408, 117, 29);
 		add(saveButton);
+		
 	}
-	public Profile getProfile() {
-		return profile;
-	}
+	
 	private class ButtonEvent implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(e.getActionCommand().equalsIgnoreCase("Add")){
 				if (desiredRadioButton.isSelected()){
-					AddClassWindow classWindow = new AddClassWindow(classes);
-					if (classWindow.selected != null && !profile.getCoursesTaken().contains(classWindow.selected))
-						profile.addClass(classWindow.selected);
+					AddClassWindow classWindow = new AddClassWindow(us, ModalityType.APPLICATION_MODAL, classes);
+					if (classWindow.selected != null && !profile.getCoursesTaken().contains(classWindow.selected)) {
+						if (!profile.addClass(classWindow.selected))
+							JOptionPane.showMessageDialog(us,"Class overlaps with a course that you already want to take","Invalid" ,JOptionPane.ERROR_MESSAGE);
+						else {
+							classList.addElement(classWindow.selected);
+						}
+					}
 				}
 				if(takenRadioButton.isSelected()){
-					AddCoursesWindow courseWindow = new AddCoursesWindow();
+					AddCoursesWindow courseWindow = new AddCoursesWindow(us, ModalityType.APPLICATION_MODAL, courses);
+					if (courseWindow.selected != null && !profile.getCoursesTaken().contains(courseWindow.selected)) {
+						profile.addCourse(courseWindow.selected);
+						courseList.addElement(courseWindow.selected);
+					}
 				}
 			}	
 		}

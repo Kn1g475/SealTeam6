@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import CourseData.Category;
 import CourseData.Course;
 import CourseData.Data;
+import CourseData.Profile;
 import Main.Constants;
 
 /**
@@ -34,6 +35,7 @@ import Main.Constants;
 public class MainGUI extends JFrame {
 	File selectedFile;
 	
+	private Profile profile;
 	private List<Course> courses;
 	private List<Category> cat;
 	
@@ -58,6 +60,7 @@ public class MainGUI extends JFrame {
 	 * @throws Exception
 	 */
 	public MainGUI() {
+		profile = new Profile();
 		courses = new ArrayList<>();
 		cat = new ArrayList<>();
 		
@@ -102,7 +105,7 @@ public class MainGUI extends JFrame {
 				Constants.CONTENT_BACKGROUND_COLOR, 10));
 
 		profilePanel = new ProfileGUI();
-		schedulePanel = new Schedule(); 
+		schedulePanel = new Schedule(profile); 
 		aboutPanel = new About();
 		instructionsPanel = new Instructions();
 
@@ -155,7 +158,7 @@ public class MainGUI extends JFrame {
 	private void fileReport() {
 		if (reportPanel != null)
 			contentSwitcher.removeLayoutComponent(reportPanel);
-		reportPanel = new Report(schedulePanel.getProfile());
+		reportPanel = new Report(profile);
 		contentPanel.add(reportPanel, "REPORT");
 		contentSwitcher.show(contentPanel, "REPORT");
 	}
@@ -166,7 +169,7 @@ public class MainGUI extends JFrame {
 	private void fileInitialReport() {
 		if (reportPanel != null)
 			contentSwitcher.removeLayoutComponent(reportPanel);
-		reportPanel = new Report(schedulePanel.getProfile());
+		reportPanel = new Report(profile);
 		contentPanel.add(reportPanel, "REPORT");
 	}
 
@@ -248,10 +251,10 @@ public class MainGUI extends JFrame {
 				contentSwitcher.show(contentPanel, "PROFILE");
 			if(e.getSource() == sideBar.scheduleButton)
 				if (profilePanel.allSelected() == true) {
-					schedulePanel.getProfile().setCurYear(profilePanel.curYear);
-					schedulePanel.getProfile().setMajor(profilePanel.major);
-					schedulePanel.getProfile().setUniqueID(profilePanel.uniqueId);
-					schedulePanel.getProfile().setHours(profilePanel.hours);
+					profile.setCurYear(profilePanel.curYear);
+					profile.setMajor(profilePanel.major);
+					profile.setUniqueID(profilePanel.uniqueId);
+					profile.setHours(profilePanel.hours);
 					
 					//data.readNewRequirementData();
 					schedulePanel.classes = Data.readNewCourseData(profilePanel.semester);

@@ -162,7 +162,7 @@ public class Class implements Comparable<Class> {
 	 * ToString method that returns all the information of the class.
 	 */
 	public String toString() {
-		return String.format("%s:\t%s\t%s\t%d - %d\t%s", CRN_Number,
+		return String.format("%s:\t\t%s\t\t%s\t\t%d - %d\t\t%s", CRN_Number,
 				course.toString(section),instructor,startTime,endTime,getMeetingDays());
 	}
 	public String output() {

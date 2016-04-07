@@ -3,10 +3,10 @@ package GUI;
 import CourseData.Class;
 
 import javax.swing.DefaultListModel;
-import javax.swing.JButton;
 
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 
 import java.awt.Color;
 import java.awt.Button;
@@ -22,15 +22,15 @@ import javax.swing.border.LineBorder;
 
 @SuppressWarnings("serial")
 public class AddClassWindow extends JDialog{
-    JDialog us;
+    AddClassWindow us;
 	JList<Class> courseToAdd;
 	DefaultListModel<Class> list;
 	Button acceptButton, cancelButton;
 	Label courseLabel;
 	JComboBox<String> comboBox;
-	public Class selected;
-	
-	public AddClassWindow(List<Class> classes) {
+	Class selected;
+	public AddClassWindow(JFrame parent,ModalityType modal ,List<Class> classes) {
+		super(parent, modal);
 		us = this;
 		setTitle("Desired Class");
 		setLocation(new Point(400, 300));
@@ -58,7 +58,7 @@ public class AddClassWindow extends JDialog{
 		getContentPane().add(pane);
         
         cancelButton = new Button("Cancel");
-        cancelButton.setBounds(517, 215, 77, 28);
+        cancelButton.setBounds(617, 215, 77, 28);
         cancelButton.setActionCommand("cancelWindowButton");
         cancelButton.addActionListener(new ButtonEvent());
         getContentPane().add(cancelButton);
@@ -71,19 +71,19 @@ public class AddClassWindow extends JDialog{
         setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
         setVisible(true);
     }
+	private void close() {
+		setVisible(false);
+		dispose();
+	}
 	private class ButtonEvent implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
 			if (arg0.getActionCommand().equalsIgnoreCase("cancelWindowButton")){
-        		us.setVisible(false);
-				us.dispose();
+        		us.close();
 			}
 			if (arg0.getActionCommand().equalsIgnoreCase("acceptWindowButton")){
 				selected = courseToAdd.getSelectedValue();
-				us.setVisible(false);
-				us.dispose();
+				us.close();
 			}
-			
 		}
-		
 	}
 }
