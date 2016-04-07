@@ -1,32 +1,21 @@
 package GUI;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Collections;
-import java.util.List;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextPane;
 
-import CourseData.Category;
-import CourseData.Class;
 import CourseData.Profile;
 import Main.Constants;
 
 /**
  * This panel represents a generated report and allows for navigation within the
  * report
- * 
  * @author matt
- * 
  */
 @SuppressWarnings("serial")
 public class Report extends JPanel {

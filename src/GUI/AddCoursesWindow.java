@@ -2,24 +2,16 @@ package GUI;
 
 import javax.swing.JFrame;
 import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
-
-import java.awt.Rectangle;
 
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 
 import java.awt.Color;
-import java.awt.Scrollbar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-import java.awt.Dialog.ModalityType;
 import java.awt.Button;
-import java.awt.Dimension;
 import java.awt.Label;
 import java.awt.Point;
 

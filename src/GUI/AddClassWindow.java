@@ -67,8 +67,6 @@ public class AddClassWindow extends JDialog{
         courseLabel.setBounds(118, 10, 117, 17);
         getContentPane().add(courseLabel);
         
-        
-        setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
         setVisible(true);
     }
 	private void close() {

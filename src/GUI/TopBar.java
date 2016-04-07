@@ -13,17 +13,13 @@ import javax.swing.JPanel;
 
 import Main.Constants;
 
-import javax.swing.JRadioButton;
-
 import GUI.MainGUI.ButtonListener;
 import Main.FileState;
 import java.awt.Cursor;
 
 /**
  * The top bar of the GUI.
- * 
  * @author matt
- * 
  */
 @SuppressWarnings("serial")
 public class TopBar extends JPanel {
