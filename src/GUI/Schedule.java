@@ -33,7 +33,7 @@ import java.util.ArrayList;
 
 @SuppressWarnings("serial")
 public class Schedule extends JPanel{
-	JFrame us;
+	JFrame parent;
 	Profile profile;
 	private DefaultListModel<Class> classList;
 	private DefaultListModel<Course> courseList;
@@ -52,7 +52,7 @@ public class Schedule extends JPanel{
 
 	public Schedule(Profile prof) {
 		profile = prof;
-		us = (JFrame) this.getParent();
+		parent = (JFrame) this.getParent();
 		courses = new ArrayList<>();
 		classes = new ArrayList<>();
 		
@@ -119,17 +119,17 @@ public class Schedule extends JPanel{
 		public void actionPerformed(ActionEvent e) {
 			if(e.getActionCommand().equalsIgnoreCase("Add")){
 				if (desiredRadioButton.isSelected()){
-					AddClassWindow classWindow = new AddClassWindow(us, ModalityType.APPLICATION_MODAL, classes);
+					AddClassWindow classWindow = new AddClassWindow(parent, ModalityType.APPLICATION_MODAL, classes);
 					if (classWindow.selected != null && !profile.getCoursesTaken().contains(classWindow.selected) && !classList.contains(classWindow.selected)) {
 						if (!profile.addClass(classWindow.selected))
-							JOptionPane.showMessageDialog(us,"Class overlaps with a course that you already want to take","Invalid" ,JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(parent,"Class overlaps with a course that you already want to take","Invalid" ,JOptionPane.ERROR_MESSAGE);
 						else {
 							classList.addElement(classWindow.selected);
 						}
 					}
 				}
 				if(takenRadioButton.isSelected()){
-					AddCoursesWindow courseWindow = new AddCoursesWindow(us, ModalityType.APPLICATION_MODAL, courses);
+					AddCoursesWindow courseWindow = new AddCoursesWindow(parent, ModalityType.APPLICATION_MODAL, courses);
 					if (courseWindow.selected != null && !profile.getCoursesTaken().contains(courseWindow.selected)) {
 						profile.addCourse(courseWindow.selected);
 						courseList.addElement(courseWindow.selected);
