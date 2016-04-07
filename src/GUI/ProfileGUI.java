@@ -17,6 +17,8 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
+import CourseData.Profile;
+
 /**
  * This panel one of the content windows that get switched by the Main GUI. Its
  * only purpose is to display simple text.
@@ -37,14 +39,14 @@ public class ProfileGUI extends JPanel {
 	/**
 	 * Creates the profile panel
 	 */
-	public ProfileGUI() {
+	public ProfileGUI(Profile profile) {
 		setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		//Create a blank profile panel
 		setBackground(Constants.CONTENT_BACKGROUND_COLOR);
 		setLayout(null);
 		
 		uniqueIDTextField = new JTextField();
-		uniqueIDTextField.setText("Unique ID");
+		uniqueIDTextField.setText((profile.getUniqueID().equals(""))? "Unique ID" : profile.getUniqueID());
 		uniqueIDTextField.addFocusListener(new FocusListener() {
 			public void focusGained(FocusEvent e) {
 				uniqueIDTextField.setText("");
@@ -66,6 +68,7 @@ public class ProfileGUI extends JPanel {
 		majorBox.addItem("Select Your Major");
 		majorBox.addItem("Computer Science");
 		majorBox.addItem("Software Engineering");
+		majorBox.setSelectedItem(profile.getMajor().equals("") ? "Select Your Major" : profile.getMajor());
 		add(majorBox);
 		
 		statusBox = new JComboBox<>();
@@ -75,11 +78,13 @@ public class ProfileGUI extends JPanel {
 		statusBox.addItem("Second Year");
 		statusBox.addItem("Thrid Year");
 		statusBox.addItem("Fourth Year +");
+		statusBox.setSelectedItem(profile.getCurYear().equals("") ? "Current Year" : profile.getCurYear());
 		add(statusBox);
 		
 		spinner = new JSpinner();
 		spinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 		spinner.setBounds(409, 233, 131, 28);
+		spinner.setValue(profile.getHours());
 		add(spinner);
 		
 		hoursLabel = new Label("Hours:");
@@ -95,12 +100,10 @@ public class ProfileGUI extends JPanel {
 		currentSemesterBox.addItem("Spring 2016");
 		add(currentSemesterBox);
 		
-		profileTitleLabel = new JLabel("Create Your Own ProfileGUI");
+		profileTitleLabel = new JLabel("Create Your Own Profile");
 		profileTitleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 27));
 		profileTitleLabel.setBounds(169, 20, 341, 64);
 		add(profileTitleLabel);
-
-		
 	}
 	
 	public boolean allSelected(){

@@ -104,7 +104,7 @@ public class MainGUI extends JFrame {
 		contentPanel.setBorder(BorderFactory.createLineBorder(
 				Constants.CONTENT_BACKGROUND_COLOR, 10));
 
-		profilePanel = new ProfileGUI();
+		profilePanel = new ProfileGUI(profile);
 		schedulePanel = new Schedule(profile); 
 		aboutPanel = new About();
 		instructionsPanel = new Instructions();
