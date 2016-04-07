@@ -172,7 +172,8 @@ public class MainGUI extends JFrame {
 		reportPanel = new Report(profile);
 		contentPanel.add(reportPanel, "REPORT");
 	}
-
+	
+	
 	/**
 	 * Listens for top bar button actions
 	 * @author matt

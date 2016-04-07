@@ -100,6 +100,7 @@ public class Schedule extends JPanel{
 
 		removeButton = new JButton("Remove");
 		removeButton.setBounds(249, 408, 117, 29);
+		removeButton.addActionListener(new ButtonEvent());
 		add(removeButton);
 
 		checkButton = new JButton("Check");
@@ -108,6 +109,7 @@ public class Schedule extends JPanel{
 
 		saveButton = new JButton("Save");
 		saveButton.setBounds(463, 408, 117, 29);
+		saveButton.addActionListener(new ButtonEvent());
 		add(saveButton);
 		
 	}
@@ -133,7 +135,18 @@ public class Schedule extends JPanel{
 						courseList.addElement(courseWindow.selected);
 					}
 				}
-			}	
+			}
+			if (e.getActionCommand().equalsIgnoreCase("Save")) {
+				profile.saveProfile();
+			}
+			if (e.getActionCommand().equalsIgnoreCase("Remove")) {
+				if (desiredRadioButton.isSelected()) {
+					classList.removeElement(coursesDesiredList.getSelectedValue());
+				}
+				if (takenRadioButton.isSelected()) {
+					courseList.removeElement(coursesDesiredList.getSelectedValue());
+				}
+			}
 		}
 	}
 	private class RadioButton implements ActionListener {

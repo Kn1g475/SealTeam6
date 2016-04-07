@@ -1,6 +1,9 @@
 package CourseData;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,6 +109,27 @@ public class Profile {
 	}
 	
 	public void saveProfile() {
+		File save = new File(uniqueID + major + ".prof");
+		System.out.println(save.getAbsolutePath());
+		if (!save.exists())
+			try {
+				save.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		try (BufferedWriter bw = new BufferedWriter(new FileWriter(save))) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("Unique Id: " + uniqueID + "\n");
+			sb.append("Major: " + major + "\n");
+			sb.append("Year: " + curYear + "\n");
+			sb.append("Hours: " + hours + "\n");
+			
+			
+			bw.write(sb.toString());
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 	}
 	public void readProfile(File selectedFile) {
