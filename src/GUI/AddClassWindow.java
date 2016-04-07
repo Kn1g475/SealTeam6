@@ -58,7 +58,7 @@ public class AddClassWindow extends JDialog{
 		getContentPane().add(pane);
         
         cancelButton = new Button("Cancel");
-        cancelButton.setBounds(617, 215, 77, 28);
+        cancelButton.setBounds(517, 215, 77, 28);
         cancelButton.setActionCommand("cancelWindowButton");
         cancelButton.addActionListener(new ButtonEvent());
         getContentPane().add(cancelButton);

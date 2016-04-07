@@ -118,7 +118,7 @@ public class Schedule extends JPanel{
 			if(e.getActionCommand().equalsIgnoreCase("Add")){
 				if (desiredRadioButton.isSelected()){
 					AddClassWindow classWindow = new AddClassWindow(us, ModalityType.APPLICATION_MODAL, classes);
-					if (classWindow.selected != null && !profile.getCoursesTaken().contains(classWindow.selected)) {
+					if (classWindow.selected != null && !profile.getCoursesTaken().contains(classWindow.selected) && !classList.contains(classWindow.selected)) {
 						if (!profile.addClass(classWindow.selected))
 							JOptionPane.showMessageDialog(us,"Class overlaps with a course that you already want to take","Invalid" ,JOptionPane.ERROR_MESSAGE);
 						else {
