@@ -15,11 +15,10 @@ public class Class implements Comparable<Class> {
 	public int endTime; //End time of the class.
 	private Class lab;
 
-	private Instructor instructor; //Instructor of the class.
+	private String instructor; //Instructor of the class.
 
 	public boolean hasConflict = false; //Boolean that determines if there is a conflicting final.
 	private int meetingDays; //Days that the classes meet.
-	private String location;
 	private Category category; //Category of the class.
 
 	/**
@@ -32,7 +31,7 @@ public class Class implements Comparable<Class> {
 	 * @param endTime Time that the class ends.
 	 * @param days Days that the class meets.
 	 */
-	public Class(Course course, Instructor instructor, String CRN_Number, String section, int startTime, int endTime, String days) {
+	public Class(Course course, String instructor, String CRN_Number, String section, int startTime, int endTime, String days) {
 		this.course = course;
 		this.instructor = instructor;
 		this.CRN_Number = CRN_Number;
@@ -43,7 +42,7 @@ public class Class implements Comparable<Class> {
 		this.lab = null;
 		addMeetingDays(days);
 
-		if (this.course == null || this.instructor == null || this.CRN_Number == "" || this.section == ""
+		if (this.course == null || this.instructor == "" || this.CRN_Number == "" || this.section == ""
 				|| this.startTime < 0 || this.startTime > 2400 || this.endTime < 0 || this.endTime > 2400
 				|| this.endTime <= this.startTime || days == "") {
 			System.err.println("Error: Invalid or blank input sent to a Class constructor");
@@ -51,15 +50,8 @@ public class Class implements Comparable<Class> {
 		}
 	}
 	public Class(String[] lineArgs) {
-		this(new Course(lineArgs[1], lineArgs[4], lineArgs[2]),new Instructor(lineArgs[9]),lineArgs[0],
+		this(new Course(lineArgs[1], lineArgs[4], lineArgs[2]),lineArgs[9],lineArgs[0],
 				lineArgs[3],Integer.parseInt(lineArgs[6]),Integer.parseInt(lineArgs[7]),lineArgs[5]);
-
-		if (lineArgs[0].contains("H "))
-			this.location = "Hamilton";
-		else if(lineArgs[0].contains("M "))
-			this.location = "MiddleTown";
-		else
-			this.location = "Oxford";
 	}
 
 	public boolean doesOverlap(Class test) {
@@ -99,10 +91,6 @@ public class Class implements Comparable<Class> {
 	public void addLab(Class lab) {
 		this.lab = lab;
 		addMeetingDays(lab.getMeetingDays());
-	}
-
-	public String getLocation() {
-		return location;
 	}
 
 	/**
@@ -174,11 +162,10 @@ public class Class implements Comparable<Class> {
 	 * @return
 	 */
 	public String toStringReportHTMLRow() {
-		return String.format("%s <td>%s%s</td><td>%s - %s </td><td>%s</td><td>%s, %s</td><td>(%s)</td></tr>",
+		return String.format("%s <td>%s%s</td><td>%s - %s </td><td>%s</td><td>%s</td><td>(%s)</td></tr>",
 				(hasConflict)?("<tr style=\"font-weight:bold;\"><td>***</td>"):("<tr><td></td>"),
 						course.shortName,section, Constants.timeToString(startTime),
-						Constants.timeToString(endTime), getMeetingDays(), instructor.lastName,
-						instructor.firstName, CRN_Number);
+						Constants.timeToString(endTime), getMeetingDays(), instructor, CRN_Number);
 
 	}
 

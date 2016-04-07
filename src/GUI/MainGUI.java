@@ -260,6 +260,7 @@ public class MainGUI extends JFrame {
 					//data.readNewRequirementData();
 					schedulePanel.classes = Data.readNewCourseData(profilePanel.semester);
 					Data.setCategories(schedulePanel.classes, cat);
+					schedulePanel.courses = Data.getCourses(schedulePanel.classes);
 					contentSwitcher.show(contentPanel, "SCHEDULE");
 				}
 			if (e.getSource() == sideBar.aboutButton)

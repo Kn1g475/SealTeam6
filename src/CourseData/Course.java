@@ -25,7 +25,7 @@ public class Course implements Comparable<Course> {
 		//this.subject = subject;
 		this.title = title;
 		//this.courseNumber = courseNumber;
-		this.shortName = String.format("%s %s",subject.toString(), courseNumber);
+		this.shortName = String.format("%s %s",subject, courseNumber);
 	}
 	
 	public String getShortName() {

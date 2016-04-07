@@ -54,7 +54,13 @@ public class Data {
 		}
 		return allClassList;
 	}
-	
+	public static List<Course> getCourses(List<Class> classes) {
+		List<Course> courses = new ArrayList<>();
+		for (Class c : classes)
+			if (!courses.contains(c.getCourse()))
+				courses.add(c.getCourse());
+		return courses;
+	}
 	/*public List<Requirement> getMajorRequirements(String major) {
 		List<Requirement> majorRequirements = new ArrayList<>();
 		for (Requirement req : degreeRequirements) {

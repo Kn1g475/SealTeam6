@@ -123,8 +123,11 @@ public class Profile {
 			sb.append("Major: " + major + "\n");
 			sb.append("Year: " + curYear + "\n");
 			sb.append("Hours: " + hours + "\n");
-			
-			
+			sb.append("Courses: \n");
+			for (Course c : this.takenCourses) {
+				sb.append(c + "\n");
+			}
+			sb.append("Classes: \n");
 			bw.write(sb.toString());
 			
 		} catch (IOException e) {
