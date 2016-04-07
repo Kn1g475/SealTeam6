@@ -157,6 +157,10 @@ public class Class implements Comparable<Class> {
 		return String.format("%s with %s from %d to %d on %s with final at %s(%s)", 
 				course.toString(section),instructor,startTime,endTime,getMeetingDays(),getFinalInfo(),CRN_Number); 
 	}
+	
+	public String fileSave() {
+		return String.format("%s|%s|%s|%s|%s|%s|%s|%s", CRN_Number,course, section,startTime,endTime,instructor,getMeetingDays(),category);
+	}
 	/**
 	 * ToString method that returns all information except for the infor of the final.
 	 * @return

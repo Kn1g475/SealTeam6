@@ -13,7 +13,6 @@ import Exceptions.*;
  * @author matt
  */
 public class Data {
-	public List<Category> finalsCategories;
 	/**
 	 * calls the static function that flags conflicts in the data
 	 * @throws InvlaidClassException
