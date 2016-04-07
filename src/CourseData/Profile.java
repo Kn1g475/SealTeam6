@@ -1,5 +1,6 @@
 package CourseData;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,6 +105,12 @@ public class Profile {
 		this.curYear = curYear;
 	}
 	
+	public void saveProfile() {
+		
+	}
+	public void readProfile(File selectedFile) {
+		
+	}
 	
 	public boolean checkFeasibility() {
 		return !checkPreReq();
