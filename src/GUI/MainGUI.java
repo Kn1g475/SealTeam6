@@ -262,8 +262,9 @@ public class MainGUI extends JFrame {
 					profile.setUniqueID(profilePanel.uniqueId);
 					profile.setHours(profilePanel.hours);
 					
-					//data.readNewRequirementData();
-					schedulePanel.classes = Data.readNewCourseData(profilePanel.semester);
+					
+					if(schedulePanel.classes.isEmpty())
+						schedulePanel.classes = Data.readNewCourseData(profilePanel.semester);
 					schedulePanel.courses = Data.getCourses(schedulePanel.classes);
 					contentSwitcher.show(contentPanel, "SCHEDULE");
 				}
