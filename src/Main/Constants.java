@@ -87,10 +87,10 @@ public class Constants {
 	 * @return
 	 */
 	public static String timeToString(int time) {
-		String amPM = "AM";
+		String amPM = "am";
 		// handle am/pm
 		if (time >= 1200) 
-			amPM = "PM";
+			amPM = "pm";
 		// handle 12 hour time format
 		if (time >= 1300)
 			time -= 1200;

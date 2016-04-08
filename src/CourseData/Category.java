@@ -61,7 +61,7 @@ public class Category {
 	 * @return ifMatches
 	 */
 	public boolean matches(Class c) {
-		if (c.startTime >= this.startTime && c.startTime < this.endTime) {
+		/*if (c.startTime >= this.startTime && c.startTime < this.endTime) {
 			for (int m : this.meetingDayPatterns) {
 				if (c.matchesMeetingTime(m)) {
 					if (!this.classesInThisCategory.contains(c))
@@ -69,7 +69,7 @@ public class Category {
 					return true;
 				}
 			}
-		}
+		}*/
 		return false;
 	}
 
