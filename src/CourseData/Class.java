@@ -16,10 +16,7 @@ public class Class implements Comparable<Class> {
 	private String section; //Section of the class.
 
 	public Map<Character,TimeInterval> times;
-
-	//public int startTime; //Start time of the class.
-	//public int endTime; //End time of the class.
-
+	public int startTime,endTime;
 	private String instructor; //Instructor of the class.
 
 	public boolean hasConflict = false; //Boolean that determines if there is a conflicting final.
@@ -43,14 +40,15 @@ public class Class implements Comparable<Class> {
 		this.section = section;
 		this.times = new HashMap<>();
 		addTimes(days,startTime,endTime);
-		//this.startTime = startTime;
-		//this.endTime = endTime;
 		this.meetingDays = 0;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		
 		addMeetingDays(days);
 
 		if (this.course == null || this.instructor == "" || this.CRN_Number == "" || this.section == ""
-				|| /*this.startTime < 0 || this.startTime > 2400 || this.endTime < 0 || this.endTime > 2400
-				|| this.endTime <= this.startTime ||*/ days == "") {
+				|| this.startTime < 0 || this.startTime > 2400 || this.endTime < 0 || this.endTime > 2400
+				|| this.endTime <= this.startTime || days == "") {
 			System.err.println("Error: Invalid or blank input sent to a Class constructor");
 			throw new IllegalArgumentException();
 		}
@@ -100,6 +98,7 @@ public class Class implements Comparable<Class> {
 		}
 		return br.toString();
 	}
+	
 	/**
 	 * Accesser method for the course.
 	 * @return Course
@@ -166,10 +165,10 @@ public class Class implements Comparable<Class> {
 	}
 
 	public String fileSave() {
-		return String.format("%s|%s|%s|%s|%s|%s|%s|%s", CRN_Number,course, section,getTimes(getMeetingDays()),instructor,getMeetingDays(),category);
+		return String.format("%s|%s|%s|%s|%s|%s", CRN_Number,course, section,getTimes(getMeetingDays()),instructor,getMeetingDays());
 	}
 	/**
-	 * ToString method that returns all information except for the infor of the final.
+	 * ToString method that returns all information except for the info of the final.
 	 * @return
 	 */
 	public String toStringReportHTMLRow() {
@@ -259,11 +258,12 @@ public class Class implements Comparable<Class> {
 		public int getEndTime() {
 			return endTime;
 		}
-
 		public boolean doesOverlap(TimeInterval temp) {
 			return (temp.getStartTime() >= this.getStartTime() && temp.getStartTime() <= this.getEndTime()) ||
 					(temp.getEndTime() >= this.getStartTime() && temp.getEndTime() <= this.getEndTime());
-			
+		}
+		public boolean inInterval(int time) {
+			return time >= getStartTime() && time < getEndTime();
 		}
 	}
 }

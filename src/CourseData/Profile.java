@@ -21,8 +21,11 @@ public class Profile {
 	private int hours;
 	private String curYear;
 	
+	public List<Category> finalsCategories;
+	
 	public Profile() {
 		takenCourses = new ArrayList<>();
+		finalsCategories = new ArrayList<>();
 		schedule = new ArrayList<>();
 		majorReq = new ArrayList<>();
 		hours = 0;
@@ -175,6 +178,7 @@ public class Profile {
 	}
 	
 	public void findConflicts() throws InvalidClassException{
+		Data.setCategories(schedule, finalsCategories);
 		displayError(schedule);
 	}
 	
@@ -193,12 +197,12 @@ public class Profile {
 
 				if (a.getCategory() == null || b.getCategory() == null)
 					throw new InvalidClassException("There is a class that does not exist");
-				/*if (a.endTime <= b.startTime && a.getCategory().equals(b.getCategory()) && !a.getCourse().equals(b.getCourse())) {
+				if (a.endTime <= b.startTime && a.getCategory().equals(b.getCategory()) && !a.getCourse().equals(b.getCourse())) {
 					a.hasConflict = true;
 					b.hasConflict = true;
 					a.getCategory().hasConflicts = true;
 					System.out.println(String.format("There is a conflict!: \n\t%s ----- %s", a.toString(), b.toString()));
-				}*/
+				}
 			}
 		}
 	}

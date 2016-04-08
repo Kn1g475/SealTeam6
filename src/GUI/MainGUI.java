@@ -37,7 +37,6 @@ public class MainGUI extends JFrame {
 	
 	private Profile profile;
 	private List<Course> courses;
-	private List<Category> cat;
 	
 	private JPanel mainPanel;
 
@@ -62,7 +61,6 @@ public class MainGUI extends JFrame {
 	public MainGUI() {
 		profile = new Profile();
 		courses = new ArrayList<>();
-		cat = new ArrayList<>();
 		
 		setTitle(Constants.WINDOW_TITLE);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -259,7 +257,6 @@ public class MainGUI extends JFrame {
 					
 					//data.readNewRequirementData();
 					schedulePanel.classes = Data.readNewCourseData(profilePanel.semester);
-					Data.setCategories(schedulePanel.classes, cat);
 					schedulePanel.courses = Data.getCourses(schedulePanel.classes);
 					contentSwitcher.show(contentPanel, "SCHEDULE");
 				}

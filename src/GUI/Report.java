@@ -6,9 +6,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import CourseData.Category;
 import CourseData.Profile;
 import Main.Constants;
 
@@ -71,7 +73,7 @@ public class Report extends JPanel {
 
 			JPanel finalsOfWeek = new JPanel(new FlowLayout(FlowLayout.LEFT));
 			finalsOfWeek.setBackground(Constants.CONTENT_BACKGROUND_COLOR);
-			/*for (Category cat : dataObject.finalsCategories) {
+			for (Category cat : profile.finalsCategories) {
 				if (cat.finalDay.equalsIgnoreCase(days[i])) {
 					JButton day = new JButton(String.format("%s%s", Constants.timeToString(cat.finalTime), ((cat.hasConflicts) ? "**" : "")));
 					if (cat.hasConflicts)
@@ -81,7 +83,7 @@ public class Report extends JPanel {
 
 					finalsOfWeek.add(day);
 				}
-			}*/
+			}
 			mainReport.add(finalsOfWeek);
 		}
 		add(mainReport, "MAIN");
