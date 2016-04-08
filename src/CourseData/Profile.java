@@ -134,6 +134,9 @@ public class Profile {
 				sb.append(c + "\n");
 			}
 			sb.append("Classes: \n");
+			for (Class c : schedule) {
+				sb.append(c.fileSave() + "\n");
+			}
 			bw.write(sb.toString());
 			
 		} catch (IOException e) {
@@ -141,12 +144,42 @@ public class Profile {
 		}
 		
 	}
-	public void readProfile(File selectedFile) {
+	public String readProfile(File selectedFile) {
 		try (BufferedReader br = new BufferedReader(new FileReader(selectedFile))) {
+			String line = br.readLine();
+			String [] temp = line.split(":");
+			temp[1] = temp[1].trim();
+			this.uniqueID = temp[1];
+			
+			line = br.readLine();
+			temp = line.split(":");
+			temp[1] = temp[1].trim();
+			major = temp[1];
+			
+			line = br.readLine();
+			temp = line.split(":");
+			temp[1] = temp[1].trim();
+			curYear = temp[1];
+			
+			
+			line = br.readLine();
+			temp = line.split(":");
+			temp[1] = temp[1].trim();
+			hours = Integer.parseInt(temp[1]);
+			br.readLine();
+			while(!(line = br.readLine()).equals("Classes:")) {
+				temp = line.split("\\|");
+				takenCourses.add(new Course(temp[0],temp[1],temp[2]));
+			}
+			while((line = br.readLine()) != null) {
+				schedule.add(new Class(line));
+			}
 			
 		} catch (IOException e) {
 			e.printStackTrace();
+			return "Error: File could not be Read";
 		}
+		return "";
 	}
 	
 	public boolean checkFeasibility() {

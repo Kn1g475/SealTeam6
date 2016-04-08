@@ -217,11 +217,12 @@ public class MainGUI extends JFrame {
 					return;
 				}
 				String result = "";
-
+				result = profile.readProfile(selectedFile);
 				if (!result.replace("Error", "").equals(result))
 					alert(result, false);
 				else {
-					fileReport();
+					//fileReport();
+					profileUpload();
 					alert(result, true);
 				}
 				selectedFile = null;
@@ -231,7 +232,13 @@ public class MainGUI extends JFrame {
 			}
 		}
 	}
-
+	private void profileUpload() {
+		if (profilePanel != null)
+			contentSwitcher.removeLayoutComponent(profilePanel);
+		profilePanel = new ProfileGUI(profile);
+		contentPanel.add(profilePanel, "PROFILE");
+		contentSwitcher.show(contentPanel, "PROFILE");
+	}
 	/**
 	 * Listens for clicks on the side bar labels
 	 * @author matt

@@ -5,9 +5,9 @@ package CourseData;
  */
 public class Course implements Comparable<Course> {
 
-	//private String subject; //Subject of the course.
+	private String subject; //Subject of the course.
 	private String title; //Title of the course.
-	//private String courseNumber; //Number of the course.
+	private String courseNumber; //Number of the course.
 
 	public String shortName; //Combined subject and course number string.
 
@@ -18,13 +18,13 @@ public class Course implements Comparable<Course> {
 	 * @param courseNumber Number of the course.
 	 */
 	public Course(String subject, String title, String courseNumber) {
-		if (subject == "" /*|| title == ""*/ || courseNumber == "") {
+		if (subject == "" || title == "" || courseNumber == "") {
 			System.err.println("Error: Invalid input sent to Course constructor");
 			throw new IllegalArgumentException();
 		}
-		//this.subject = subject;
+		this.subject = subject;
 		this.title = title;
-		//this.courseNumber = courseNumber;
+		this.courseNumber = courseNumber;
 		this.shortName = String.format("%s %s",subject, courseNumber);
 	}
 	
@@ -55,6 +55,9 @@ public class Course implements Comparable<Course> {
 	 */
 	public String toString() {
 		return String.format("%s - %s", shortName, title);
+	}
+	public String saveString() {
+		return String.format("%s|%s|%s", subject, title, courseNumber);
 	}
 
 	/**

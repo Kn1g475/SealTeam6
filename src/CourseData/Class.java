@@ -1,6 +1,8 @@
 package CourseData;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import CourseData.Class;
@@ -43,7 +45,7 @@ public class Class implements Comparable<Class> {
 		this.meetingDays = 0;
 		this.startTime = startTime;
 		this.endTime = endTime;
-		
+
 		addMeetingDays(days);
 
 		if (this.course == null || this.instructor == "" || this.CRN_Number == "" || this.section == ""
@@ -58,6 +60,37 @@ public class Class implements Comparable<Class> {
 		this(new Course(lineArgs[1], lineArgs[4], lineArgs[2]),lineArgs[9],lineArgs[0],
 				lineArgs[3],Integer.parseInt(lineArgs[6]),Integer.parseInt(lineArgs[7]),lineArgs[5]);
 	}
+	
+	public Class(String line) {
+		String[] args = line.split("\\|");
+		
+		this.CRN_Number = args[0];
+		this.course = new Course(args[1],args[2],args[3]);
+		this.section = args[4];
+		
+		this.times = new HashMap<>();
+		String[] temp = args[5].split(":");
+		String days = "";
+		List<TimeInterval> inter = new ArrayList<>();
+		for(String t : temp) {
+			if(t.contains("-")) {
+				String[] temp2 = t.split("-");
+				temp2[0] = temp2[0].trim();
+				temp2[1] = temp2[1].trim();
+				inter.add(new TimeInterval(Integer.parseInt(temp2[0]),Integer.parseInt(temp2[1])));
+			} else {
+				t = t.trim();
+				days += t;
+			}
+		}
+		this.startTime = inter.get(0).getStartTime();
+		this.endTime = inter.get(0).getEndTime();
+		addTimes(days,inter);
+		this.instructor = temp[6];
+		this.meetingDays = 0;
+		addMeetingDays(days);
+	}
+
 	public boolean doesOverlap(Class test) {
 		for(char day : test.times.keySet()) {
 			if (times.containsKey(day)) {
@@ -67,6 +100,7 @@ public class Class implements Comparable<Class> {
 		}
 		return false;
 	}
+
 	public void addLab(Class lab) {
 		addTimes(lab.times);
 		addMeetingDays(lab.getMeetingDays());
@@ -78,27 +112,62 @@ public class Class implements Comparable<Class> {
 				times.put(day, new TimeInterval(startTime,endTime));
 			}
 		}
-
 	}
 	private void addTimes(Map<Character,TimeInterval> map) {
-
 		for (char day : map.keySet()) {
-			if (!times.containsKey(day)) {
-				times.put(day, new TimeInterval(map.get(day).getStartTime(),map.get(day).getEndTime()));
-			}
+			addTimes(Character.toString(day),map.get(day).getStartTime(),map.get(day).getEndTime());
 		}
-
+	}
+	private void addTimes(String days, List<TimeInterval> inter) {
+		int cur = 0;
+		for (char day : days.toCharArray()) {
+			addTimes(Character.toString(day),inter.get(cur).getStartTime(),inter.get(cur).getEndTime());
+			cur++;
+		}
 	}
 	private String getTimes(String meetingDays) {
 		StringBuilder br = new StringBuilder();
+		String checked = "";
+		boolean isNew = true;
 		for (char day : meetingDays.toCharArray()) {
-			br.append(day+": ");
-			br.append(String.format("%s - %s\t", 
-					Constants.timeToString(times.get(day).getStartTime()),Constants.timeToString(times.get(day).getEndTime())));
+			for (char day2 : checked.toCharArray()) {
+				if(times.get(day2).equals(times.get(day))) {
+					br.insert(br.indexOf(checked)+1, day);
+					isNew = false;
+				}
+			}
+			checked += day;
+			if(isNew) {
+				br.append(day+": ");
+				br.append(String.format("%s - %s\t", 
+						Constants.timeToString(times.get(day).getStartTime()),Constants.timeToString(times.get(day).getEndTime())));
+			}
+			isNew = true;
 		}
 		return br.toString();
 	}
 	
+	
+	private String getSaveTimes (String meetingDays) {
+		StringBuilder br = new StringBuilder();
+		String checked = "";
+		boolean isNew = true;
+		for (char day : meetingDays.toCharArray()) {
+			for (char day2 : checked.toCharArray()) {
+				if(times.get(day2).equals(times.get(day))) {
+					br.insert(br.indexOf(checked)+1, day);
+					isNew = false;
+				}
+			}
+			checked += day;
+			if(isNew) {
+				br.append(day+": ");
+				br.append(String.format("%d - %d\t",times.get(day).getStartTime(),times.get(day).getEndTime()));
+			}
+			isNew = true;
+		}
+		return br.toString();
+	}
 	/**
 	 * Accesser method for the course.
 	 * @return Course
@@ -159,13 +228,8 @@ public class Class implements Comparable<Class> {
 		return String.format("%s:\t\t%s\t\t%s\t\t%s", CRN_Number,
 				course.toString(section),instructor,getTimes(getMeetingDays()));
 	}
-	public String output() {
-		return String.format("%s with %s from %s on %s with final at %s(%s)", 
-				course.toString(section),instructor,getTimes(getMeetingDays()),getMeetingDays(),getFinalInfo(),CRN_Number); 
-	}
-
 	public String fileSave() {
-		return String.format("%s|%s|%s|%s|%s|%s", CRN_Number,course, section,getTimes(getMeetingDays()),instructor,getMeetingDays());
+		return String.format("%s|%s|%s|%s|%s", CRN_Number,course.saveString(), section,getSaveTimes(getMeetingDays()),instructor);
 	}
 	/**
 	 * ToString method that returns all information except for the info of the final.
@@ -175,7 +239,6 @@ public class Class implements Comparable<Class> {
 		return String.format("%s <td>%s%s</td><td>%s</td><td>(%s)</td></tr>",
 				(hasConflict)?("<tr style=\"font-weight:bold;\"><td>***</td>"):("<tr><td></td>"),
 						course.shortName,section, getTimes(getMeetingDays()), instructor, CRN_Number);
-
 	}
 
 	/**
@@ -251,12 +314,14 @@ public class Class implements Comparable<Class> {
 			startTime = start;
 			endTime = end;
 		}
-
 		public int getStartTime() {
 			return startTime;
 		}
 		public int getEndTime() {
 			return endTime;
+		}
+		public boolean equals(TimeInterval test) {
+			return getStartTime() == test.getStartTime() && getEndTime() == test.getEndTime();
 		}
 		public boolean doesOverlap(TimeInterval temp) {
 			return (temp.getStartTime() >= this.getStartTime() && temp.getStartTime() <= this.getEndTime()) ||
