@@ -35,10 +35,9 @@ import Main.Constants;
 @SuppressWarnings("serial")
 public class MainGUI extends JFrame {
 	File selectedFile;
-	
+
 	private Profile profile;
-	private List<Course> courses;
-	
+
 	private JPanel mainPanel;
 
 	private CardLayout contentSwitcher;
@@ -52,7 +51,7 @@ public class MainGUI extends JFrame {
 	private JPanel instructionsPanel;
 	private JPanel reportPanel;
 	private ProfileGUI profilePanel;
-	
+
 
 	/**
 	 * The main constructor. Creates the GUI and initializes the program.
@@ -61,7 +60,6 @@ public class MainGUI extends JFrame {
 	 */
 	public MainGUI() {
 		profile = new Profile();
-		courses = new ArrayList<>();
 		this.setIconImage(new ImageIcon("img/Icon.png").getImage());
 		setTitle(Constants.WINDOW_TITLE);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -70,10 +68,8 @@ public class MainGUI extends JFrame {
 
 		// moves the window to the middle of the screen because it's annoying
 		// that it pops up in the corner
-		setBounds(
-				(int) ((java.awt.Toolkit.getDefaultToolkit().getScreenSize()
-						.getWidth() / 2) - (Constants.MAIN_GUI_WIDTH / 2)),
-						100, 0, 0);
+		setBounds((int)((java.awt.Toolkit.getDefaultToolkit().getScreenSize()
+						.getWidth() / 2) - (Constants.MAIN_GUI_WIDTH / 2)), 100, 0, 0);
 
 		// set window size
 		//setSize(Constants.MAIN_GUI_WIDTH, Constants.MAIN_GUI_HEIGHT);
@@ -90,7 +86,7 @@ public class MainGUI extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		
+
 		mainPanel.add(topBar, BorderLayout.NORTH);
 
 		// =================== Make and add side bar =====================
@@ -114,7 +110,7 @@ public class MainGUI extends JFrame {
 		contentPanel.add(instructionsPanel, "INSTRUCTIONS");
 
 		mainPanel.add(contentPanel, BorderLayout.CENTER);
-	
+
 
 		// pack and display the main GUI
 		pack();
@@ -171,8 +167,8 @@ public class MainGUI extends JFrame {
 		reportPanel = new Report(profile);
 		contentPanel.add(reportPanel, "REPORT");
 	}
-	
-	
+
+
 	/**
 	 * Listens for top bar button actions
 	 * @author matt
@@ -245,7 +241,7 @@ public class MainGUI extends JFrame {
 	 * @author matt
 	 */
 
-	
+
 	private class SideButtonListener extends MouseAdapter {
 		/**
 		 * Takes the action of a mouse click on a side bar button. Includes
@@ -262,8 +258,8 @@ public class MainGUI extends JFrame {
 					profile.setMajor(profilePanel.major);
 					profile.setUniqueID(profilePanel.uniqueId);
 					profile.setHours(profilePanel.hours);
-					
-					
+
+
 					if(schedulePanel.classes.isEmpty())
 						schedulePanel.classes = Data.readNewCourseData(profilePanel.semester);
 					schedulePanel.courses = Data.getCourses(schedulePanel.classes);
@@ -275,7 +271,7 @@ public class MainGUI extends JFrame {
 				contentSwitcher.show(contentPanel, "INSTRUCTIONS");
 			if (e.getSource() == sideBar.reportButton)
 				if(profilePanel.allSelected() == true)
-				contentSwitcher.show(contentPanel, "REPORT");
+					contentSwitcher.show(contentPanel, "REPORT");
 		}
 	}
 }
