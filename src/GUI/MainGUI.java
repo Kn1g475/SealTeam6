@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -61,7 +62,7 @@ public class MainGUI extends JFrame {
 	public MainGUI() {
 		profile = new Profile();
 		courses = new ArrayList<>();
-		
+		this.setIconImage(new ImageIcon("img/Icon.png").getImage());
 		setTitle(Constants.WINDOW_TITLE);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
