@@ -57,7 +57,7 @@ public class TopBar extends JPanel {
 
 		// set up Icon and Program Title in top left corner
 		JLabel title = new JLabel();
-		title.setBounds(0, 10, 208, 32);
+		title.setBounds(0, 10, 400, 32);
 		Image img = new ImageIcon(Constants.MIAMI_ICON_NAME).getImage();
 		img = img.getScaledInstance(Constants.TOP_ROW_HEIGHT,
 				Constants.TOP_ROW_HEIGHT, Image.SCALE_SMOOTH);
@@ -69,34 +69,34 @@ public class TopBar extends JPanel {
 		
 		JPanel buttonsPanel = new JPanel();
 		buttonsPanel.setBorder(new LineBorder(new Color(0, 0, 0), 0));
-		buttonsPanel.setBounds(220, 0, 496, 32);
+		buttonsPanel.setBounds(400, 5, 380, 32);
 		buttonsPanel.setBackground(Constants.MENU_BACKGROUND_COLOR);
 		add(buttonsPanel);
 		buttonsPanel.setLayout(null);
 		
 		addButton = new JButton("Add File");
 		addButton.setPreferredSize(new Dimension(110, 29));
-		addButton.setBounds(54, 6, 117, 29);
+		addButton.setBounds(0, 0, 117, 29);
 		addButton.setActionCommand("addButton");
 		buttonsPanel.add(addButton);
 		addButton.addActionListener(buttonListener);
 		
 		deleteButton = new JButton("Remove");
-		deleteButton.setBounds(235, 6, 117, 29);
+		deleteButton.setBounds(130, 0, 117, 29);
 		buttonsPanel.add(deleteButton);
 		deleteButton.setActionCommand("deleteButton");
 		deleteButton.setEnabled(false);
 		deleteButton.addActionListener(buttonListener);
 		
 		submitButton = new JButton("Submit");
-		submitButton.setBounds(397, 8, 117, 24);
+		submitButton.setBounds(260, 0, 117, 29);
 		buttonsPanel.add(submitButton);
 		submitButton.setActionCommand("submitButton");
 		submitButton.setEnabled(false);
 		submitButton.addActionListener(buttonListener);
 		
 		JPanel labelPanel = new JPanel();
-		labelPanel.setBounds(272, 33, 430, 16);
+		labelPanel.setBounds(400, 33, 380, 16);
 		labelPanel.setBackground(Constants.MENU_BACKGROUND_COLOR);
 		labelPanel.setBorder(new LineBorder(new Color(0, 0, 0), 0));
 		add(labelPanel);
