@@ -2,32 +2,45 @@ package GUI;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import GUI.MainGUI.ButtonListener;
 import Main.Constants;
 
-import GUI.MainGUI.ButtonListener;
+import javax.swing.JRadioButton;
+
 import Main.FileState;
+
 import java.awt.Cursor;
+
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 
 /**
  * The top bar of the GUI.
+ * 
  * @author matt
+ * 
  */
 @SuppressWarnings("serial")
 public class TopBar extends JPanel {
-
+	
 	public static FileState state = FileState.COURSE;
-
+	
 	public JLabel fileLabel, errorLabel;
 	public JButton addButton, submitButton, deleteButton;
+	
 
 	/**
 	 * Creates a new top bar object, takes in a listener class so that this
@@ -36,8 +49,6 @@ public class TopBar extends JPanel {
 	 * @param buttonListener
 	 */
 	public TopBar(ButtonListener buttonListener) {
-
-		setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 		setPreferredSize(new Dimension(795, 55));
 		setBackground(Constants.MENU_BACKGROUND_COLOR);
 		setBorder(BorderFactory.createMatteBorder(0, 0,
@@ -46,59 +57,62 @@ public class TopBar extends JPanel {
 
 		// set up Icon and Program Title in top left corner
 		JLabel title = new JLabel();
+		title.setBounds(0, 10, 208, 32);
 		Image img = new ImageIcon(Constants.MIAMI_ICON_NAME).getImage();
 		img = img.getScaledInstance(Constants.TOP_ROW_HEIGHT,
 				Constants.TOP_ROW_HEIGHT, Image.SCALE_SMOOTH);
+		setLayout(null);
 		title.setIcon(new ImageIcon(img));
 		title.setFont(Constants.TITLE_FONT);
 		title.setText(Constants.TITLE);
 		add(title);
-
-		//add(Box.createHorizontalGlue());
-
-		// set up all buttons and labels
-		JPanel buttonsGroup = new JPanel();
-		buttonsGroup.setLayout(new BoxLayout(buttonsGroup, BoxLayout.PAGE_AXIS));
-		buttonsGroup.setBackground(Constants.MENU_BACKGROUND_COLOR);
-		JPanel fileButtons = new JPanel();
-		add(fileButtons);
-		fileButtons.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-
+		
+		JPanel buttonsPanel = new JPanel();
+		buttonsPanel.setBorder(new LineBorder(new Color(0, 0, 0), 0));
+		buttonsPanel.setBounds(220, 0, 496, 32);
+		buttonsPanel.setBackground(Constants.MENU_BACKGROUND_COLOR);
+		add(buttonsPanel);
+		buttonsPanel.setLayout(null);
+		
 		addButton = new JButton("Add File");
-		addButton.setBounds(86, 5, 95, 29);
+		addButton.setPreferredSize(new Dimension(110, 29));
+		addButton.setBounds(54, 6, 117, 29);
 		addButton.setActionCommand("addButton");
+		buttonsPanel.add(addButton);
 		addButton.addActionListener(buttonListener);
-
+		
 		deleteButton = new JButton("Remove");
-		deleteButton.setBounds(239, 5, 93, 29);
+		deleteButton.setBounds(235, 6, 117, 29);
+		buttonsPanel.add(deleteButton);
 		deleteButton.setActionCommand("deleteButton");
 		deleteButton.setEnabled(false);
 		deleteButton.addActionListener(buttonListener);
-
+		
 		submitButton = new JButton("Submit");
-		submitButton.setBounds(386, 5, 88, 29);
+		submitButton.setBounds(397, 8, 117, 24);
+		buttonsPanel.add(submitButton);
 		submitButton.setActionCommand("submitButton");
 		submitButton.setEnabled(false);
 		submitButton.addActionListener(buttonListener);
-		fileButtons.setLayout(null);
-
-
-		fileButtons.add(addButton);
-		fileButtons.add(deleteButton);
-		fileButtons.add(submitButton);
-		fileButtons.setBackground(Constants.MENU_BACKGROUND_COLOR);
-
+		
+		JPanel labelPanel = new JPanel();
+		labelPanel.setBounds(272, 33, 430, 16);
+		labelPanel.setBackground(Constants.MENU_BACKGROUND_COLOR);
+		labelPanel.setBorder(new LineBorder(new Color(0, 0, 0), 0));
+		add(labelPanel);
+		labelPanel.setLayout(null);
+		
+		fileLabel = new JLabel();
+		fileLabel.setBounds(27, 0, 406, 17);
+		labelPanel.add(fileLabel);
+		fileLabel.setFont(Constants.SMALL_FONT);
+		
 		errorLabel = new JLabel();
+		errorLabel.setBounds(27, 0, 406, 17);
+		labelPanel.add(errorLabel);
 		errorLabel.setFont(Constants.SMALL_FONT);
 		errorLabel.setForeground(Color.RED);
 		errorLabel.setBackground(Constants.MENU_BACKGROUND_COLOR);
-		buttonsGroup.add(errorLabel);
 
-		add(buttonsGroup);
-		fileLabel = new JLabel();
-		buttonsGroup.add(fileLabel);
-		fileLabel.setFont(Constants.SMALL_FONT);
-		fileLabel.setLocation(getX(), 50);
 	}
-
 }
