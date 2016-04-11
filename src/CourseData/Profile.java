@@ -131,7 +131,7 @@ public class Profile {
 			sb.append("Hours: " + hours + "\n");
 			sb.append("Courses: \n");
 			for (Course c : this.takenCourses) {
-				sb.append(c + "\n");
+				sb.append(c.saveString() + "\n");
 			}
 			sb.append("Classes: \n");
 			for (Class c : schedule) {
@@ -167,11 +167,13 @@ public class Profile {
 			temp[1] = temp[1].trim();
 			hours = Integer.parseInt(temp[1]);
 			br.readLine();
-			while(!(line = br.readLine()).equals("Classes:")) {
+			while(!(line = br.readLine().trim()).equals("Classes:")) {
+				System.out.println(line);
 				temp = line.split("\\|");
 				takenCourses.add(new Course(temp[0],temp[1],temp[2]));
 			}
 			while((line = br.readLine()) != null) {
+				System.out.println(line);
 				schedule.add(new Class(line));
 			}
 			
