@@ -262,6 +262,8 @@ public class MainGUI extends JFrame {
 
 					if(schedulePanel.classes.isEmpty())
 						schedulePanel.classes = Data.readNewCourseData(profilePanel.semester);
+					if(profile.majorReq.isEmpty())
+						profile.majorReq = Data.readNewRequirementData();
 					schedulePanel.courses = Data.getCourses(schedulePanel.classes);
 					contentSwitcher.show(contentPanel, "SCHEDULE");
 				}

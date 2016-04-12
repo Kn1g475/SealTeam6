@@ -16,7 +16,7 @@ public class Profile {
 	private List<Class> schedule;
 	private String uniqueID;
 	private String major;
-	private List<Requirement> majorReq;
+	public List<Requirement> majorReq;
 	private int hours;
 	private String curYear;
 	

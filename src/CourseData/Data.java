@@ -21,7 +21,7 @@ public class Data {
 		List<Requirement> degreeRequirements = new ArrayList<>();;
 		try{
 			DatabaseConnector connector= new DatabaseConnector();
-			degreeRequirements.addAll(connector.getRequrements("SELECT " + Constants.COLUMNS_IN_REQUIREMENTS + "FROM CSE_Requirements WHERE 1"));
+			degreeRequirements.addAll(connector.getRequrements("SELECT " + Constants.COLUMNS_IN_REQUIREMENTS + "FROM CSE_Requirements_2015-2016 WHERE 1"));
 			connector.close();
 		} catch(SQLTimeoutException e){
 			e.printStackTrace();

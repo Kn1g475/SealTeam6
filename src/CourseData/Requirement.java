@@ -28,7 +28,7 @@ public class Requirement {
 	}
 	
 	public Requirement(String[] Args) {
-		this(Args[0],new Course( Args[1], Args[2],Args[3]), Args[4], 
+		this(Args[0],new Course( Args[1],Args[3] ,Args[2]), Args[4], 
 				Args[5].equals("1") ? true : false, Integer.parseInt(Args[6]), Args[7].equals("1") ? true : false, Args[8]); 
 	}
 	
