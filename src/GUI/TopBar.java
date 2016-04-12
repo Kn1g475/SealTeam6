@@ -2,14 +2,9 @@ package GUI;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -18,13 +13,10 @@ import javax.swing.JPanel;
 import GUI.MainGUI.ButtonListener;
 import Main.Constants;
 
-import javax.swing.JRadioButton;
 
 import Main.FileState;
 
-import java.awt.Cursor;
 
-import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 /**

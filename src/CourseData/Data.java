@@ -7,7 +7,6 @@ import java.util.List;
 
 import CourseData.Class;
 import Main.Constants;
-import Exceptions.*;
 /**
  * The container class for the data structure that holds all class data
  * @author matt
