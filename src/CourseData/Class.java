@@ -71,22 +71,28 @@ public class Class implements Comparable<Class> {
 		this.times = new HashMap<>();
 		String[] temp = args[5].split(":");
 		String days = "";
-		List<TimeInterval> inter = new ArrayList<>();
+		String keys = "";
+		Map<Character,TimeInterval> inter = new HashMap<>();
 		for(String t : temp) {
 			if(t.contains("-")) {
 				String[] temp2 = t.split("-");
 				temp2[0] = temp2[0].trim();
 				temp2[1] = temp2[1].trim();
-				inter.add(new TimeInterval(Integer.parseInt(temp2[0]),Integer.parseInt(temp2[1])));
+				for (char key : keys.toCharArray()) {
+					inter.put(key, new TimeInterval(Integer.parseInt(temp2[0]),Integer.parseInt(temp2[1])));
+					days.replace(Character.toString(key), "");
+				}
 			} else {
 				t = t.trim();
 				days += t;
+				keys += t;
 			}
 		}
-		this.startTime = inter.get(0).getStartTime();
-		this.endTime = inter.get(0).getEndTime();
-		addTimes(days,inter);
-		this.instructor = temp[6];
+		//System.out.println(inter);
+		this.startTime = inter.get(days.charAt(0)).getStartTime();
+		this.endTime = inter.get(days.charAt(0)).getEndTime();
+		addTimes(inter);
+		this.instructor = args[6];
 		this.meetingDays = 0;
 		addMeetingDays(days);
 	}
@@ -116,13 +122,6 @@ public class Class implements Comparable<Class> {
 	private void addTimes(Map<Character,TimeInterval> map) {
 		for (char day : map.keySet()) {
 			addTimes(Character.toString(day),map.get(day).getStartTime(),map.get(day).getEndTime());
-		}
-	}
-	private void addTimes(String days, List<TimeInterval> inter) {
-		int cur = 0;
-		for (char day : days.toCharArray()) {
-			addTimes(Character.toString(day),inter.get(cur).getStartTime(),inter.get(cur).getEndTime());
-			cur++;
 		}
 	}
 	private String getTimes(String meetingDays) {
@@ -162,7 +161,7 @@ public class Class implements Comparable<Class> {
 			checked += day;
 			if(isNew) {
 				br.append(day+": ");
-				br.append(String.format("%d - %d\t",times.get(day).getStartTime(),times.get(day).getEndTime()));
+				br.append(String.format("%d - %d\t:",times.get(day).getStartTime(),times.get(day).getEndTime()));
 			}
 			isNew = true;
 		}
@@ -319,6 +318,9 @@ public class Class implements Comparable<Class> {
 		}
 		public int getEndTime() {
 			return endTime;
+		}
+		public String toString() {
+			return String.format("%d - %d", getStartTime(), getEndTime());
 		}
 		public boolean equals(TimeInterval test) {
 			return getStartTime() == test.getStartTime() && getEndTime() == test.getEndTime();

@@ -234,6 +234,10 @@ public class MainGUI extends JFrame {
 			contentSwitcher.removeLayoutComponent(profilePanel);
 		profilePanel = new ProfileGUI(profile);
 		contentPanel.add(profilePanel, "PROFILE");
+		if (schedulePanel != null)
+			contentSwitcher.removeLayoutComponent(schedulePanel);
+		schedulePanel = new Schedule(profile);
+		contentPanel.add(schedulePanel,"SCHEDULE"); 
 		contentSwitcher.show(contentPanel, "PROFILE");
 	}
 	/**

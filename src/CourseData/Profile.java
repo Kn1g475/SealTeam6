@@ -123,7 +123,7 @@ public class Profile {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter(save))) {
+		try (BufferedWriter bw = new BufferedWriter(new FileWriter(save,false))) {
 			StringBuilder sb = new StringBuilder();
 			sb.append("Unique Id: " + uniqueID + "\n");
 			sb.append("Major: " + major + "\n");

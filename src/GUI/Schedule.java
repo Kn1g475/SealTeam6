@@ -59,8 +59,10 @@ public class Schedule extends JPanel{
 		setBorder(new CompoundBorder());
 		setBackground(Constants.CONTENT_BACKGROUND_COLOR);
 		setLayout(null);
-		
+
 		courseList = new DefaultListModel<>();
+		for (Course c : prof.getCoursesTaken()) 
+			courseList.addElement(c);
 		coursesTakenList = new JList<>(courseList);
 		JScrollPane coursePane = new JScrollPane(coursesTakenList);
 		coursePane.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -70,7 +72,11 @@ public class Schedule extends JPanel{
 		coursesTakenLabel = new JLabel("Courses Taken");
 		coursesTakenLabel.setBounds(20, 23, 104, 16);
 		add(coursesTakenLabel);
+		
+		
 		classList = new DefaultListModel<>();
+		for (Class c : prof.getSchedule())
+			classList.addElement(c);
 		coursesDesiredList = new JList<>(classList);
 		JScrollPane classesPane = new JScrollPane(coursesDesiredList);
 		classesPane.setBorder(new LineBorder(new Color(0, 0, 0)));
