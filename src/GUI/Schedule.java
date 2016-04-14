@@ -148,9 +148,11 @@ public class Schedule extends JPanel{
 			}
 			if (e.getActionCommand().equalsIgnoreCase("Remove")) {
 				if (desiredRadioButton.isSelected()) {
+					profile.removeClass(coursesDesiredList.getSelectedValue());
 					classList.removeElement(coursesDesiredList.getSelectedValue());
 				}
 				if (takenRadioButton.isSelected()) {
+					profile.removeCourse(coursesTakenList.getSelectedValue());
 					courseList.removeElement(coursesTakenList.getSelectedValue());
 				}
 			}
