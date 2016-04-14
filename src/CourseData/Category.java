@@ -61,7 +61,8 @@ public class Category {
 	 * @return ifMatches
 	 */
 	public boolean matches(Class c) {
-		if (c.startTime >= this.startTime && c.startTime < this.endTime) {
+		int startTime = c.times.get(c.getMeetingDays().charAt(0)).getStartTime();
+		if (startTime >= this.startTime && startTime < this.endTime) {
 			for (int m : this.meetingDayPatterns) {
 				if (c.matchesMeetingTime(m)) {
 					if (!this.classesInThisCategory.contains(c))

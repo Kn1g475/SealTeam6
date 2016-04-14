@@ -199,12 +199,16 @@ public class Profile {
 	}
 	
 	private boolean checkPreReq() {
+		boolean result = true;
 		for (Class clas : schedule) {
+			System.out.println(clas.getCourse());
 			for(Requirement req : majorReq) {
-				
+				if (clas.getCourse().equals(req.getCourse())) {
+					result = req.getHours() >= getHours() && !req.hasPrereqs(this.takenCourses); 
+				}
 			}
 		}
-		return false;
+		return result;
 	}
 	
 	public boolean isFilledIn() {
@@ -231,7 +235,8 @@ public class Profile {
 
 				if (a.getCategory() == null || b.getCategory() == null)
 					throw new InvalidClassException("There is a class that does not exist");
-				if (a.endTime <= b.startTime && a.getCategory().equals(b.getCategory()) && !a.getCourse().equals(b.getCourse())) {
+				if (a.times.get(a.getMeetingDays().charAt(0)).getEndTime() <= b.times.get(b.getMeetingDays().charAt(0)).getEndTime() 
+						&& a.getCategory().equals(b.getCategory()) && !a.getCourse().equals(b.getCourse())) {
 					a.hasConflict = true;
 					b.hasConflict = true;
 					a.getCategory().hasConflicts = true;

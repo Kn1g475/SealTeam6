@@ -27,7 +27,12 @@ public class Course implements Comparable<Course> {
 		this.courseNumber = courseNumber;
 		this.shortName = String.format("%s %s",subject, courseNumber);
 	}
-	
+	public Course(String shortTitle) {
+		shortName = shortTitle;
+		String[] split = shortTitle.split("\\s+");
+		subject = split[0];
+		courseNumber = split[1];
+	}
 	public String getShortName() {
 		return shortName;
 	}
@@ -36,7 +41,7 @@ public class Course implements Comparable<Course> {
 	 * Compares two courses with each other.
 	 */
 	public int compareTo(Course o) {
-		return this.toString().toLowerCase().compareTo(o.toString().toLowerCase());
+		return this.getShortName().toLowerCase().compareTo(o.getShortName().toLowerCase());
 	}
 
 	/**
@@ -45,7 +50,7 @@ public class Course implements Comparable<Course> {
 	public boolean equals(Object obj) {
 		if (obj instanceof Course) {
 			Course test = (Course) obj;
-			return test.toString().equalsIgnoreCase(this.toString());
+			return test.getShortName().equalsIgnoreCase(this.getShortName());
 		}
 		return false;
 	}

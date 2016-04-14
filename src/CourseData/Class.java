@@ -3,7 +3,6 @@ package CourseData;
 import java.util.HashMap;
 import java.util.Map;
 
-import CourseData.Class;
 import Main.Constants;
 
 /**
@@ -16,7 +15,6 @@ public class Class implements Comparable<Class> {
 	private String section; //Section of the class.
 
 	public Map<Character,TimeInterval> times;
-	public int startTime,endTime;
 	private String instructor; //Instructor of the class.
 
 	public boolean hasConflict = false; //Boolean that determines if there is a conflicting final.
@@ -41,14 +39,12 @@ public class Class implements Comparable<Class> {
 		this.times = new HashMap<>();
 		addTimes(days,startTime,endTime);
 		this.meetingDays = 0;
-		this.startTime = startTime;
-		this.endTime = endTime;
 
 		addMeetingDays(days);
 
 		if (this.course == null || this.instructor == "" || this.CRN_Number == "" || this.section == ""
-				|| this.startTime < 0 || this.startTime > 2400 || this.endTime < 0 || this.endTime > 2400
-				|| this.endTime <= this.startTime || days == "") {
+				|| startTime < 0 || startTime > 2400 || endTime < 0 || endTime > 2400
+				|| endTime <= startTime || days == "") {
 			System.err.println("Error: Invalid or blank input sent to a Class constructor");
 			throw new IllegalArgumentException();
 		}
@@ -87,8 +83,6 @@ public class Class implements Comparable<Class> {
 			}
 		}
 		//System.out.println(inter);
-		this.startTime = inter.get(days.charAt(0)).getStartTime();
-		this.endTime = inter.get(days.charAt(0)).getEndTime();
 		addTimes(inter);
 		this.instructor = args[6];
 		this.meetingDays = 0;
@@ -302,33 +296,5 @@ public class Class implements Comparable<Class> {
 		if( (this.meetingDays & 1) == 1)
 			ret.append("F");
 		return ret.toString();
-	}
-	private class TimeInterval {
-		private int startTime;
-		private int endTime;
-
-		public TimeInterval(int start, int end) {
-			startTime = start;
-			endTime = end;
-		}
-		public int getStartTime() {
-			return startTime;
-		}
-		public int getEndTime() {
-			return endTime;
-		}
-		public String toString() {
-			return String.format("%d - %d", getStartTime(), getEndTime());
-		}
-		public boolean equals(TimeInterval test) {
-			return getStartTime() == test.getStartTime() && getEndTime() == test.getEndTime();
-		}
-		public boolean doesOverlap(TimeInterval temp) {
-			return (temp.getStartTime() >= this.getStartTime() && temp.getStartTime() <= this.getEndTime()) ||
-					(temp.getEndTime() >= this.getStartTime() && temp.getEndTime() <= this.getEndTime());
-		}
-		public boolean inInterval(int time) {
-			return time >= getStartTime() && time < getEndTime();
-		}
 	}
 }

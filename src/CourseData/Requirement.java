@@ -32,6 +32,16 @@ public class Requirement {
 				Args[5].equals("1") ? true : false, Integer.parseInt(Args[6]), Args[7].equals("1") ? true : false, Args[8]); 
 	}
 	
+	public boolean hasPrereqs(List<Course> taken) {
+		for (String shortTitle : prequisites) {
+			System.out.println(shortTitle);
+			if (!taken.contains(new Course(shortTitle))) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	//Accessors
 	public String getUniqueId() {
 		return uniqueId;

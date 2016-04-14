@@ -111,6 +111,7 @@ public class Schedule extends JPanel{
 
 		checkButton = new JButton("Check");
 		checkButton.setBounds(463, 350, 117, 38);
+		checkButton.addActionListener(new ButtonEvent());
 		add(checkButton);
 
 		saveButton = new JButton("Save");
@@ -152,6 +153,10 @@ public class Schedule extends JPanel{
 				if (takenRadioButton.isSelected()) {
 					courseList.removeElement(coursesTakenList.getSelectedValue());
 				}
+			}
+			if (e.getActionCommand().equalsIgnoreCase("Check")) {
+				if (!profile.checkFeasibility())
+					JOptionPane.showMessageDialog(parent,"Schedule is not good","Opps" ,JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}
