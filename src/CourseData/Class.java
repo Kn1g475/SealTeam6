@@ -12,7 +12,7 @@ public class Class implements Comparable<Class> {
 
 	private Course course; //Course associated with the class.
 	public String CRN_Number; //Course registration number
-	private String section; //Section of the class.
+	public String section; //Section of the class.
 
 	public Map<Character,TimeInterval> times;
 	private String instructor; //Instructor of the class.
@@ -229,7 +229,7 @@ public class Class implements Comparable<Class> {
 	public String toStringReportHTMLRow() {
 		return String.format("%s <td>%s%s</td><td>%s</td><td>(%s)</td></tr>",
 				(hasConflict)?("<tr style=\"font-weight:bold;\"><td>***</td>"):("<tr><td></td>"),
-						course.shortName,section, getTimes(getMeetingDays()), instructor, CRN_Number);
+						course.getShortName(),section, getTimes(getMeetingDays()), instructor, CRN_Number);
 	}
 
 	/**

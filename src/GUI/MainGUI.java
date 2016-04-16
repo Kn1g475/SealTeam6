@@ -14,6 +14,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import CourseData.Data;
@@ -65,7 +66,7 @@ public class MainGUI extends JFrame {
 		// moves the window to the middle of the screen because it's annoying
 		// that it pops up in the corner
 		setBounds((int)((java.awt.Toolkit.getDefaultToolkit().getScreenSize()
-						.getWidth() / 2) - (Constants.MAIN_GUI_WIDTH / 2)), 100, 0, 0);
+				.getWidth() / 2) - (Constants.MAIN_GUI_WIDTH / 2)), 100, 0, 0);
 
 		// set window size
 		//setSize(Constants.MAIN_GUI_WIDTH, Constants.MAIN_GUI_HEIGHT);
@@ -96,7 +97,7 @@ public class MainGUI extends JFrame {
 				Constants.CONTENT_BACKGROUND_COLOR, 10));
 
 		profilePanel = new ProfileGUI(profile);
-		schedulePanel = new Schedule(profile); 
+		schedulePanel = new Schedule(profile, new CheckButton()); 
 		aboutPanel = new About();
 		instructionsPanel = new Instructions();
 
@@ -165,6 +166,20 @@ public class MainGUI extends JFrame {
 	}
 
 
+	public class CheckButton implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			if (arg0.getActionCommand().equalsIgnoreCase("Check")) {
+				if (!profile.checkFeasibility())
+					JOptionPane.showMessageDialog(schedulePanel.parent,"Schedule is not good","Opps" ,JOptionPane.ERROR_MESSAGE);
+				else
+					fileReport();
+			}
+		}
+
+	}
+
 	/**
 	 * Listens for top bar button actions
 	 * @author matt
@@ -232,7 +247,7 @@ public class MainGUI extends JFrame {
 		contentPanel.add(profilePanel, "PROFILE");
 		if (schedulePanel != null)
 			contentSwitcher.removeLayoutComponent(schedulePanel);
-		schedulePanel = new Schedule(profile);
+		schedulePanel = new Schedule(profile, new CheckButton());
 		contentPanel.add(schedulePanel,"SCHEDULE"); 
 		contentSwitcher.show(contentPanel, "PROFILE");
 	}
@@ -240,8 +255,6 @@ public class MainGUI extends JFrame {
 	 * Listens for clicks on the side bar labels
 	 * @author matt
 	 */
-
-
 	private class SideButtonListener extends MouseAdapter {
 		/**
 		 * Takes the action of a mouse click on a side bar button. Includes
@@ -252,28 +265,26 @@ public class MainGUI extends JFrame {
 			clearAlert();
 			if (e.getSource() == sideBar.profileButton)
 				contentSwitcher.show(contentPanel, "PROFILE");
-			if(e.getSource() == sideBar.scheduleButton)
-				if (profilePanel.allSelected() == true) {
-					profile.setCurYear(profilePanel.curYear);
+			if(e.getSource() == sideBar.scheduleButton && profilePanel.allSelected()) {
+				profile.setCurYear(profilePanel.curYear);
+				profile.setUniqueID(profilePanel.uniqueId);
+				profile.setHours(profilePanel.hours);
+
+				if(schedulePanel.classes.isEmpty())
+					schedulePanel.classes = Data.readNewCourseData(profilePanel.semester);
+				if(profile.majorReq.isEmpty() || !profile.getMajor().equals(profilePanel.major)) {
 					profile.setMajor(profilePanel.major);
-					profile.setUniqueID(profilePanel.uniqueId);
-					profile.setHours(profilePanel.hours);
-
-
-					if(schedulePanel.classes.isEmpty())
-						schedulePanel.classes = Data.readNewCourseData(profilePanel.semester);
-					if(profile.majorReq.isEmpty())
-						profile.majorReq = Data.readNewRequirementData(profile.getMajor());
-					schedulePanel.courses = Data.getCourses(schedulePanel.classes);
-					contentSwitcher.show(contentPanel, "SCHEDULE");
+					profile.majorReq = Data.readNewRequirementData(profile.getMajor());
 				}
+				schedulePanel.courses = Data.getCourses(schedulePanel.classes);
+				contentSwitcher.show(contentPanel, "SCHEDULE");
+			}
 			if (e.getSource() == sideBar.aboutButton)
 				contentSwitcher.show(contentPanel, "ABOUT");
 			if (e.getSource() == sideBar.instructionsButton)
 				contentSwitcher.show(contentPanel, "INSTRUCTIONS");
-			if (e.getSource() == sideBar.reportButton)
-				if(profilePanel.allSelected() == true)
-					contentSwitcher.show(contentPanel, "REPORT");
+			if (e.getSource() == sideBar.reportButton && profilePanel.allSelected())
+				contentSwitcher.show(contentPanel, "REPORT");
 		}
 	}
 }

@@ -13,8 +13,10 @@ public class Requirement {
 	public Requirement(String prequisities, boolean seniorLevel, int hours, boolean instructorPermission, String type) {
 		this.prequisites = new ArrayList<>();
 		String[] args = prequisities.split("\\|");
-		for (String arg : args)
-			this.prequisites.add(arg);
+		for (String arg : args) {
+			if (!arg.isEmpty())
+				this.prequisites.add(arg);
+		}
 		
 		this.seniorLevel = seniorLevel;
 		this.hours = hours;
@@ -27,9 +29,7 @@ public class Requirement {
 	}
 	
 	public boolean hasPrereqs(List<Course> taken) {
-		//System.out.println(prequisites);
 		for (String shortTitle : prequisites) {
-			//System.out.println(shortTitle);
 			if (!taken.contains(new Course(shortTitle))) {
 				return false;
 			}

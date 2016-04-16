@@ -20,6 +20,7 @@ import javax.swing.border.LineBorder;
 import CourseData.Course;
 import CourseData.Class;
 import CourseData.Profile;
+import GUI.MainGUI.CheckButton;
 
 import java.awt.Button;
 import java.awt.Color;
@@ -46,16 +47,16 @@ public class Schedule extends JPanel{
 	List listAddWindow;
 	Scrollbar scrollbarAddWindow;
 	Button acceptWindowButton, cancelWindowButton;
-	
+
 	public java.util.List<Course> courses;
 	public java.util.List<Class> classes;
 
-	public Schedule(Profile prof) {
+	public Schedule(Profile prof, CheckButton event) {
 		profile = prof;
 		parent = (JFrame) this.getParent();
 		courses = new ArrayList<>();
 		classes = new ArrayList<>();
-		
+
 		setBorder(new CompoundBorder());
 		setBackground(Constants.CONTENT_BACKGROUND_COLOR);
 		setLayout(null);
@@ -72,8 +73,8 @@ public class Schedule extends JPanel{
 		coursesTakenLabel = new JLabel("Courses Taken");
 		coursesTakenLabel.setBounds(20, 23, 104, 16);
 		add(coursesTakenLabel);
-		
-		
+
+
 		classList = new DefaultListModel<>();
 		for (Class c : prof.getSchedule())
 			classList.addElement(c);
@@ -111,16 +112,16 @@ public class Schedule extends JPanel{
 
 		checkButton = new JButton("Check");
 		checkButton.setBounds(463, 350, 117, 38);
-		checkButton.addActionListener(new ButtonEvent());
+		checkButton.addActionListener(event);
 		add(checkButton);
 
 		saveButton = new JButton("Save");
 		saveButton.setBounds(463, 408, 117, 29);
 		saveButton.addActionListener(new ButtonEvent());
 		add(saveButton);
-		
+
 	}
-	
+
 	private class ButtonEvent implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -155,10 +156,6 @@ public class Schedule extends JPanel{
 					profile.removeCourse(coursesTakenList.getSelectedValue());
 					courseList.removeElement(coursesTakenList.getSelectedValue());
 				}
-			}
-			if (e.getActionCommand().equalsIgnoreCase("Check")) {
-				if (!profile.checkFeasibility())
-					JOptionPane.showMessageDialog(parent,"Schedule is not good","Opps" ,JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}

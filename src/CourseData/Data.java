@@ -19,8 +19,8 @@ public class Data {
 	 * @throws InvlaidClassException
 	 */
 
-	public static Map<Course, Requirement> readNewRequirementData(String major) {
-		Map<Course, Requirement> degreeRequirements = new HashMap<>();
+	public static Map<String, Requirement> readNewRequirementData(String major) {
+		Map<String, Requirement> degreeRequirements = new HashMap<>();
 		String[] split = major.split(" ");
 		String use = Character.toString(split[0].charAt(0)) + Character.toString(split[1].charAt(0));
 		try{

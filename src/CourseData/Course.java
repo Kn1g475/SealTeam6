@@ -9,8 +9,6 @@ public class Course implements Comparable<Course> {
 	private String title; //Title of the course.
 	private String courseNumber; //Number of the course.
 
-	public String shortName; //Combined subject and course number string.
-
 	/**
 	 * Constructor for courses.
 	 * @param subject Subject of the course.
@@ -25,16 +23,14 @@ public class Course implements Comparable<Course> {
 		this.subject = subject;
 		this.title = title;
 		this.courseNumber = courseNumber;
-		this.shortName = String.format("%s %s",subject, courseNumber);
 	}
 	public Course(String shortTitle) {
-		shortName = shortTitle;
 		String[] split = shortTitle.split("\\s+");
 		subject = split[0];
 		courseNumber = split[1];
 	}
 	public String getShortName() {
-		return shortName;
+		return String.format("%s %s",subject, courseNumber);
 	}
 
 	/**
@@ -59,7 +55,7 @@ public class Course implements Comparable<Course> {
 	 * ToString method to return the shortName and the title of the course.
 	 */
 	public String toString() {
-		return String.format("%s - %s", shortName, title);
+		return String.format("%s - %s", getShortName(), title);
 	}
 	public String saveString() {
 		return String.format("%s|%s|%s", subject, title, courseNumber);
@@ -71,6 +67,6 @@ public class Course implements Comparable<Course> {
 	 * @return String with the shortName, section, and title of the course.
 	 */
 	public String toString(String section) {
-		return String.format("%s%s - %s", shortName, section, title);
+		return String.format("%s%s - %s", getShortName(), section, title);
 	}
 }

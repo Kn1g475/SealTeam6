@@ -25,11 +25,11 @@ public class DatabaseConnector {
 		statement = connector.createStatement();
 	}
 	
-	public Map<Course,Requirement> getRequrements(String SQLStatement) throws SQLException {
+	public Map<String,Requirement> getRequrements(String SQLStatement) throws SQLException {
 		resultSet = statement.executeQuery(SQLStatement);
 		String[] columnNames = Constants.COLUMNS_OF_REQUIREMENTS.split(",");
 		String[] rowArgs = new String[columnNames.length];
-		Map<Course, Requirement> requirements = new HashMap<>();
+		Map<String, Requirement> requirements = new HashMap<>();
 		ReadRow: while (resultSet.next()) {
 			for (int i = 0; i < columnNames.length; i++) {
 				rowArgs[i] = resultSet.getString(columnNames[i]);
@@ -38,8 +38,9 @@ public class DatabaseConnector {
 				System.out.printf("Warning: unable to parse an Hours for a line, skipped: %s\n", dump(rowArgs));
 				continue ReadRow;
 			}
-			
-			requirements.put(new Course(rowArgs[0], rowArgs[2], rowArgs[1]), new Requirement(rowArgs));
+			Course temp = new Course(rowArgs[0], rowArgs[2], rowArgs[1]);
+			//System.out.println(temp);
+			requirements.put(temp.getShortName(), new Requirement(rowArgs));
 		}
 		resultSet.close();
 		return requirements;

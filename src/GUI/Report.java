@@ -1,14 +1,19 @@
 package GUI;
 
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collections;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
 
 import CourseData.Category;
 import CourseData.Profile;
@@ -89,7 +94,7 @@ public class Report extends JPanel {
 		add(mainReport, "MAIN");
 
 		// make a panel for each final exam time and add them to the content switcher.
-		/*for (Category cat : dataObject.finalsCategories) {
+		for (Category cat : profile.finalsCategories) {
 			JTextPane catPanel = new JTextPane();
 			catPanel.setEditable(false);
 			catPanel.setContentType("text/html");
@@ -100,7 +105,7 @@ public class Report extends JPanel {
 
 			Collections.sort(cat.classesInThisCategory);
 
-			for (Class c : cat.classesInThisCategory)
+			for (CourseData.Class c : cat.classesInThisCategory)
 				content += c.toStringReportHTMLRow();
 
 			content += "</table></html>";
@@ -125,7 +130,7 @@ public class Report extends JPanel {
 			paneWrapper.add(backButtonHolder, BorderLayout.SOUTH);
 
 			add(paneWrapper, cat.toString());
-		}*/
+		}
 	}
 
 	/**

@@ -18,16 +18,21 @@ public class Profile {
 	private List<Class> schedule;
 	private String uniqueID;
 	private String major;
-	public Map<Course, Requirement> majorReq;
+	public Map<String, Requirement> majorReq;
 	private int hours;
 	private String curYear;
-	
+
 	public List<Category> finalsCategories;
-	
+	public List<String> Errors;
+	public List<String> Warnings;
 	public Profile() {
 		takenCourses = new ArrayList<>();
 		finalsCategories = new ArrayList<>();
 		schedule = new ArrayList<>();
+		
+		Errors = new ArrayList<>();
+		Warnings = new ArrayList<>();
+		
 		majorReq = new HashMap<>();
 		hours = 0;
 		curYear = "";
@@ -70,8 +75,8 @@ public class Profile {
 		} 
 		return check;
 	}
-	
-	
+
+
 	/**
 	 * Removes a Course that has been taken
 	 * @param course
@@ -88,8 +93,8 @@ public class Profile {
 	public boolean removeClass(Class clas) {
 		return schedule.remove(clas);
 	}
-	
-	
+
+
 	public String getUniqueID() {
 		return uniqueID;
 	}
@@ -114,7 +119,7 @@ public class Profile {
 	public void setCurYear(String curYear) {
 		this.curYear = curYear;
 	}
-	
+
 	public void saveProfile() {
 		File save = new File(uniqueID + major + ".prof");
 		System.out.println(save.getAbsolutePath());
@@ -139,11 +144,11 @@ public class Profile {
 				sb.append(c.fileSave() + "\n");
 			}
 			bw.write(sb.toString());
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 	public String readProfile(File selectedFile) {
 		try (BufferedReader br = new BufferedReader(new FileReader(selectedFile))) {
@@ -151,18 +156,18 @@ public class Profile {
 			String [] temp = line.split(":");
 			temp[1] = temp[1].trim();
 			this.uniqueID = temp[1];
-			
+
 			line = br.readLine();
 			temp = line.split(":");
 			temp[1] = temp[1].trim();
 			major = temp[1];
-			
+
 			line = br.readLine();
 			temp = line.split(":");
 			temp[1] = temp[1].trim();
 			curYear = temp[1];
-			
-			
+
+
 			line = br.readLine();
 			temp = line.split(":");
 			temp[1] = temp[1].trim();
@@ -177,18 +182,29 @@ public class Profile {
 				System.out.println(line);
 				schedule.add(new Class(line));
 			}
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 			return "Error: File could not be Read";
 		}
 		return "";
 	}
-	
+
 	public boolean checkFeasibility() {
-		return !checkPreReq();
+		Errors.clear();
+		Warnings.clear();
+		for (Class c : schedule) {
+			String err = checkPreReq(c);
+			if (err.contains("Invalid"))
+				Errors.add(err);
+			if (err.contains("Warning"))
+				Warnings.add(err);
+		}
+		System.out.println(Errors);
+		System.out.println(Warnings);
+		return Errors.isEmpty();
 	}
-	
+
 	private boolean checkTimeOverlap(Class add) {
 		boolean test = false;
 		for (Class clas : schedule) {
@@ -199,31 +215,34 @@ public class Profile {
 		}
 		return test;
 	}
-	
-	private boolean checkPreReq() {
+
+	private String checkPreReq(Class test) {
 		//System.out.println(majorReq);
-		boolean result = true;
-		for (Class clas : schedule) {
-			if (majorReq.containsKey(clas.getCourse())) {
-				Requirement cur = majorReq.get(clas.getCourse());
-				result = cur.getHours() >= getHours() && !cur.hasPrereqs(this.takenCourses);
-			}
-			else {
-				System.out.println("Does not contain " + clas.getCourse());
-			}
+		Course curCourse = test.getCourse();
+		if (majorReq.containsKey(curCourse.getShortName())) {
+			Requirement req = majorReq.get(test.getCourse().getShortName());
+
+			if (req.getHours() > getHours())
+				return String.format("Invalid: Need %d for %s you have %d ", req.getHours(), curCourse.toString(test.section), getHours());
+			if (!req.hasPrereqs(this.takenCourses))
+				return "Invalid: Required that you have taken: " + req.getPrequisites();
+			if (req.isSeniorLevel())
+				if (this.curYear.equals("Fourth Year +"))
+					return "Invalid: Senior required for " + curCourse.toString(test.section);
+			if (req.isInstructorPermission())
+				return String.format("Warning: %s requires instructor permission", curCourse.toString(test.section));
 		}
-		return result;
+		else {
+			System.out.println("Does not contain " + curCourse);
+		}
+		return "";
 	}
-	
-	public boolean isFilledIn() {
-		return !uniqueID.isEmpty() && !curYear.isEmpty() && !major.isEmpty();
-	}
-	
+
 	public void findConflicts() throws InvalidClassException{
 		Data.setCategories(schedule, finalsCategories);
 		displayError(schedule);
 	}
-	
+
 
 	/**
 	 * method marks classes have overlapping times
@@ -231,7 +250,7 @@ public class Profile {
 	 * @param allClassList
 	 * @throws Exception
 	 */
-	private static void displayError(List<Class> classList) throws InvalidClassException {
+	private void displayError(List<Class> classList) throws InvalidClassException {
 		for (int i = 0; i < classList.size() - 1 ; i++) {
 			for (int j =  i + 1; j < classList.size(); j++) {
 				Class a = classList.get(i);
