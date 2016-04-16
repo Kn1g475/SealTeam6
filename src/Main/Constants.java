@@ -17,8 +17,8 @@ public class Constants {
 
 	public static final String COLUMNS_OF_DATABASE = "CRN,SUBJ,CRSE,SECTION,TITLE,DAYS,START_TIME,END_TIME,DAYS,INSTRUCTOR,MEETING_CATEGORY";
 	public static final String COLUMNS_IN_DATABASE = "`CRN`,`SUBJ`,`CRSE`,`SECTION`,`TITLE`,`DAYS`,`START_TIME`,`END_TIME`,`DAYS`,`INSTRUCTOR`,`MEETING_CATEGORY`";
-	public static final String COLUMNS_OF_REQUIREMENTS = "UniqueID,SUBJ,CRSE,TITLE,PREREQ,SNR,HRS,INSTR,TYPE";
-	public static final String COLUMNS_IN_REQUIREMENTS = "`UniqueID`,`SUBJ`,`CRSE`,`TITLE`,`PREREQ`,`SNR`,`HRS`,`INSTR`,`TYPE`";
+	public static final String COLUMNS_OF_REQUIREMENTS = "SUBJ,CRSE,TITLE,PREREQ,SNR,HRS,INSTR,TYPE";
+	public static final String COLUMNS_IN_REQUIREMENTS = "`SUBJ`,`CRSE`,`TITLE`,`PREREQ`,`SNR`,`HRS`,`INSTR`,`TYPE`";
 	
 	public static final int MAIN_GUI_WIDTH = 800;
 	public static final int MAIN_GUI_HEIGHT = 600;

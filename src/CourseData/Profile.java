@@ -7,7 +7,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import Exceptions.InvalidClassException;
 
@@ -16,7 +18,7 @@ public class Profile {
 	private List<Class> schedule;
 	private String uniqueID;
 	private String major;
-	public List<Requirement> majorReq;
+	public Map<Course, Requirement> majorReq;
 	private int hours;
 	private String curYear;
 	
@@ -26,7 +28,7 @@ public class Profile {
 		takenCourses = new ArrayList<>();
 		finalsCategories = new ArrayList<>();
 		schedule = new ArrayList<>();
-		majorReq = new ArrayList<>();
+		majorReq = new HashMap<>();
 		hours = 0;
 		curYear = "";
 		uniqueID = "";
@@ -199,13 +201,15 @@ public class Profile {
 	}
 	
 	private boolean checkPreReq() {
+		//System.out.println(majorReq);
 		boolean result = true;
 		for (Class clas : schedule) {
-			System.out.println(clas.getCourse());
-			for(Requirement req : majorReq) {
-				if (clas.getCourse().equals(req.getCourse())) {
-					result = req.getHours() >= getHours() && !req.hasPrereqs(this.takenCourses); 
-				}
+			if (majorReq.containsKey(clas.getCourse())) {
+				Requirement cur = majorReq.get(clas.getCourse());
+				result = cur.getHours() >= getHours() && !cur.hasPrereqs(this.takenCourses);
+			}
+			else {
+				System.out.println("Does not contain " + clas.getCourse());
 			}
 		}
 		return result;

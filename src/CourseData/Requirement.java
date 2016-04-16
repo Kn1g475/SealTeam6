@@ -4,18 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Requirement {
-	private String uniqueId;
-	private Course course;
 	private List<String> prequisites;
 	private boolean seniorLevel;
 	private int hours;
 	private boolean instructorPermission;
 	private String type;
 	
-	public Requirement(String uniqueId, Course course, String prequisities, boolean seniorLevel, int hours, boolean instructorPermission, String type) {
-		this.uniqueId = uniqueId;
-		this.course = course;
-		
+	public Requirement(String prequisities, boolean seniorLevel, int hours, boolean instructorPermission, String type) {
 		this.prequisites = new ArrayList<>();
 		String[] args = prequisities.split("\\|");
 		for (String arg : args)
@@ -28,13 +23,13 @@ public class Requirement {
 	}
 	
 	public Requirement(String[] Args) {
-		this(Args[0],new Course( Args[1],Args[3] ,Args[2]), Args[4], 
-				Args[5].equals("1") ? true : false, Integer.parseInt(Args[6]), Args[7].equals("1") ? true : false, Args[8]); 
+		this(Args[3], Args[4].equals("1") ? true : false, Integer.parseInt(Args[5]), Args[6].equals("1") ? true : false, Args[7]); 
 	}
 	
 	public boolean hasPrereqs(List<Course> taken) {
+		//System.out.println(prequisites);
 		for (String shortTitle : prequisites) {
-			System.out.println(shortTitle);
+			//System.out.println(shortTitle);
 			if (!taken.contains(new Course(shortTitle))) {
 				return false;
 			}
@@ -43,12 +38,6 @@ public class Requirement {
 	}
 	
 	//Accessors
-	public String getUniqueId() {
-		return uniqueId;
-	}
-	public Course getCourse() {
-		return course;
-	}
 	public List<String> getPrequisites() {
 		return prequisites;
 	}

@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import Main.Constants;
 
@@ -23,11 +25,11 @@ public class DatabaseConnector {
 		statement = connector.createStatement();
 	}
 	
-	public List<Requirement> getRequrements(String SQLStatement) throws SQLException {
+	public Map<Course,Requirement> getRequrements(String SQLStatement) throws SQLException {
 		resultSet = statement.executeQuery(SQLStatement);
 		String[] columnNames = Constants.COLUMNS_OF_REQUIREMENTS.split(",");
 		String[] rowArgs = new String[columnNames.length];
-		List<Requirement> requirements = new ArrayList<>();
+		Map<Course, Requirement> requirements = new HashMap<>();
 		ReadRow: while (resultSet.next()) {
 			for (int i = 0; i < columnNames.length; i++) {
 				rowArgs[i] = resultSet.getString(columnNames[i]);
@@ -37,7 +39,7 @@ public class DatabaseConnector {
 				continue ReadRow;
 			}
 			
-			requirements.add(new Requirement(rowArgs));
+			requirements.put(new Course(rowArgs[0], rowArgs[2], rowArgs[1]), new Requirement(rowArgs));
 		}
 		resultSet.close();
 		return requirements;

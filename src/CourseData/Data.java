@@ -3,7 +3,9 @@ package CourseData;
 import java.sql.SQLException;
 import java.sql.SQLTimeoutException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import CourseData.Class;
 import Main.Constants;
@@ -17,11 +19,13 @@ public class Data {
 	 * @throws InvlaidClassException
 	 */
 
-	public static List<Requirement> readNewRequirementData() {
-		List<Requirement> degreeRequirements = new ArrayList<>();;
+	public static Map<Course, Requirement> readNewRequirementData(String major) {
+		Map<Course, Requirement> degreeRequirements = new HashMap<>();
+		String[] split = major.split(" ");
+		String use = Character.toString(split[0].charAt(0)) + Character.toString(split[1].charAt(0));
 		try{
 			DatabaseConnector connector= new DatabaseConnector();
-			degreeRequirements.addAll(connector.getRequrements("SELECT " + Constants.COLUMNS_IN_REQUIREMENTS + "FROM CSE_Requirements_2015_2016 WHERE 1"));
+			degreeRequirements.putAll(connector.getRequrements("SELECT " + Constants.COLUMNS_IN_REQUIREMENTS + "FROM " + use + "_Requirements_2015_2016 WHERE 1"));
 			connector.close();
 		} catch(SQLTimeoutException e){
 			e.printStackTrace();
