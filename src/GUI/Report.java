@@ -2,19 +2,24 @@ package GUI;
 
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.util.Collections;
 import java.util.Map.Entry;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
+
 
 import CourseData.Category;
 import CourseData.Profile;
@@ -30,7 +35,6 @@ import Main.Constants;
 public class Report extends JPanel {
 	private Report report = this;
 	private CardLayout contentSwitcher;
-
 	/**
 	 * A new report is generated from a given data object. Any changes to the
 	 * data object require that the report be recreated
@@ -90,8 +94,9 @@ public class Report extends JPanel {
 
 		for (CourseData.Class c : profile.getSchedule()) {
 			for (Entry<Character, TimeInterval> entry : c.times.entrySet()) {
-				weekSchedule.getModel().setValueAt(c.CoursenSection(), 
-						classStartTimeToWeekRow(entry.getValue().getStartTime()), classDayToWeekColumn(entry.getKey()));
+				int row = classStartTimeToWeekRow(entry.getValue().getStartTime());
+				int column = dayToWeekColumn(entry.getKey());
+				weekSchedule.getModel().setValueAt(c.CoursenSection(), row, column);
 			}
 		}
 
@@ -156,6 +161,10 @@ public class Report extends JPanel {
 				time +=30;
 				break;
 			}
+			if (time % 100 == 60)
+				time += 40;
+			if (time % 100 == 90)
+				time += 10;
 		}
 		conflictReport.add(finalSchedule);
 
@@ -180,11 +189,11 @@ public class Report extends JPanel {
 			String finalsInfo = "";
 			for (CourseData.Class c : cat.classesInThisCategory) 
 				finalsInfo += c.CoursenSection() + "\n"; 
-			finalSchedule.getModel().setValueAt(finalsInfo,categoryToFinalsRow(cat),categoryToFinalsColumn(cat));
+			finalSchedule.getModel().setValueAt(finalsInfo,categoryToFinalsRow(cat),dayToWeekColumn(cat.finalDay.charAt(0)));
 		}
 		add(conflictReport,"CONFLICT");
 	}
-	private int classDayToWeekColumn(char day) {
+	private int dayToWeekColumn(char day) {
 		switch (day) {
 		case 'M': return 1;
 		case 'T': return 2;
@@ -232,16 +241,7 @@ public class Report extends JPanel {
 		default: return 0;
 		}
 	}
-	private int categoryToFinalsColumn(Category cat) {
-		switch (cat.finalDay) {
-		case "M": return 1;
-		case "T": return 2;
-		case "W": return 3;
-		case "R": return 4;
-		case "F": return 5;
-		default: return 0;
-		}
-	}
+	
 	private class Switcher implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
