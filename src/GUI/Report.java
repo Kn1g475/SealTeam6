@@ -1,19 +1,19 @@
 package GUI;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collections;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextPane;
+import javax.swing.JTable;
+import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import CourseData.Category;
 import CourseData.Profile;
@@ -49,113 +49,154 @@ public class Report extends JPanel {
 			this.add(new JLabel("An Error occured searching for conflicts within the file"));
 			return;
 		}
+		
+		String[] longDays = { "Monday", "Tuesday", "Wendesday", "Thursday", "Friday" };
 		// create report content
 		contentSwitcher = new CardLayout();
 		setLayout(contentSwitcher);
-
+		
+		
 		JPanel mainReport = new JPanel();
-		mainReport.setLayout(new BoxLayout(mainReport, BoxLayout.PAGE_AXIS));
+		mainReport.setLayout(null);
 		mainReport.setBackground(Constants.CONTENT_BACKGROUND_COLOR);
+		
+		
+		TableModel weekModel = new DefaultTableModel(21,6);
+		JTable weekSchedule = new JTable(weekModel);
+		weekSchedule.setBounds(50, 50, 550, 400);
+		weekSchedule.setCellSelectionEnabled(false);
+		weekSchedule.setBorder(new LineBorder(Color.BLACK,1));
+		
+		for (int i = 0; i < weekSchedule.getRowCount(); i++) {
+			if( i == 0)
+				weekSchedule.setRowHeight(i, 20);
+			else 
+				weekSchedule.setRowHeight(i, 380 / 20);
+		}
+		weekSchedule.getColumnModel().getColumn(0).setPreferredWidth(35);
+		for (int i = 1; i < weekSchedule.getColumnCount(); i++)
+			weekSchedule.getModel().setValueAt(longDays[i - 1], 0, i);
+		int time = 800;
+		for (int i = 1; i < weekSchedule.getRowCount(); i++) {
+			weekSchedule.getModel().setValueAt(Constants.timeToString(time), i, 0);
+			time += (i % 2 == 1) ? 30 : 70; 
+		}
+		
+		mainReport.add(weekSchedule);
+		
+		JButton mainLeft = new JButton("<--");
+		mainLeft.setBounds(50, 20, 50, 30);
+		mainLeft.addActionListener(new Switcher());
+		mainReport.add(mainLeft);
+		
+		JButton mainRight = new JButton("-->");
+		mainRight.setBounds(550, 20, 50, 30);
+		mainRight.addActionListener(new Switcher());
+		mainReport.add(mainRight);
+		
+		JLabel mainTitle = new JLabel("Week At a Glance");
+		mainTitle.setBounds(250, 20,100,30);
+		mainReport.add(mainTitle);
 
 		JPanel reportLabel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		reportLabel.setBackground(Constants.CONTENT_BACKGROUND_COLOR);
 		reportLabel.add(new JLabel(Constants.MAIN_REPORT_LABEL));
 		mainReport.add(reportLabel);
-
-		String[] days = { "M", "T", "W", "R", "F" };
-		String[] longDays = { "Monday", "Tuesday", "Wendesday", "Thursday", "Friday" };
-
-		// For each day of the week, get all the finals for that day and add
-		// them as time buttons. This generates the "home page" for the report
-		for (int i = 0; i < days.length; i++) {
-			JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
-			header.setBackground(Constants.CONTENT_BACKGROUND_COLOR);
-			JLabel dayOfWeek = new JLabel(longDays[i]);
-			dayOfWeek.setBackground(Constants.CONTENT_BACKGROUND_COLOR);
-			dayOfWeek.setFont(Constants.MAIN_FONT);
-			header.add(dayOfWeek);
-			mainReport.add(header);
-
-			JPanel finalsOfWeek = new JPanel(new FlowLayout(FlowLayout.LEFT));
-			finalsOfWeek.setBackground(Constants.CONTENT_BACKGROUND_COLOR);
-			for (Category cat : profile.finalsCategories) {
-				if (cat.finalDay.equalsIgnoreCase(days[i])) {
-					JButton day = new JButton(String.format("%s%s", Constants.timeToString(cat.finalTime), ((cat.hasConflicts) ? "**" : "")));
-					if (cat.hasConflicts)
-						day.setBackground(Constants.FINAL_CONTAINS_CONFLICT_WARNING);
-					day.addActionListener(new ReportSwitcher());
-					day.setActionCommand(cat.toString());
-
-					finalsOfWeek.add(day);
-				}
-			}
-			mainReport.add(finalsOfWeek);
-		}
-		add(mainReport, "MAIN");
-
+		add(mainReport, "WEEK SCHEDULE");
+		
 		// make a panel for each final exam time and add them to the content switcher.
+		JPanel conflictReport = new JPanel();
+		conflictReport.setLayout(null);
+		conflictReport.setBackground(Constants.CONTENT_BACKGROUND_COLOR);
+		
+		TableModel conflictModel = new DefaultTableModel(13,6);
+		JTable finalSchedule = new JTable(conflictModel);
+		finalSchedule.setBounds(50, 50, 550, 400);
+		finalSchedule.setCellSelectionEnabled(false);
+		finalSchedule.setBorder(new LineBorder(Color.BLACK,1));
+		
+		for (int i = 0; i < finalSchedule.getRowCount(); i++) {
+			if( i == 0)
+				finalSchedule.setRowHeight(i, 40);
+			else 
+				finalSchedule.setRowHeight(i, 360 / 12);
+		}
+		finalSchedule.getColumnModel().getColumn(0).setPreferredWidth(35);
+		for (int i = 1; i < finalSchedule.getColumnCount(); i++)
+			finalSchedule.getModel().setValueAt(longDays[i - 1], 0, i);
+		time = 800;
+		for (int i = 1; i < finalSchedule.getRowCount(); i++) {
+			finalSchedule.getModel().setValueAt(Constants.timeToString(time), i, 0);
+			switch (i) {
+			case 1: case 3: case 5: case 7: case 9: case 11:
+				time += 200;
+				break;
+			case 2: case 6: 
+				time += 15;
+				break;
+			case 4: case 8:
+				time +=30;
+				break;
+			}
+		}
+		conflictReport.add(finalSchedule);
+		
+		JButton conflictLeft = new JButton("<--");
+		conflictLeft.setBounds(50, 20, 50, 30);
+		conflictLeft.addActionListener(new Switcher());
+		conflictReport.add(conflictLeft);
+		
+		JButton conflictRight = new JButton("-->");
+		conflictRight.setBounds(550, 20, 50, 30);
+		conflictRight.addActionListener(new Switcher());
+		conflictReport.add(conflictRight);
+		
+		JLabel conflictTitle = new JLabel("Finals Schedule");
+		conflictTitle.setBounds(250, 20,100,30);
+		conflictReport.add(conflictTitle);
+		
+		
 		for (Category cat : profile.finalsCategories) {
-			JTextPane catPanel = new JTextPane();
-			catPanel.setEditable(false);
-			catPanel.setContentType("text/html");
-			catPanel.setBackground(Constants.CONTENT_BACKGROUND_COLOR);
-
-			String content = "<html>" + "<h1>" + cat.toString()
-					+ "</h1> <table>";
 
 			Collections.sort(cat.classesInThisCategory);
-
-			for (CourseData.Class c : cat.classesInThisCategory)
-				content += c.toStringReportHTMLRow();
-
-			content += "</table></html>";
-			catPanel.setText(content);
-
-			JScrollPane scrollWrapper = new JScrollPane(catPanel);
-			scrollWrapper.setBackground(Constants.CONTENT_BACKGROUND_COLOR);
-
-			JPanel paneWrapper = new JPanel(new BorderLayout());
-			paneWrapper.setBackground(Constants.CONTENT_BACKGROUND_COLOR);
-			paneWrapper.add(scrollWrapper, BorderLayout.CENTER);
-
-			JPanel backButtonHolder = new JPanel();
-			backButtonHolder.setLayout(new BoxLayout(backButtonHolder,
-					BoxLayout.LINE_AXIS));
-			backButtonHolder.setBackground(Constants.CONTENT_BACKGROUND_COLOR);
-			JButton backButton = new JButton("Back");
-			backButton.addActionListener(new BackButtonListener());
-			backButtonHolder.add(Box.createHorizontalGlue());
-			backButtonHolder.add(backButton);
-
-			paneWrapper.add(backButtonHolder, BorderLayout.SOUTH);
-
-			add(paneWrapper, cat.toString());
+			String finalsInfo = "";
+			for (CourseData.Class c : cat.classesInThisCategory) 
+				finalsInfo += c.CoursenSection() + "\n"; 
+			finalSchedule.getModel().setValueAt(finalsInfo,categoryToFinalsRow(cat),categoryToFinalsColumn(cat));
+		}
+		add(conflictReport,"CONFLICT");
+	}
+	
+	private int categoryToFinalsRow(Category cat) {
+		switch (cat.finalTime) {
+		case 800: return 1;
+		case 1015: return 3;
+		case 1245: return 5;
+		case 1500: return 7;
+		case 1730: return 9;
+		case 1945: return 11;
+		default: return 0;
 		}
 	}
-
-	/**
-	 * Switches the report to display content based on which button was clicked
-	 * 
-	 * @author matt
-	 * 
-	 */
-	private class ReportSwitcher implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			contentSwitcher.show(report, e.getActionCommand());
+	private int categoryToFinalsColumn(Category cat) {
+		switch (cat.finalDay) {
+		case "M": return 1;
+		case "T": return 2;
+		case "W": return 3;
+		case "R": return 4;
+		case "F": return 5;
+		default: return 0;
 		}
 	}
-
-	/**
-	 * Switches to the main report when a back button is clicked
-	 * 
-	 * @author matt
-	 * 
-	 */
-	private class BackButtonListener implements ActionListener {
+	private class Switcher implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			contentSwitcher.show(report, "MAIN");
+			if (e.getActionCommand().equals("-->")) {
+				contentSwitcher.next(report);
+			}
+			if (e.getActionCommand().equals("<--")) {
+				contentSwitcher.last(report);
+			}
 		}
 	}
 }

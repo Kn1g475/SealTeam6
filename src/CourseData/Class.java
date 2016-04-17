@@ -222,6 +222,7 @@ public class Class implements Comparable<Class> {
 	public String fileSave() {
 		return String.format("%s|%s|%s|%s|%s", CRN_Number,course.saveString(), section,getSaveTimes(getMeetingDays()),instructor);
 	}
+	
 	/**
 	 * ToString method that returns all information except for the info of the final.
 	 * @return
@@ -231,16 +232,8 @@ public class Class implements Comparable<Class> {
 				(hasConflict)?("<tr style=\"font-weight:bold;\"><td>***</td>"):("<tr><td></td>"),
 						course.getShortName(),section, getTimes(getMeetingDays()), instructor, CRN_Number);
 	}
-
-	/**
-	 * Gets the final meeting times of the class if the class has a category.
-	 * @return String of the time and day the final for the class is unless it does not have a category.
-	 */
-	private String getFinalInfo(){
-		if(this.category != null)
-			return String.format("%s on %s", getCategory().finalTime,getCategory().finalDay);
-		else
-			return "NO FINAL SET";
+	public String CoursenSection() {
+		return String.format("%s%s", course.getShortName(), section);
 	}
 
 	/**

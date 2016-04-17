@@ -25,12 +25,9 @@ import java.awt.Font;
 @SuppressWarnings("serial")
 public class SideBar extends JPanel {
 	public JLabel aboutButton, instructionsButton, reportButton, profileButton;
-	private Component verticalStrut;
 	private Component verticalStrut_1;
 	private JLabel lblSealTeam;
 	public JLabel scheduleButton;
-	private Component verticalStrut_2;
-	private Component verticalStrut_3;
 	private Component verticalStrut_4;
 
 
