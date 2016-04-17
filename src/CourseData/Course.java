@@ -32,6 +32,9 @@ public class Course implements Comparable<Course> {
 	public String getShortName() {
 		return String.format("%s %s",subject, courseNumber);
 	}
+	public String getTitle() {
+		return String.format("%s",title);
+	}
 
 	/**
 	 * Compares two courses with each other.

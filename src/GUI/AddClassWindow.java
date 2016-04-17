@@ -3,7 +3,6 @@ package GUI;
 import CourseData.Class;
 
 import javax.swing.DefaultListModel;
-
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -14,6 +13,8 @@ import java.awt.Label;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JList;
@@ -38,9 +39,16 @@ public class AddClassWindow extends JDialog{
         getContentPane().setLayout(null);
         setSize(600,275);
         
+        Collections.sort(classes);
         comboBox = new JComboBox<>();
-        comboBox.setBounds(10, 6, 102, 27);
+        comboBox.addItem("Select Class");
+        comboBox.setSelectedItem(comboBox.getItemAt(0));
+        for (Class clas : classes)
+        	comboBox.addItem(clas.getCourse().getShortName());
+        comboBox.setBounds(10, 6, 125, 27);
         getContentPane().add(comboBox);
+        
+   
         
         acceptButton = new Button("Accept");
         acceptButton.setBounds(10, 215, 84, 28);
@@ -48,9 +56,12 @@ public class AddClassWindow extends JDialog{
         acceptButton.addActionListener(new ButtonEvent());
         getContentPane().add(acceptButton);
         
+        Collections.sort(classes);
         list = new DefaultListModel<>();
         for (Class clas : classes)
         	list.addElement(clas);
+        
+        
         courseToAdd = new JList<>(list);
         JScrollPane pane = new JScrollPane(courseToAdd);
         pane.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -64,7 +75,7 @@ public class AddClassWindow extends JDialog{
         getContentPane().add(cancelButton);
         
         courseLabel = new Label("Class Name");
-        courseLabel.setBounds(118, 10, 117, 17);
+        courseLabel.setBounds(141, 10, 117, 17);
         getContentPane().add(courseLabel);
         
         setVisible(true);
