@@ -121,7 +121,7 @@ public class Schedule extends JPanel{
 		add(saveButton);
 
 	}
-
+	
 	private class ButtonEvent implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {

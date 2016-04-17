@@ -51,24 +51,28 @@ public class Report extends JPanel {
 			this.add(new JLabel("An Error occured searching for conflicts within the file"));
 			return;
 		}
-		
+
 		String[] longDays = { "Monday", "Tuesday", "Wendesday", "Thursday", "Friday" };
 		// create report content
 		contentSwitcher = new CardLayout();
 		setLayout(contentSwitcher);
-		
-		
+
+
 		JPanel mainReport = new JPanel();
 		mainReport.setLayout(null);
 		mainReport.setBackground(Constants.CONTENT_BACKGROUND_COLOR);
-		
-		
+
+
 		TableModel weekModel = new DefaultTableModel(21,6);
-		JTable weekSchedule = new JTable(weekModel);
+		JTable weekSchedule = new JTable(weekModel) {
+			public boolean isCellEditable(int rowIndex, int vColIndex) {
+				return false;
+			}
+		};
 		weekSchedule.setBounds(50, 50, 550, 400);
 		weekSchedule.setCellSelectionEnabled(false);
 		weekSchedule.setBorder(new LineBorder(Color.BLACK,1));
-		
+
 		for (int i = 0; i < weekSchedule.getRowCount(); i++) {
 			if( i == 0)
 				weekSchedule.setRowHeight(i, 20);
@@ -83,27 +87,27 @@ public class Report extends JPanel {
 			weekSchedule.getModel().setValueAt(Constants.timeToString(time), i, 0);
 			time += (i % 2 == 1) ? 30 : 70; 
 		}
-		
+
 		for (CourseData.Class c : profile.getSchedule()) {
 			for (Entry<Character, TimeInterval> entry : c.times.entrySet()) {
 				weekSchedule.getModel().setValueAt(c.CoursenSection(), 
 						classStartTimeToWeekRow(entry.getValue().getStartTime()), classDayToWeekColumn(entry.getKey()));
 			}
 		}
-		
-		
+
+
 		mainReport.add(weekSchedule);
-		
+
 		JButton mainLeft = new JButton("<--");
 		mainLeft.setBounds(50, 20, 50, 30);
 		mainLeft.addActionListener(new Switcher());
 		mainReport.add(mainLeft);
-		
+
 		JButton mainRight = new JButton("-->");
 		mainRight.setBounds(550, 20, 50, 30);
 		mainRight.addActionListener(new Switcher());
 		mainReport.add(mainRight);
-		
+
 		JLabel mainTitle = new JLabel("Week At a Glance");
 		mainTitle.setBounds(250, 20,100,30);
 		mainReport.add(mainTitle);
@@ -113,18 +117,22 @@ public class Report extends JPanel {
 		reportLabel.add(new JLabel(Constants.MAIN_REPORT_LABEL));
 		mainReport.add(reportLabel);
 		add(mainReport, "WEEK SCHEDULE");
-		
+
 		// make a panel for each final exam time and add them to the content switcher.
 		JPanel conflictReport = new JPanel();
 		conflictReport.setLayout(null);
 		conflictReport.setBackground(Constants.CONTENT_BACKGROUND_COLOR);
-		
+
 		TableModel conflictModel = new DefaultTableModel(13,6);
-		JTable finalSchedule = new JTable(conflictModel);
+		JTable finalSchedule = new JTable(conflictModel) {
+			public boolean isCellEditable(int rowIndex, int vColIndex) {
+				return false;
+			}
+		};
 		finalSchedule.setBounds(50, 50, 550, 400);
 		finalSchedule.setCellSelectionEnabled(false);
 		finalSchedule.setBorder(new LineBorder(Color.BLACK,1));
-		
+
 		for (int i = 0; i < finalSchedule.getRowCount(); i++) {
 			if( i == 0)
 				finalSchedule.setRowHeight(i, 40);
@@ -150,22 +158,22 @@ public class Report extends JPanel {
 			}
 		}
 		conflictReport.add(finalSchedule);
-		
+
 		JButton conflictLeft = new JButton("<--");
 		conflictLeft.setBounds(50, 20, 50, 30);
 		conflictLeft.addActionListener(new Switcher());
 		conflictReport.add(conflictLeft);
-		
+
 		JButton conflictRight = new JButton("-->");
 		conflictRight.setBounds(550, 20, 50, 30);
 		conflictRight.addActionListener(new Switcher());
 		conflictReport.add(conflictRight);
-		
+
 		JLabel conflictTitle = new JLabel("Finals Schedule");
 		conflictTitle.setBounds(250, 20,100,30);
 		conflictReport.add(conflictTitle);
-		
-		
+
+
 		for (Category cat : profile.finalsCategories) {
 
 			Collections.sort(cat.classesInThisCategory);
@@ -186,7 +194,7 @@ public class Report extends JPanel {
 		default: return 0;
 		}
 	}
-	
+
 	private int classStartTimeToWeekRow(int time) {
 		switch (time) {
 		case 800: return 1;
@@ -212,7 +220,7 @@ public class Report extends JPanel {
 		default: return 0;
 		}
 	}
-	
+
 	private int categoryToFinalsRow(Category cat) {
 		switch (cat.finalTime) {
 		case 800: return 1;
@@ -241,7 +249,7 @@ public class Report extends JPanel {
 				contentSwitcher.next(report);
 			}
 			if (e.getActionCommand().equals("<--")) {
-				contentSwitcher.last(report);
+				contentSwitcher.previous(report);
 			}
 		}
 	}

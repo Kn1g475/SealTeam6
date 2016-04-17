@@ -74,8 +74,8 @@ public class Class implements Comparable<Class> {
 				temp2[1] = temp2[1].trim();
 				for (char key : keys.toCharArray()) {
 					inter.put(key, new TimeInterval(Integer.parseInt(temp2[0]),Integer.parseInt(temp2[1])));
-					days.replace(Character.toString(key), "");
 				}
+				keys = "";
 			} else {
 				t = t.trim();
 				days += t;

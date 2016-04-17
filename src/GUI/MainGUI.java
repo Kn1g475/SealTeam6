@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -165,14 +166,23 @@ public class MainGUI extends JFrame {
 		contentPanel.add(reportPanel, "REPORT");
 	}
 
-
+	private String errorDump(List<String> err) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Errors: \n");
+		for (String error : err) {
+			sb.append(String.format("\t%s\n", error.substring(8)));
+		}
+		return sb.toString();
+	}
+	
+	
 	public class CheckButton implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			if (arg0.getActionCommand().equalsIgnoreCase("Check")) {
 				if (!profile.checkFeasibility())
-					JOptionPane.showMessageDialog(schedulePanel.parent,"Schedule is not good","Opps" ,JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(schedulePanel.parent, errorDump(profile.Errors), "Oops", JOptionPane.ERROR_MESSAGE);
 				else
 					fileReport();
 			}

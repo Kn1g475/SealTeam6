@@ -151,6 +151,9 @@ public class Profile {
 
 	}
 	public String readProfile(File selectedFile) {
+		if (!selectedFile.getName().endsWith(".prof")) {
+			return "Error: Incorrect File Format";
+		}
 		try (BufferedReader br = new BufferedReader(new FileReader(selectedFile))) {
 			String line = br.readLine();
 			String [] temp = line.split(":");
@@ -176,11 +179,15 @@ public class Profile {
 			while(!(line = br.readLine().trim()).equals("Classes:")) {
 				System.out.println(line);
 				temp = line.split("\\|");
-				takenCourses.add(new Course(temp[0],temp[1],temp[2]));
+				Course tempCourse = new Course(temp[0],temp[1],temp[2]);
+				if (!takenCourses.contains(tempCourse))
+					takenCourses.add(tempCourse);
 			}
 			while((line = br.readLine()) != null) {
 				System.out.println(line);
-				schedule.add(new Class(line));
+				Class tempClass = new Class(line);
+				if (!schedule.contains(tempClass))
+					schedule.add(tempClass);
 			}
 
 		} catch (IOException e) {
@@ -225,10 +232,10 @@ public class Profile {
 			if (req.getHours() > getHours())
 				return String.format("Invalid: Need %d for %s you have %d ", req.getHours(), curCourse.toString(test.section), getHours());
 			if (!req.hasPrereqs(this.takenCourses))
-				return "Invalid: Required that you have taken: " + req.getPrequisites();
+				return String.format("Invalid: %s requires that you have taken: %s", curCourse.toString(test.section) ,req.getPrequisites());
 			if (req.isSeniorLevel())
 				if (this.curYear.equals("Fourth Year +"))
-					return "Invalid: Senior required for " + curCourse.toString(test.section);
+					return "Invalid: Senior standing required for " + curCourse.toString(test.section);
 			if (req.isInstructorPermission())
 				return String.format("Warning: %s requires instructor permission", curCourse.toString(test.section));
 		}
