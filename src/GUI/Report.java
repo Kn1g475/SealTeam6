@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collections;
+import java.util.Map.Entry;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -17,6 +18,7 @@ import javax.swing.table.TableModel;
 
 import CourseData.Category;
 import CourseData.Profile;
+import CourseData.TimeInterval;
 import Main.Constants;
 
 /**
@@ -81,6 +83,14 @@ public class Report extends JPanel {
 			weekSchedule.getModel().setValueAt(Constants.timeToString(time), i, 0);
 			time += (i % 2 == 1) ? 30 : 70; 
 		}
+		
+		for (CourseData.Class c : profile.getSchedule()) {
+			for (Entry<Character, TimeInterval> entry : c.times.entrySet()) {
+				weekSchedule.getModel().setValueAt(c.CoursenSection(), 
+						classStartTimeToWeekRow(entry.getValue().getStartTime()), classDayToWeekColumn(entry.getKey()));
+			}
+		}
+		
 		
 		mainReport.add(weekSchedule);
 		
@@ -165,6 +175,42 @@ public class Report extends JPanel {
 			finalSchedule.getModel().setValueAt(finalsInfo,categoryToFinalsRow(cat),categoryToFinalsColumn(cat));
 		}
 		add(conflictReport,"CONFLICT");
+	}
+	private int classDayToWeekColumn(char day) {
+		switch (day) {
+		case 'M': return 1;
+		case 'T': return 2;
+		case 'W': return 3;
+		case 'R': return 4;
+		case 'F': return 5;
+		default: return 0;
+		}
+	}
+	
+	private int classStartTimeToWeekRow(int time) {
+		switch (time) {
+		case 800: return 1;
+		case 830: return 2;
+		case 900: return 3;
+		case 930: return 4;
+		case 1000: return 5;
+		case 1030: return 6;
+		case 1100: return 7;
+		case 1130: return 8;
+		case 1200: return 9;
+		case 1230: return 10;
+		case 1300: return 11;
+		case 1330: return 12;
+		case 1400: return 13;
+		case 1430: return 14;
+		case 1500: return 15;
+		case 1530: return 16;
+		case 1600: return 17;
+		case 1630: return 18;
+		case 1700: return 19;
+		case 1730: return 20;
+		default: return 0;
+		}
 	}
 	
 	private int categoryToFinalsRow(Category cat) {
