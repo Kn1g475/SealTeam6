@@ -53,7 +53,6 @@ public class SideBar extends JPanel {
 		aboutButton.setIcon(new ImageIcon(aboutImg));
 		aboutButton.setText("About");
 		aboutButton.addMouseListener(sideButtonListener);
-		aboutButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		Image instructionsImg = new ImageIcon(Constants.INSTRUCTIONS_ICON_NAME)
 		.getImage();
 		instructionsImg = instructionsImg.getScaledInstance(
@@ -74,7 +73,7 @@ public class SideBar extends JPanel {
 		profileButton.setIcon(new ImageIcon(reportImg));
 		profileButton.setText("Profile");
 		profileButton.addMouseListener(sideButtonListener);
-		profileButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		
 
 		//add item to side bar
 		add(profileButton);
