@@ -130,7 +130,7 @@ public class AddClassWindow extends JDialog{
 				}else{
 
 					List<Integer> index = indexesOfClass(classes, new Course((String) comboBox.getSelectedItem()));
-					courseLabel.setText(classes.get(index.get(0)).getCourse().getShortName());
+					courseLabel.setText(classes.get(index.get(0)).getCourse().getTitle());
 					list.clear();
 					for (int i = 0; i < index.size(); i++)
 						list.addElement(classes.get(index.get(i)));
