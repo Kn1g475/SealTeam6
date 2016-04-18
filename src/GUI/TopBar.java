@@ -49,7 +49,7 @@ public class TopBar extends JPanel {
 
 		// set up Icon and Program Title in top left corner
 		JLabel title = new JLabel();
-		title.setBounds(0, 10, 400, 32);
+		title.setBounds(0, 10, 400, 45);
 		Image img = new ImageIcon(Constants.MIAMI_ICON_NAME).getImage();
 		img = img.getScaledInstance(Constants.TOP_ROW_HEIGHT,
 				Constants.TOP_ROW_HEIGHT, Image.SCALE_SMOOTH);

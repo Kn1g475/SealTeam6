@@ -24,6 +24,15 @@ public class Course implements Comparable<Course> {
 		this.title = title;
 		this.courseNumber = courseNumber;
 	}
+	public Course(String subject, String title) {
+		if (subject == "" || title == "") {
+			System.err.println("Error: Invalid input sent to Course constructor");
+			throw new IllegalArgumentException();
+		}
+		this.subject = subject;
+		this.title = title;
+		
+	}
 	public Course(String shortTitle) {
 		String[] split = shortTitle.split("\\s+");
 		subject = split[0];
@@ -34,6 +43,13 @@ public class Course implements Comparable<Course> {
 	}
 	public String getTitle() {
 		return String.format("%s",title);
+	}
+	
+	public String getCourseNumber(){
+		return String.format("%s",courseNumber);
+	}
+	public String getSubject(){
+		return String.format("%s",subject);
 	}
 
 	/**

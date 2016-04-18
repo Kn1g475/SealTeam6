@@ -119,7 +119,7 @@ public class Schedule extends JPanel{
 		saveButton.setBounds(463, 408, 117, 29);
 		saveButton.addActionListener(new ButtonEvent());
 		add(saveButton);
-
+		
 	}
 	
 	private class ButtonEvent implements ActionListener {
@@ -128,6 +128,7 @@ public class Schedule extends JPanel{
 			if(e.getActionCommand().equalsIgnoreCase("Add")){
 				if (desiredRadioButton.isSelected()){
 					AddClassWindow classWindow = new AddClassWindow(parent, ModalityType.APPLICATION_MODAL, classes);
+					
 					if (classWindow.selected != null && !profile.getCoursesTaken().contains(classWindow.selected) && !classList.contains(classWindow.selected)) {
 						if (!profile.addClass(classWindow.selected))
 							JOptionPane.showMessageDialog(parent,"Class overlaps with a course that you already want to take","Invalid" ,JOptionPane.ERROR_MESSAGE);

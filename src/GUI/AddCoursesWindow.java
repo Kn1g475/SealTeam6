@@ -35,6 +35,7 @@ public class AddCoursesWindow extends JDialog {
 	DefaultListModel<Course> courseList;
 	AddCoursesWindow us;
 	JComboBox<String> comboBox;
+	JScrollPane courseBox;
 	List<Course> courses;
 	public Course selected;
 	public AddCoursesWindow(JFrame parent,ModalityType modal, List<Course> courses) {
@@ -72,7 +73,7 @@ public class AddCoursesWindow extends JDialog {
 		}
 
 		courseToAdd = new JList<>(courseList);
-		JScrollPane courseBox = new JScrollPane(courseToAdd);
+		courseBox = new JScrollPane(courseToAdd);
 		courseBox.setBorder(new LineBorder(new Color(0, 0, 0)));
 		courseBox.setBounds(16, 45, 465, 151);
 		getContentPane().add(courseBox);
@@ -94,7 +95,7 @@ public class AddCoursesWindow extends JDialog {
 		setVisible(false);
 		dispose();
 	}
-	private class ButtonEvent implements ActionListener {
+	public class ButtonEvent implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			if(arg0.getActionCommand().equalsIgnoreCase("cancelWindowButton")){
@@ -105,8 +106,19 @@ public class AddCoursesWindow extends JDialog {
 				us.close();
 			}
 			if(arg0.getActionCommand().equalsIgnoreCase("comboBox")){
-				int index = courses.indexOf(new Course((String) comboBox.getSelectedItem()));
-				courseLabel.setText(courses.get(index).getTitle());
+				if(comboBox.getSelectedItem().equals("Select Class")){
+					if(courseList.size() == 1)
+						courseList.clear();
+					courseLabel.setText("Course Title");
+					for (Course course : courses){
+						courseList.addElement(course);
+					}					
+				}else{
+					int index = courses.indexOf(new Course((String) comboBox.getSelectedItem()));
+					courseLabel.setText(courses.get(index).getTitle());
+					courseList.clear();
+					courseList.addElement(new Course(courses.get(index).getSubject(),courses.get(index).getTitle(),courses.get(index).getCourseNumber()));
+				}
 			}
 		}
 	}

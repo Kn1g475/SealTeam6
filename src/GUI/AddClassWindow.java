@@ -1,6 +1,8 @@
 package GUI;
 
 import CourseData.Class;
+import CourseData.Course;
+import GUI.AddCoursesWindow.ButtonEvent;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
@@ -43,8 +45,11 @@ public class AddClassWindow extends JDialog{
         comboBox = new JComboBox<>();
         comboBox.addItem("Select Class");
         comboBox.setSelectedItem(comboBox.getItemAt(0));
-        for (Class clas : classes)
+        for (Class clas : classes){
         	comboBox.addItem(clas.getCourse().getShortName());
+        }
+        comboBox.addActionListener(new AddEvent());
+		comboBox.setActionCommand("comboBox");
         comboBox.setBounds(10, 6, 125, 27);
         getContentPane().add(comboBox);
         
@@ -53,15 +58,15 @@ public class AddClassWindow extends JDialog{
         acceptButton = new Button("Accept");
         acceptButton.setBounds(10, 215, 84, 28);
         acceptButton.setActionCommand("acceptWindowButton");
-        acceptButton.addActionListener(new ButtonEvent());
+        acceptButton.addActionListener(new AddEvent());
         getContentPane().add(acceptButton);
         
         Collections.sort(classes);
         list = new DefaultListModel<>();
-        for (Class clas : classes)
+        for (Class clas : classes){
         	list.addElement(clas);
-        
-        
+        }
+    
         courseToAdd = new JList<>(list);
         JScrollPane pane = new JScrollPane(courseToAdd);
         pane.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -71,7 +76,7 @@ public class AddClassWindow extends JDialog{
         cancelButton = new Button("Cancel");
         cancelButton.setBounds(517, 215, 77, 28);
         cancelButton.setActionCommand("cancelWindowButton");
-        cancelButton.addActionListener(new ButtonEvent());
+        cancelButton.addActionListener(new AddEvent());
         getContentPane().add(cancelButton);
         
         courseLabel = new Label("Class Name");
@@ -84,7 +89,7 @@ public class AddClassWindow extends JDialog{
 		setVisible(false);
 		dispose();
 	}
-	private class ButtonEvent implements ActionListener {
+	private class AddEvent implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
 			if (arg0.getActionCommand().equalsIgnoreCase("cancelWindowButton")){
         		us.close();
@@ -93,6 +98,7 @@ public class AddClassWindow extends JDialog{
 				selected = courseToAdd.getSelectedValue();
 				us.close();
 			}
+			
 		}
 	}
 }
