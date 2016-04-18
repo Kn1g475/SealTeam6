@@ -14,6 +14,7 @@ public class Class implements Comparable<Class> {
 	public String CRN_Number; //Course registration number
 	public String section; //Section of the class.
 
+
 	public Map<Character,TimeInterval> times;
 	private String instructor; //Instructor of the class.
 
@@ -54,6 +55,7 @@ public class Class implements Comparable<Class> {
 		this(new Course(lineArgs[1], lineArgs[4], lineArgs[2]),lineArgs[9],lineArgs[0],
 				lineArgs[3],Integer.parseInt(lineArgs[6]),Integer.parseInt(lineArgs[7]),lineArgs[5]);
 	}
+	
 	
 	public Class(String line) {
 		String[] args = line.split("\\|");
