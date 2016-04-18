@@ -192,6 +192,9 @@ public class Report extends JPanel {
 			finalSchedule.getModel().setValueAt(finalsInfo,categoryToFinalsRow(cat),dayToWeekColumn(cat.finalDay.charAt(0)));
 		}
 		add(conflictReport,"CONFLICT");
+		
+		
+		JPanel infoReport = new JPanel();
 	}
 	private int dayToWeekColumn(char day) {
 		switch (day) {

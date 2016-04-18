@@ -4,6 +4,7 @@ import CourseData.Class;
 import CourseData.Course;
 import GUI.AddCoursesWindow.ButtonEvent;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -15,6 +16,7 @@ import java.awt.Label;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -32,6 +34,7 @@ public class AddClassWindow extends JDialog{
 	Label courseLabel;
 	JComboBox<String> comboBox;
 	Class selected;
+	@SuppressWarnings("unchecked")
 	public AddClassWindow(JFrame parent,ModalityType modal ,List<Class> classes) {
 		super(parent, modal);
 		us = this;
@@ -42,11 +45,19 @@ public class AddClassWindow extends JDialog{
         setSize(600,275);
         
         Collections.sort(classes);
-        comboBox = new JComboBox<>();
+        DefaultComboBoxModel<String> model  = new DefaultComboBoxModel<>();
+        comboBox = new JComboBox<>(model);
         comboBox.addItem("Select Class");
         comboBox.setSelectedItem(comboBox.getItemAt(0));
-        for (Class clas : classes){
-        	comboBox.addItem(clas.getCourse().getShortName());
+        List<Course> tempList = new ArrayList<>();
+        for (Class clas : classes) {
+        	if (!tempList.contains(clas.getClass()))
+        		tempList.add(clas.getCourse());
+        }
+        Collections.sort(tempList);
+        for (Course c: tempList){
+        	if (model.getIndexOf(c.getShortName()) == -1) 
+        		model.addElement(c.getShortName());
         }
         comboBox.addActionListener(new AddEvent());
 		comboBox.setActionCommand("comboBox");
