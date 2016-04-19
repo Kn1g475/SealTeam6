@@ -2,7 +2,6 @@ package GUI;
 
 import CourseData.Class;
 import CourseData.Course;
-import GUI.AddCoursesWindow.ButtonEvent;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -17,7 +16,6 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -35,7 +33,7 @@ public class AddClassWindow extends JDialog{
 	JComboBox<String> comboBox;
 	Class selected;
 	List<Class> classes;
-	@SuppressWarnings("unchecked")
+	
 	public AddClassWindow(JFrame parent,ModalityType modal ,List<Class> classes) {
 		super(parent, modal);
 		us = this;
