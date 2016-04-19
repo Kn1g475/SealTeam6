@@ -67,13 +67,12 @@ public class WeekTable extends JTable {
 			for (Class c : schedule) {
 				for (Entry<Character, TimeInterval> entry : c.times.entrySet()) {
 					int lastRow = getLastRow(entry.getValue().getEndTime());
-					int classRow = getRow(entry.getValue().getStartTime());
+					int startRow = getRow(entry.getValue().getStartTime());
 					int classColumn = getColumnInt(entry.getKey());
-					if (classRow <= row && row <= lastRow && column == classColumn)
+					if (startRow <= row && row < lastRow && column == classColumn)
 						setBackground(Color.CYAN);
 				}
 			}
-			
 			return this; 
 		}
 	}
@@ -83,8 +82,10 @@ public class WeekTable extends JTable {
 		time -= tempTime;
 		if (tempTime > 0 && tempTime < 30)
 			time += 30;
-		if (tempTime > 30 && tempTime < 60)
+		else if (tempTime > 30 && tempTime < 60)
 			time += 60;
+		else 
+			time+= tempTime;
 		return getRow(time);
 	}
 	

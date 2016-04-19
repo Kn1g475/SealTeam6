@@ -113,11 +113,7 @@ public class Report extends JPanel {
 		conflictReport.setBackground(Constants.CONTENT_BACKGROUND_COLOR);
 
 		TableModel conflictModel = new DefaultTableModel(13,6);
-		JTable finalSchedule = new JTable(conflictModel) {
-			public boolean isCellEditable(int rowIndex, int vColIndex) {
-				return false;
-			}
-		};
+		ConflictTable finalSchedule = new ConflictTable(conflictModel, profile.finalsCategories);
 		finalSchedule.setBounds(0, 30, 630, 460);
 		finalSchedule.setCellSelectionEnabled(false);
 		finalSchedule.setBorder(new LineBorder(Color.BLACK,1));
@@ -166,41 +162,11 @@ public class Report extends JPanel {
 		conflictTitle.setBounds(290, 0,100,30);
 		conflictReport.add(conflictTitle);
 
-
-		for (Category cat : profile.finalsCategories) {
-
-			Collections.sort(cat.classesInThisCategory);
-			String finalsInfo = "";
-			for (CourseData.Class c : cat.classesInThisCategory) 
-				finalsInfo += c.CoursenSection() + "\n"; 
-			finalSchedule.getModel().setValueAt(finalsInfo,categoryToFinalsRow(cat),dayToWeekColumn(cat.finalDay.charAt(0)));
-		}
 		add(conflictReport,"CONFLICT");
 		
 		
 		JPanel infoReport = new JPanel();
-	}
-	private int dayToWeekColumn(char day) {
-		switch (day) {
-		case 'M': return 1;
-		case 'T': return 2;
-		case 'W': return 3;
-		case 'R': return 4;
-		case 'F': return 5;
-		default: return 0;
-		}
-	}
-
-	private int categoryToFinalsRow(Category cat) {
-		switch (cat.finalTime) {
-		case 800: return 1;
-		case 1015: return 3;
-		case 1245: return 5;
-		case 1500: return 7;
-		case 1730: return 9;
-		case 1945: return 11;
-		default: return 0;
-		}
+		
 	}
 	
 	private class Switcher implements ActionListener {
