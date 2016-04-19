@@ -60,7 +60,8 @@ public class Constants {
 	public static final String PROFILE = "<html><h1>Profile</h1>"; // 
 	
 	public static final String ABOUT = "<html><h1>About</h1>"
-			+ "<p>This program allows users at Miami University to insert a .csv file with course information "
+			+ "<p>This program allows users at Miami University to create a profile based off of "
+			+ "Their "
 			+ "and will generate a final report showing when the final exam times are scheduled."
 			+ " The report will also show any possible conflicts where exam times overlap "
 			+ "and cannot be taken at the same time.</p>"
@@ -70,13 +71,13 @@ public class Constants {
 
 	public static final String INSTRUCTIONS = "<html><h1>Instructions</h1>"
 			+ "<p>To see Full Report:<br><br>"
-			+ "Click 'Add File' button and choose file.<br>"
-			+ "To add a new file, click 'Add File' again.<br>"
-			+ "To remove a file, click 'Remove'.<br>"
-			+ "When files have been chosen click 'Submit'.<br><br>"
-			+ "A report will be generated and will show the exam times.<br>"
-			+ "To see the classes at that time, click on the button with the given time.<br>"
-			+ "Any time with '***' next to it indicates an overlap in classes with the same exam time.</p>"
+			+ "Click 'Add File' button to upload your profile if you havent created one..<br>"
+			+ "To add a new profile, click 'Add File' again.<br>"
+			+ "To remove a profile, click 'Remove'.<br>"
+			+ "When your Profile has been chosen, click 'Submit'.<br><br>"
+			+ "A report will be generated and will show your schedule, as well as your exam time.<br>"
+			//+ "To see the classes at that time, click on the button with the given time.<br>"
+			+ "</p>"
 			+ "</html>";
 
 	/**
