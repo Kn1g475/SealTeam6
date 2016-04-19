@@ -10,15 +10,10 @@ import java.util.Map;
 import CourseData.Class;
 import Main.Constants;
 /**
- * The container class for the data structure that holds all class data
- * @author matt
+ * 
+ * @author Sam Levy
  */
 public class Data {
-	/**
-	 * calls the static function that flags conflicts in the data
-	 * @throws InvlaidClassException
-	 */
-
 	public static Map<String, Requirement> readNewRequirementData(String major) {
 		Map<String, Requirement> degreeRequirements = new HashMap<>();
 		String[] split = major.split(" ");
@@ -36,11 +31,6 @@ public class Data {
 		}
 		return degreeRequirements;
 	}
-	/**
-	 * Processes a file and adds new entries to the data
-	 * @param dataFile
-	 * @return
-	 */
 	public static List<Class> readNewCourseData(String table) {
 		List<Class> allClassList = new ArrayList<>();
 		try{
@@ -63,14 +53,6 @@ public class Data {
 				courses.add(c.getCourse());
 		return courses;
 	}
-	/*public List<Requirement> getMajorRequirements(String major) {
-		List<Requirement> majorRequirements = new ArrayList<>();
-		for (Requirement req : degreeRequirements) {
-			if (req.getUniqueId().contains(major))
-					majorRequirements.add(req);
-		}
-		return majorRequirements;
-	}*/
 	
 	/**
 	 * Hard coded way of setting the final exam slots
@@ -223,7 +205,7 @@ public class Data {
 			setCat = new Category(1730, 2400, 1945, "W", "W");
 			cats.add(setCat);
 		}
-		// loop through data object and set categories
+		// loop through classes and set categories
 		for (int i = 0; i < classList.size(); i++) {
 			for (int j = 0; j < cats.size(); j++) {
 				if (cats.get(j).matches(classList.get(i)))
