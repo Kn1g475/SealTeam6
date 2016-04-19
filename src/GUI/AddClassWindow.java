@@ -91,7 +91,7 @@ public class AddClassWindow extends JDialog{
 		getContentPane().add(cancelButton);
 
 		courseLabel = new Label("Class Name");
-		courseLabel.setBounds(141, 10, 117, 17);
+		courseLabel.setBounds(141, 10, 363, 17);
 		getContentPane().add(courseLabel);
 
 		setVisible(true);
