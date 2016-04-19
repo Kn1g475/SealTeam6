@@ -207,6 +207,7 @@ public class Profile {
 			if (err.contains("Warning"))
 				Warnings.add(err);
 		}
+		checkMajorReqs();
 		System.out.println(Errors);
 		System.out.println(Warnings);
 		return Errors.isEmpty();
@@ -224,11 +225,9 @@ public class Profile {
 	}
 
 	private String checkPreReq(Class test) {
-		//System.out.println(majorReq);
 		Course curCourse = test.getCourse();
 		if (majorReq.containsKey(curCourse.getShortName())) {
 			Requirement req = majorReq.get(test.getCourse().getShortName());
-
 			if (req.getHours() > getHours())
 				return String.format("Invalid: Need %d for %s you have %d ", req.getHours(), curCourse.toString(test.section), getHours());
 			if (!req.hasPrereqs(this.takenCourses))
@@ -244,7 +243,66 @@ public class Profile {
 		}
 		return "";
 	}
-
+	private void checkMajorReqs() {
+		int affiliate = 0;
+		int research = 0;
+		int compSci = 0;
+		int engineer = 0;
+		for (Course c : takenCourses) {
+			if (majorReq.containsKey(c.getShortName())) {
+				Requirement req = majorReq.get(c.getShortName());
+				switch (req.getType()) {
+				case "COMPUTER SCIENCE":
+					compSci++;
+					break;
+				case "AFFILIATE":
+					affiliate++;
+					break;
+				case "RESEARCH":
+					research++;
+					break;
+				case "ENGINEERING":
+					engineer++;
+					break;
+				}
+			}
+		}
+		for (Class c : schedule) {
+			Course curCourse = c.getCourse();
+			if (majorReq.containsKey(curCourse.getShortName())) {
+				Requirement req = majorReq.get(curCourse.getShortName());
+				switch (req.getType()) {
+				case "COMPUTER SCIENCE":
+					compSci++;
+					if (compSci > 3) {
+						Warnings.add(String.format("Warning: %s, a computer science elective, is not useful to your graduation", curCourse.toString(c.section)));
+					}
+					break;
+				case "AFFILIATE":
+					affiliate++;
+					if (affiliate > 2) {
+						Warnings.add(String.format("Warning: %s, an affiliate elective, is not useful to your graduation", curCourse.toString(c.section)));
+					}
+					break;
+				case "RESEARCH":
+					research++;
+					if (research > 1) {
+						Warnings.add(String.format("Warning: %s, a research elective, is not useful to your graduation", curCourse.toString(c.section)));
+					}
+					break;
+				case "ENGINEERING":
+					engineer++;
+					break;
+				} 
+			} else {
+				Warnings.add(String.format("Warning: %s is not required for your major", curCourse.toString(c.section)));
+			}
+			
+		}
+		
+		
+		
+	}
 	public void findConflicts() throws InvalidClassException{
 		Data.setCategories(schedule, finalsCategories);
 		displayError(schedule);

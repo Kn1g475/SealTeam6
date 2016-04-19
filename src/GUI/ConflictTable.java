@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map.Entry;
 
 import javax.swing.JComponent;
 import javax.swing.JTable;
@@ -14,7 +13,6 @@ import javax.swing.table.TableModel;
 
 import CourseData.Category;
 import CourseData.Class;
-import CourseData.TimeInterval;
 import Main.Constants;
 
 @SuppressWarnings("serial")
@@ -59,7 +57,14 @@ public class ConflictTable extends JTable{
 			setForeground(Color.black);
 			setBackground(Color.WHITE);
 			for (Category cat : cats) {
-				
+				for (Class c : cat.classesInThisCategory){
+					if (c.hasConflict) {
+						int rw = getRow(cat);
+						int clmn = getColumnInt(cat.finalDay.charAt(0));
+						if (row == rw && clmn == column)
+							setBackground(Color.RED);
+					}
+				}
 			}
 			return this; 
 		}
