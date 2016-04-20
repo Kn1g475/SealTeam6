@@ -18,6 +18,7 @@ import javax.swing.table.TableModel;
 
 import CourseData.Category;
 import CourseData.Profile;
+import Exceptions.InvalidClassException;
 import CourseData.Class;
 import Main.Constants;
 
@@ -46,7 +47,7 @@ public class Report extends JPanel {
 		// report
 		try {
 			profile.findConflicts();
-		} catch (Exception e) {
+		} catch (InvalidClassException e) {
 			this.add(new JLabel("An Error occured searching for conflicts within the file"));
 			return;
 		}

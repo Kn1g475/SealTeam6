@@ -303,7 +303,7 @@ public class Profile {
 		
 		
 	}
-	public void findConflicts() throws InvalidClassException{
+	public void findConflicts() throws InvalidClassException {
 		Data.setCategories(schedule, finalsCategories);
 		displayError(schedule);
 	}
