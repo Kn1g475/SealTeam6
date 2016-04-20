@@ -11,25 +11,39 @@ import java.util.List;
 import java.util.Map;
 
 import Main.Constants;
-
+/**
+ * This Handles all Connections to the database for information Retrieval
+ * @author Skippy
+ */
 public class DatabaseConnector {
-	private static final String USER_NAME = "levysj-r";
-	private static final String PASSWORD = "q8mYPAyUAHeeByQ4";
-	private static final String DATABASE = "jdbc:mysql://134.53.148.193/levysj";
+	private static final String USER_NAME = "levysj-r"; //user name for database
+	private static final String PASSWORD = "q8mYPAyUAHeeByQ4"; //password for database
+	private static final String DATABASE = "jdbc:mysql://134.53.148.193/levysj"; //database location
 	
 	private Connection connector;
 	private Statement statement;
 	private ResultSet resultSet;
 	public DatabaseConnector() throws SQLException{
+		//open connection to database
 		connector = DriverManager.getConnection(DATABASE,USER_NAME,PASSWORD);
 		statement = connector.createStatement();
 	}
-	
+	/**
+	 * Accesses the requirements' information from the database and stores that information for later use
+	 * @param SQLStatement - What information you want to access from the database in SQL format
+	 * @return - A mapping of CSE Course short names to their requirements
+	 * @throws SQLException - If any errors trying to connect to the database
+	 */
 	public Map<String,Requirement> getRequrements(String SQLStatement) throws SQLException {
+		//sends the SQL statement to the database and retrieves the result.
 		resultSet = statement.executeQuery(SQLStatement);
+		
+		//prepare to handle and store the information
 		String[] columnNames = Constants.COLUMNS_OF_REQUIREMENTS.split(",");
 		String[] rowArgs = new String[columnNames.length];
 		Map<String, Requirement> requirements = new HashMap<>();
+		
+		//parse all the information in to the mapping of Course short names to their requirements
 		ReadRow: while (resultSet.next()) {
 			for (int i = 0; i < columnNames.length; i++) {
 				rowArgs[i] = resultSet.getString(columnNames[i]);
@@ -42,16 +56,27 @@ public class DatabaseConnector {
 			//System.out.println(temp);
 			requirements.put(temp.getShortName(), new Requirement(rowArgs));
 		}
+		//Close down and return
 		resultSet.close();
 		return requirements;
 	}
-	
+	/**
+	 * Accesses the class information from the database and stores it into a list
+	 * @param SQLStatement - what information you want to access form the database in SQL format
+	 * @return A List of classes
+	 * @throws SQLException - If any errors trying to connect to the database
+	 */
 	public List<Class> getClasses(String SQLStatement) throws SQLException{
+		//sends the SQL statement to the database and retrieves the result.
 		resultSet = statement.executeQuery(SQLStatement);
+		
+		//Prepare to handle and store information
 		String[] columnNames = Constants.COLUMNS_OF_DATABASE.split(",");
 		String[] rowArgs = new String[columnNames.length];
 		List<Class> classes = new ArrayList<>();
 		List<Class> labs = new ArrayList<>();
+		
+		//parse all the information into a List of classes
 		ReadRow: while (resultSet.next()) {
 			for (int i = 0; i < columnNames.length; i++) {
 				rowArgs[i] = resultSet.getString(columnNames[i]);
@@ -69,8 +94,8 @@ public class DatabaseConnector {
 					continue ReadRow;
 				}
 			}
-			// Note: meeting days is not part of checking equality
 			Class tempClass = new Class(rowArgs);
+			//Check to see if a class is a lab or not
 			if(rowArgs[10].equals("2")){
 				labs.add(tempClass);
 				System.out.printf("Note: Lab detected: %s\n", dump(rowArgs));
@@ -82,15 +107,23 @@ public class DatabaseConnector {
 		for(Class lab : labs) {
 			classes.get(classes.indexOf(lab)).addLab(lab);
 		}
+		//Close down and return the List of classes
 		resultSet.close();
 		return classes;
 	}
-	
+	/**
+	 * Disconnects from the database
+	 * @throws SQLException - If any errors trying to disconnect to the database
+	 */
 	public void close() throws SQLException{
 		statement.close();
 		connector.close();
 	}
-
+	/**
+	 * debug String dump for an array of information
+	 * @param array
+	 * @return
+	 */
 	private String dump(String[] array) {
 		StringBuilder br = new StringBuilder();
 		for(String ele : array) {
