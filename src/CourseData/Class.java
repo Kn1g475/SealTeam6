@@ -230,7 +230,7 @@ public class Class implements Comparable<Class> {
 	 * @return
 	 */
 	public String toStringReportHTMLRow() {
-		return String.format("%s <td>%s%s</td><td>%s</td><td>(%s)</td></tr>",
+		return String.format("%s <td>%s%s</td><td>%s</td><td>(%s)</td><td>%s</td></tr>",
 				(hasConflict)?("<tr style=\"font-weight:bold;\"><td>***</td>"):("<tr><td></td>"),
 						course.getShortName(),section, getTimes(getMeetingDays()), instructor, CRN_Number);
 	}

@@ -12,6 +12,7 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
 import CourseData.Class;
+import CourseData.Course;
 import CourseData.TimeInterval;
 import Main.Constants;
 
@@ -36,8 +37,7 @@ public class WeekTable extends JTable {
 				getModel().setValueAt(c.CoursenSection(), row, column);
 			}
 		}
-		setDefaultRenderer(getColumnClass(0), new WeekRenderer());
-		revalidate();
+		setDefaultRenderer(getColumnClass(2), new WeekRenderer());
 
 	}
 	public boolean isCellEditable(int rowIndex, int vColIndex) {
@@ -69,7 +69,7 @@ public class WeekTable extends JTable {
 					int lastRow = getLastRow(entry.getValue().getEndTime());
 					int startRow = getRow(entry.getValue().getStartTime());
 					int classColumn = getColumnInt(entry.getKey());
-					if (startRow <= row && row < lastRow && column == classColumn)
+					if (startRow <= row && row <= lastRow && column == classColumn)
 						setBackground(Color.CYAN);
 				}
 			}
@@ -83,9 +83,9 @@ public class WeekTable extends JTable {
 		if (tempTime > 0 && tempTime < 30)
 			time += 30;
 		else if (tempTime > 30 && tempTime < 60)
-			time += 60;
+			time += 100;
 		else 
-			time+= tempTime;
+			time += tempTime;
 		return getRow(time);
 	}
 	
@@ -121,6 +121,7 @@ public class WeekTable extends JTable {
 		case 1630: return 18;
 		case 1700: return 19;
 		case 1730: return 20;
+		case 1800: return 21;
 		default: return 0;
 		}
 	}
