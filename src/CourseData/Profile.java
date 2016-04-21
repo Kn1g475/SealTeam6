@@ -304,6 +304,9 @@ public class Profile {
 		
 	}
 	public void findConflicts() throws InvalidClassException {
+		finalsCategories = new ArrayList<>();
+		for (Class c: schedule)
+			c.setCategory(null);
 		Data.setCategories(schedule, finalsCategories);
 		displayError(schedule);
 	}
