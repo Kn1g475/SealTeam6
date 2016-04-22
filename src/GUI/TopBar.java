@@ -66,7 +66,7 @@ public class TopBar extends JPanel {
 		add(buttonsPanel);
 		buttonsPanel.setLayout(null);
 		
-		addButton = new JButton("Add File");
+		addButton = new JButton("Upload");
 		addButton.setPreferredSize(new Dimension(110, 29));
 		addButton.setBounds(0, 0, 117, 29);
 		addButton.setActionCommand("addButton");
