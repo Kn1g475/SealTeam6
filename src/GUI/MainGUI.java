@@ -174,8 +174,8 @@ public class MainGUI extends JFrame {
 		}
 		return sb.toString();
 	}
-	
-	
+
+
 	public class CheckButton implements ActionListener {
 
 		@Override
@@ -275,25 +275,29 @@ public class MainGUI extends JFrame {
 			clearAlert();
 			if (e.getSource() == sideBar.profileButton)
 				contentSwitcher.show(contentPanel, "PROFILE");
-			if(e.getSource() == sideBar.scheduleButton && profilePanel.allSelected()) {
-				profile.setCurYear(profilePanel.curYear);
-				profile.setUniqueID(profilePanel.uniqueId);
-				profile.setHours(profilePanel.hours);
+			if(e.getSource() == sideBar.scheduleButton) {
+				if (profilePanel.allSelected()) {
+					profile.setCurYear(profilePanel.curYear);
+					profile.setUniqueID(profilePanel.uniqueId);
+					profile.setHours(profilePanel.hours);
 
-				if(schedulePanel.classes.isEmpty())
-					schedulePanel.classes = Data.readNewCourseData(profilePanel.semester);
-				if(profile.majorReq.isEmpty() || !profile.getMajor().equals(profilePanel.major)) {
-					profile.setMajor(profilePanel.major);
-					profile.majorReq = Data.readNewRequirementData(profile.getMajor());
+					if(schedulePanel.classes.isEmpty())
+						schedulePanel.classes = Data.readNewCourseData(profilePanel.semester);
+					if(profile.majorReq.isEmpty() || !profile.getMajor().equals(profilePanel.major)) {
+						profile.setMajor(profilePanel.major);
+						profile.majorReq = Data.readNewRequirementData(profile.getMajor());
+					}
+					schedulePanel.courses = Data.getCourses(schedulePanel.classes);
+					contentSwitcher.show(contentPanel, "SCHEDULE");
+				} else {
+					JOptionPane.showMessageDialog(schedulePanel.parent, "You need to Fill Out All the Profile Infomation", "Warning", JOptionPane.WARNING_MESSAGE);
 				}
-				schedulePanel.courses = Data.getCourses(schedulePanel.classes);
-				contentSwitcher.show(contentPanel, "SCHEDULE");
-			}
+			} 
 			if (e.getSource() == sideBar.aboutButton)
 				contentSwitcher.show(contentPanel, "ABOUT");
 			if (e.getSource() == sideBar.instructionsButton)
 				contentSwitcher.show(contentPanel, "INSTRUCTIONS");
-			if (e.getSource() == sideBar.reportButton && profilePanel.allSelected())
+			if (e.getSource() == sideBar.reportButton)
 				contentSwitcher.show(contentPanel, "REPORT");
 		}
 	}
