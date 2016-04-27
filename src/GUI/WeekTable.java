@@ -122,6 +122,12 @@ public class WeekTable extends JTable {
 		case 1700: return 19;
 		case 1730: return 20;
 		case 1800: return 21;
+		case 1830: return 22;
+		case 1900: return 23;
+		case 1930: return 24;
+		case 2000: return 25;
+		case 2030: return 26;
+		case 2100: return 27;
 		default: return 0;
 		}
 	}

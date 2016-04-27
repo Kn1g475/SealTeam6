@@ -60,17 +60,14 @@ public class Report extends JPanel {
 		mainReport.setLayout(null);
 		mainReport.setBackground(Constants.CONTENT_BACKGROUND_COLOR);
 
-		TableModel weekModel = new DefaultTableModel(21,6);
+		TableModel weekModel = new DefaultTableModel(28,6);
 		WeekTable weekSchedule = new WeekTable(weekModel, profile.getSchedule());
 		weekSchedule.setBounds(0, 30, 630, 460);
 		weekSchedule.setCellSelectionEnabled(false);
 		weekSchedule.setBorder(new LineBorder(Color.BLACK,1));
-
+		//weekSchedule.setRowHeight(460/28);
 		for (int i = 0; i < weekSchedule.getRowCount(); i++) {
-			if( i == 0)
-				weekSchedule.setRowHeight(i, 20);
-			else 
-				weekSchedule.setRowHeight(i, 440 / 20);
+				weekSchedule.setRowHeight(i, 460 / 28);
 		}
 		weekSchedule.getColumnModel().getColumn(0).setPreferredWidth(35);
 		for (int i = 1; i < weekSchedule.getColumnCount(); i++)
