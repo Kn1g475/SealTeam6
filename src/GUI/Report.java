@@ -85,7 +85,7 @@ public class Report extends JPanel {
 		mainReport.add(mainRight);
 
 		JLabel mainTitle = new JLabel("Week At a Glance");
-		mainTitle.setBounds(290, 0,100,30);
+		mainTitle.setBounds(290, 0,300,30);
 		mainReport.add(mainTitle);
 
 		JPanel reportLabel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -146,7 +146,7 @@ public class Report extends JPanel {
 		conflictReport.add(conflictRight);
 
 		JLabel conflictTitle = new JLabel("Finals Schedule");
-		conflictTitle.setBounds(290, 0,100,30);
+		conflictTitle.setBounds(290, 0,300,30);
 		conflictReport.add(conflictTitle);
 
 		add(conflictReport,"CONFLICT");
