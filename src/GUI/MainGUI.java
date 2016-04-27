@@ -290,7 +290,7 @@ public class MainGUI extends JFrame {
 					schedulePanel.courses = Data.getCourses(schedulePanel.classes);
 					contentSwitcher.show(contentPanel, "SCHEDULE");
 				} else {
-					JOptionPane.showMessageDialog(schedulePanel.parent, "You need to Fill Out All the Profile Infomation", "Warning", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(schedulePanel.parent, "You need to fill out all the profile information", "Warning", JOptionPane.WARNING_MESSAGE);
 				}
 			} 
 			if (e.getSource() == sideBar.aboutButton)

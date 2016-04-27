@@ -25,6 +25,10 @@ import CourseData.Course;
 public class AddCoursesWindow extends JDialog {
 
 	/**
+	 * This window will allow the user to add courses to their
+	 * 'Taken' list for later checking. Includes prerequisite checking.
+	 * 
+	 * @author npatterson
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;

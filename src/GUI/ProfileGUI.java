@@ -23,7 +23,7 @@ import CourseData.Profile;
  * This panel one of the content windows that get switched by the Main GUI. Its
  * only purpose is to display simple text.
  * 
- * @author Nate
+ * @author npatterson
  * 
  */
 @SuppressWarnings("serial")

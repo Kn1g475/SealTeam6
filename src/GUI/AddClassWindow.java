@@ -25,6 +25,14 @@ import javax.swing.border.LineBorder;
 
 @SuppressWarnings("serial")
 public class AddClassWindow extends JDialog{
+	/**
+	 *
+	 * This window will add classes to the 'Desired'
+	 * list and be used for building the schedule for the final Report.  
+	 *
+	 * @author npatterson
+	 */
+	
 	AddClassWindow us;
 	JList<Class> courseToAdd;
 	DefaultListModel<Class> list;
