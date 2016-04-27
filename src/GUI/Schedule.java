@@ -131,7 +131,7 @@ public class Schedule extends JPanel{
 					
 					if (classWindow.selected != null && !profile.getCoursesTaken().contains(classWindow.selected) && !classList.contains(classWindow.selected)) {
 						if (!profile.addClass(classWindow.selected))
-							JOptionPane.showMessageDialog(parent,"Class overlaps with a course that you already want to take","Invalid" ,JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(parent,"Class overlaps with a course that you already want to take or\n you are already taking this course","Invalid" ,JOptionPane.ERROR_MESSAGE);
 						else {
 							classList.addElement(classWindow.selected);
 						}

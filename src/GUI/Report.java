@@ -60,19 +60,26 @@ public class Report extends JPanel {
 		mainReport.setLayout(null);
 		mainReport.setBackground(Constants.CONTENT_BACKGROUND_COLOR);
 
-		TableModel weekModel = new DefaultTableModel(28,6);
+		TableModel weekModel = new DefaultTableModel(29,6);
 		WeekTable weekSchedule = new WeekTable(weekModel, profile.getSchedule());
 		weekSchedule.setBounds(0, 30, 630, 460);
 		weekSchedule.setCellSelectionEnabled(false);
 		weekSchedule.setBorder(new LineBorder(Color.BLACK,1));
 		//weekSchedule.setRowHeight(460/28);
 		for (int i = 0; i < weekSchedule.getRowCount(); i++) {
-				weekSchedule.setRowHeight(i, 460 / 28);
+				weekSchedule.setRowHeight(i, 20);
 		}
 		weekSchedule.getColumnModel().getColumn(0).setPreferredWidth(35);
-		for (int i = 1; i < weekSchedule.getColumnCount(); i++)
-			weekSchedule.getModel().setValueAt(longDays[i - 1], 0, i);
-		mainReport.add(weekSchedule);
+		for (int i = 0; i < weekSchedule.getColumnCount(); i++)
+			if(i == 0)
+				weekSchedule.getColumnModel().getColumn(i).setHeaderValue("");
+			else
+				weekSchedule.getColumnModel().getColumn(i).setHeaderValue(longDays[i - 1]);
+		
+		
+		JScrollPane calanderScroll = new JScrollPane(weekSchedule);
+		calanderScroll.setBounds(0, 30, 630, 460);
+		mainReport.add(calanderScroll);
 
 		JButton mainLeft = new JButton("<--");
 		mainLeft.setBounds(0, 0, 50, 30);

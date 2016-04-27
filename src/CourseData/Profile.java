@@ -69,7 +69,7 @@ public class Profile {
 	 */
 	public boolean addClass(Class clas) {
 		boolean check = false;
-		if (!checkTimeOverlap(clas)) {
+		if (!checkTimeOverlap(clas) && ! this.checkAlreadyHave(clas)) {
 			schedule.add(clas);
 			check = true;
 		} 
@@ -223,7 +223,12 @@ public class Profile {
 		}
 		return test;
 	}
-
+	private boolean checkAlreadyHave(Class add) {
+		for (Class c : schedule)
+			if (add.getCourse().equals(c.getCourse()))
+				return true;
+		return false;
+	}
 	private String checkPreReq(Class test) {
 		Course curCourse = test.getCourse();
 		if (majorReq.containsKey(curCourse.getShortName())) {
