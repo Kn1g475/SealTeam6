@@ -127,7 +127,7 @@ public class AddClassWindow extends JDialog{
 				us.close();
 			}
 			if(arg0.getActionCommand().equalsIgnoreCase("comboBox")){
-				if(comboBox.getSelectedItem().equals("Select Item")){
+				if(comboBox.getSelectedItem().equals("Select Class")){
 					if(list.size() == 1){
 						list.clear();
 					}
