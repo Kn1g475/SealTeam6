@@ -83,7 +83,6 @@ public class Data {
 	 * Hard coded way of setting the final exam slots
 	 * @param allClassList
 	 * @param cats
-	 * @throws Exception
 	 */
 	public static void setCategories(List<Class> classList, List<Category> cats) {
 		if (cats.size() == 0) {

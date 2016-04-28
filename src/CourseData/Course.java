@@ -59,6 +59,9 @@ public class Course implements Comparable<Course> {
 	}
 
 	@Override
+	/**
+	 * Generates hash code for each course
+	 */
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -67,6 +70,9 @@ public class Course implements Comparable<Course> {
 		return result;
 	}
 	@Override
+	/**
+	 * checks to see if two courses are the same, compares shortnames only
+	 */
 	public boolean equals(Object obj) {
 		boolean ret = false;
 		if( obj instanceof Course) {
