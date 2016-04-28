@@ -41,7 +41,7 @@ public class AddCoursesWindow extends JDialog {
 	JComboBox<String> comboBox;
 	JScrollPane courseBox;
 	List<Course> courses;
-	public Course selected;
+	public List<Course> selected;
 	public AddCoursesWindow(JFrame parent,ModalityType modal, List<Course> courses) {
 		super(parent, modal);
 		us = this;
@@ -106,7 +106,7 @@ public class AddCoursesWindow extends JDialog {
 				us.close();
 			}
 			if(arg0.getActionCommand().equalsIgnoreCase("acceptWindowButton")){
-				selected = courseToAdd.getSelectedValue();
+				selected = courseToAdd.getSelectedValuesList();
 				us.close();
 			}
 			if(arg0.getActionCommand().equalsIgnoreCase("comboBox")){

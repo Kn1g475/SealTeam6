@@ -138,6 +138,16 @@ public class Schedule extends JPanel{
 		}
 
 	}
+	
+	private String errorDump(java.util.List<String> err) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Errors: \n");
+		for (String error : err) {
+			sb.append(String.format("\t%s\n", error.substring(8)));
+		}
+		return sb.toString();
+	}
+	
 	private class ButtonEvent implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -146,18 +156,21 @@ public class Schedule extends JPanel{
 					AddClassWindow classWindow = new AddClassWindow(parent, ModalityType.APPLICATION_MODAL, classes);
 
 					if (classWindow.selected != null && !profile.getCoursesTaken().contains(classWindow.selected) && !classList.contains(classWindow.selected)) {
-						if (!profile.addClass(classWindow.selected))
-							JOptionPane.showMessageDialog(parent,"Class overlaps with a course that you already want to take or\n you are already taking this course","Invalid" ,JOptionPane.ERROR_MESSAGE);
-						else {
-							classList.addElement(classWindow.selected);
-						}
+						
+						java.util.List<String> errors = profile.addClasses(classWindow.selected);
+						if (!errors.isEmpty())
+							JOptionPane.showMessageDialog(parent,errorDump(errors),"Invalid" ,JOptionPane.ERROR_MESSAGE);
+						classList.clear();
+						for (Class c : profile.getSchedule())
+							classList.addElement(c);
 					}
 				}
 				if(takenRadioButton.isSelected()){
 					AddCoursesWindow courseWindow = new AddCoursesWindow(parent, ModalityType.APPLICATION_MODAL, courses);
 					if (courseWindow.selected != null && !profile.getCoursesTaken().contains(courseWindow.selected)) {
 						profile.addCourse(courseWindow.selected);
-						courseList.addElement(courseWindow.selected);
+						for (Course c : courseWindow.selected)
+							courseList.addElement(c);
 					}
 				}
 			}
@@ -166,9 +179,11 @@ public class Schedule extends JPanel{
 			}
 			if (e.getActionCommand().equalsIgnoreCase("Remove")) {
 				profile.removeClass(coursesDesiredList.getSelectedValuesList());
-				classList.removeElement(coursesDesiredList.getSelectedValuesList());
+				for (Class c : coursesDesiredList.getSelectedValuesList())
+						classList.removeElement(c);
 				profile.removeCourse(coursesTakenList.getSelectedValuesList());
-				courseList.removeElement(coursesTakenList.getSelectedValuesList());
+				for (Course c : coursesTakenList.getSelectedValuesList())
+					courseList.removeElement(c);
 			}
 		}
 	}

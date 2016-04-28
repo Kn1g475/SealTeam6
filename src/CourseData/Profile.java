@@ -85,7 +85,11 @@ public class Profile {
 		} 
 		return check;
 	}
-	
+	/**
+	 * Adds all given classes to the schedule
+	 * @param classes
+	 * @return
+	 */
 	public List<String> addClasses(List<Class> classes) {
 		List<String> errors = new ArrayList<>();
 		for (Class c : classes) {

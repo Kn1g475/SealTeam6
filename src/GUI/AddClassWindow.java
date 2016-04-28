@@ -39,7 +39,7 @@ public class AddClassWindow extends JDialog{
 	Button acceptButton, cancelButton;
 	Label courseLabel;
 	JComboBox<String> comboBox;
-	Class selected;
+	List<Class> selected;
 	List<Class> classes;
 	
 	public AddClassWindow(JFrame parent,ModalityType modal ,List<Class> classes) {
@@ -123,7 +123,7 @@ public class AddClassWindow extends JDialog{
 				us.close();
 			}
 			if (arg0.getActionCommand().equalsIgnoreCase("acceptWindowButton")){
-				selected = courseToAdd.getSelectedValue();
+				selected = courseToAdd.getSelectedValuesList();
 				us.close();
 			}
 			if(arg0.getActionCommand().equalsIgnoreCase("comboBox")){
