@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import CourseData.Class;
 import Main.Constants;
@@ -19,9 +20,9 @@ public class Data {
 	 * @param major
 	 * @return
 	 */
-	public static Map<String, Requirement> readNewRequirementData(String major) {
+	public static Map<Course, Requirement> readNewRequirementData(String major) {
 		//create storage for requirements
-		Map<String, Requirement> degreeRequirements = new HashMap<>();
+		Map<Course, Requirement> degreeRequirements = new HashMap<>();
 		//determine the Major table
 		String[] split = major.split(" ");
 		String use = Character.toString(split[0].charAt(0)) + Character.toString(split[1].charAt(0));
@@ -68,7 +69,7 @@ public class Data {
 	 * @param classes
 	 * @return
 	 */
-	public static List<Course> getCourses(List<Class> classes) {
+	public static List<Course> getCourses(List<Class> classes, Set<Course> course) {
 		List<Course> courses = new ArrayList<>();
 		for (Class c : classes)
 			if (!courses.contains(c.getCourse()))

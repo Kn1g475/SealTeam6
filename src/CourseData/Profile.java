@@ -21,7 +21,7 @@ public class Profile {
 	private List<Class> schedule;
 	private String uniqueID;
 	private String major;
-	public Map<String, Requirement> majorReq;
+	public Map<Course, Requirement> majorReq;
 	private int hours;
 	private String curYear;
 
@@ -261,9 +261,9 @@ public class Profile {
 	 */
 	private String checkPreReq(Class test) {
 		Course curCourse = test.getCourse();
-		if (majorReq.containsKey(curCourse.getShortName())) {
+		if (majorReq.containsKey(curCourse)) {
 			//get requirements for course
-			Requirement req = majorReq.get(test.getCourse().getShortName());
+			Requirement req = majorReq.get(curCourse);
 			//check hours
 			if (req.getHours() > getHours())
 				return String.format("Invalid: Need %d for %s you have %d ", req.getHours(), curCourse.toString(test.section), getHours());
@@ -314,8 +314,8 @@ public class Profile {
 		//get new course elective count
 		for (Class c : schedule) {
 			Course curCourse = c.getCourse();
-			if (majorReq.containsKey(curCourse.getShortName())) {
-				Requirement req = majorReq.get(curCourse.getShortName());
+			if (majorReq.containsKey(curCourse)) {
+				Requirement req = majorReq.get(curCourse);
 				switch (req.getType()) {
 				case "COMPUTER SCIENCE":
 					compSci++;

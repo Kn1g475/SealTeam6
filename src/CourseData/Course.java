@@ -58,15 +58,22 @@ public class Course implements Comparable<Course> {
 		return this.getShortName().toLowerCase().compareTo(o.getShortName().toLowerCase());
 	}
 
-	/**
-	 * Checks to see if two courses are equal with each other.
-	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((courseNumber == null) ? 0 : courseNumber.hashCode());
+		result = prime * result + ((subject == null) ? 0 : subject.hashCode());
+		return result;
+	}
+	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Course) {
-			Course test = (Course) obj;
-			return test.getShortName().equalsIgnoreCase(this.getShortName());
+		boolean ret = false;
+		if( obj instanceof Course) {
+			Course other = (Course) obj;
+			ret = this.getShortName().equals(other.getShortName());
 		}
-		return false;
+		return ret;
 	}
 
 	/**
@@ -91,4 +98,6 @@ public class Course implements Comparable<Course> {
 	public String toString(String section) {
 		return String.format("%s%s - %s", getShortName(), section, title);
 	}
+	
+	
 }

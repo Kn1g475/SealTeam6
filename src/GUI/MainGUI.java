@@ -287,7 +287,7 @@ public class MainGUI extends JFrame {
 						profile.setMajor(profilePanel.major);
 						profile.majorReq = Data.readNewRequirementData(profile.getMajor());
 					}
-					schedulePanel.courses = Data.getCourses(schedulePanel.classes);
+					schedulePanel.courses = Data.getCourses(schedulePanel.classes, profile.majorReq.keySet());
 					contentSwitcher.show(contentPanel, "SCHEDULE");
 				} else {
 					JOptionPane.showMessageDialog(schedulePanel.parent, "You need to fill out all the profile information", "Warning", JOptionPane.WARNING_MESSAGE);

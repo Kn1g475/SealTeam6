@@ -20,16 +20,21 @@ import Main.Constants;
 public class WeekTable extends JTable {
 
 	List<Class> schedule;
-
+	/**
+	 * Constructor
+	 * @param arg0
+	 * @param schedule
+	 */
 	public WeekTable(TableModel arg0, List<Class> schedule) {
 		super(arg0);
 		this.schedule = schedule;
+		// set times in side bar
 		int time = 800;
 		for (int i = 0; i < getRowCount(); i++) {
 			getModel().setValueAt(Constants.timeToString(time), i, 0);
 			time += (i % 2 == 1) ? 30 : 70; 
 		}
-
+		// put class data in respective data row and column
 		for (CourseData.Class c : schedule) {
 			for (Entry<Character, TimeInterval> entry : c.times.entrySet()) {
 				int row = getRow(entry.getValue().getStartTime());
@@ -43,6 +48,9 @@ public class WeekTable extends JTable {
 	public boolean isCellEditable(int rowIndex, int vColIndex) {
 		return false;
 	}
+	/**
+	 * Adds tool tips to table cells
+	 */
 	public Component prepareRenderer(TableCellRenderer renderer, int rowIndex, int vColIndex) {
         Component c = super.prepareRenderer(renderer, rowIndex, vColIndex);
         if (c instanceof JComponent) {
@@ -59,6 +67,9 @@ public class WeekTable extends JTable {
         }
         return c;
       }
+	/**
+	 * 
+	 */
 	private class WeekRenderer extends DefaultTableCellRenderer {
 		public Component getTableCellRendererComponent (JTable table, Object value, boolean selected, boolean focused, int row, int column){
 			super.getTableCellRendererComponent(table, value, selected, focused, row, column);

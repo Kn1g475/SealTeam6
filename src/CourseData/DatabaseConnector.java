@@ -34,14 +34,14 @@ public class DatabaseConnector {
 	 * @return - A mapping of CSE Course short names to their requirements
 	 * @throws SQLException - If any errors trying to connect to the database
 	 */
-	public Map<String,Requirement> getRequrements(String SQLStatement) throws SQLException {
+	public Map<Course,Requirement> getRequrements(String SQLStatement) throws SQLException {
 		//sends the SQL statement to the database and retrieves the result.
 		resultSet = statement.executeQuery(SQLStatement);
 		
 		//prepare to handle and store the information
 		String[] columnNames = Constants.COLUMNS_OF_REQUIREMENTS.split(",");
 		String[] rowArgs = new String[columnNames.length];
-		Map<String, Requirement> requirements = new HashMap<>();
+		Map<Course, Requirement> requirements = new HashMap<>();
 		
 		//parse all the information in to the mapping of Course short names to their requirements
 		ReadRow: while (resultSet.next()) {
@@ -54,7 +54,7 @@ public class DatabaseConnector {
 			}
 			Course temp = new Course(rowArgs[0], rowArgs[2], rowArgs[1]);
 			//System.out.println(temp);
-			requirements.put(temp.getShortName(), new Requirement(rowArgs));
+			requirements.put(temp, new Requirement(rowArgs));
 		}
 		//Close down and return
 		resultSet.close();

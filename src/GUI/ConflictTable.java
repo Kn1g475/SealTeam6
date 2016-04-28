@@ -22,12 +22,27 @@ public class ConflictTable extends JTable{
 	public ConflictTable(TableModel arg0, List<Category> cats) {
 		super(arg0);
 		this.cats = cats;
+		
 		int time = 800;
 		for (int i = 1; i < getRowCount(); i++) {
 			getModel().setValueAt(Constants.timeToString(time), i, 0);
-			time += (i % 2 == 1) ? 30 : 70; 
+			switch (i) {
+			case 1: case 3: case 5: case 7: case 9: case 11:
+				time += 200;
+				break;
+			case 2: case 6: case 10: 
+				time += 15;
+				break;
+			case 4: case 8:
+				time +=30;
+				break;
+			}
+			if (time % 100 == 60)
+				time += 40;
+			if (time % 100 == 90)
+				time += 10;
 		}
-
+		
 		for (Category cat : cats) {
 
 			Collections.sort(cat.classesInThisCategory);
