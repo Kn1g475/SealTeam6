@@ -49,7 +49,7 @@ public class ProfileGUI extends JPanel {
 		uniqueIDTextField.setText((profile.getUniqueID().equals(""))? "Unique ID" : profile.getUniqueID());
 		uniqueIDTextField.addFocusListener(new FocusListener() {
 			public void focusGained(FocusEvent e) {
-				uniqueIDTextField.setText("");
+				uniqueIDTextField.setText(uniqueIDTextField.getText().equals("Unique ID") ? "" : uniqueIDTextField.getText());
 			}
 			public void focusLost(FocusEvent e) {
 				uniqueIDTextField.setText(uniqueIDTextField.getText().equals("") ? "Unique ID" : uniqueIDTextField.getText());
