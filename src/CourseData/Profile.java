@@ -12,7 +12,10 @@ import java.util.List;
 import java.util.Map;
 
 import Exceptions.InvalidClassException;
-
+/**
+ * A class to store the information for a students information and class schedule
+ * @author Sam Levy
+ */
 public class Profile {
 	private List<Course> takenCourses;
 	private List<Class> schedule;
@@ -25,6 +28,9 @@ public class Profile {
 	public List<Category> finalsCategories;
 	public List<String> Errors;
 	public List<String> Warnings;
+	/**
+	 * Constructor
+	 */
 	public Profile() {
 		takenCourses = new ArrayList<>();
 		finalsCategories = new ArrayList<>();
@@ -94,7 +100,7 @@ public class Profile {
 		return schedule.remove(clas);
 	}
 
-
+	//getters
 	public String getUniqueID() {
 		return uniqueID;
 	}
@@ -118,8 +124,11 @@ public class Profile {
 	}
 	public void setCurYear(String curYear) {
 		this.curYear = curYear;
-	}
-
+	}//end getters
+	/**
+	 * Saves all the information in the profile to a text file in the
+	 * folder of the .jar named uniqueIDMajor.prof
+	 */
 	public void saveProfile() {
 		File save = new File(uniqueID + major + ".prof");
 		System.out.println(save.getAbsolutePath());
@@ -150,6 +159,11 @@ public class Profile {
 		}
 
 	}
+	/**
+	 * Reads the information from the selected file and adds it to the profile
+	 * @param selectedFile
+	 * @return
+	 */
 	public String readProfile(File selectedFile) {
 		if (!selectedFile.getName().endsWith(".prof")) {
 			return "Error: Incorrect File Format";
@@ -196,7 +210,10 @@ public class Profile {
 		}
 		return "";
 	}
-
+	/**
+	 * Checks to see if the made schedule is feasible or not
+	 * @return
+	 */
 	public boolean checkFeasibility() {
 		Errors.clear();
 		Warnings.clear();
@@ -212,7 +229,12 @@ public class Profile {
 		System.out.println(Warnings);
 		return Errors.isEmpty();
 	}
-
+	
+	/**
+	 * checks to see if a selected class happens during any of the selected courses times
+	 * @param add
+	 * @return
+	 */
 	private boolean checkTimeOverlap(Class add) {
 		boolean test = false;
 		for (Class clas : schedule) {
@@ -223,23 +245,36 @@ public class Profile {
 		}
 		return test;
 	}
+	/**
+	 * checks to see if you already taking a class
+	 * @param add
+	 * @return
+	 */
 	private boolean checkAlreadyHave(Class add) {
 		for (Class c : schedule)
 			if (add.getCourse().equals(c.getCourse()))
 				return true;
 		return false;
 	}
+	/**
+	 * Checks Prerequisites for a given class
+	 */
 	private String checkPreReq(Class test) {
 		Course curCourse = test.getCourse();
 		if (majorReq.containsKey(curCourse.getShortName())) {
+			//get requirements for course
 			Requirement req = majorReq.get(test.getCourse().getShortName());
+			//check hours
 			if (req.getHours() > getHours())
 				return String.format("Invalid: Need %d for %s you have %d ", req.getHours(), curCourse.toString(test.section), getHours());
+			//check prerequisites
 			if (!req.hasPrereqs(this.takenCourses))
 				return String.format("Invalid: %s requires that you have taken: %s", curCourse.toString(test.section) ,req.getPrequisites());
+			//check senior level
 			if (req.isSeniorLevel())
 				if (this.curYear.equals("Fourth Year +"))
 					return "Invalid: Senior standing required for " + curCourse.toString(test.section);
+			//warn for instructor permission
 			if (req.isInstructorPermission())
 				return String.format("Warning: %s requires instructor permission", curCourse.toString(test.section));
 		}
@@ -248,11 +283,15 @@ public class Profile {
 		}
 		return "";
 	}
+	/**
+	 * checks Major Requirements
+	 */
 	private void checkMajorReqs() {
 		int affiliate = 0;
 		int research = 0;
 		int compSci = 0;
 		int engineer = 0;
+		//get current elective course count
 		for (Course c : takenCourses) {
 			if (majorReq.containsKey(c.getShortName())) {
 				Requirement req = majorReq.get(c.getShortName());
@@ -272,6 +311,7 @@ public class Profile {
 				}
 			}
 		}
+		//get new course elective count
 		for (Class c : schedule) {
 			Course curCourse = c.getCourse();
 			if (majorReq.containsKey(curCourse.getShortName())) {
@@ -308,6 +348,10 @@ public class Profile {
 		
 		
 	}
+	/**
+	 * searches for final conflicts
+	 * @throws InvalidClassException
+	 */
 	public void findConflicts() throws InvalidClassException {
 		finalsCategories = new ArrayList<>();
 		for (Class c: schedule)

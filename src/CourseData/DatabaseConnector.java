@@ -13,7 +13,7 @@ import java.util.Map;
 import Main.Constants;
 /**
  * This Handles all Connections to the database for information Retrieval
- * @author Skippy
+ * @author Sam Levy
  */
 public class DatabaseConnector {
 	private static final String USER_NAME = "levysj-r"; //user name for database

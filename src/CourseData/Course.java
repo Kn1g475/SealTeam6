@@ -24,33 +24,32 @@ public class Course implements Comparable<Course> {
 		this.title = title;
 		this.courseNumber = courseNumber;
 	}
-	public Course(String subject, String title) {
-		if (subject == "" || title == "") {
-			System.err.println("Error: Invalid input sent to Course constructor");
-			throw new IllegalArgumentException();
-		}
-		this.subject = subject;
-		this.title = title;
-		
-	}
+	/**
+	 * Creates course with out title based on its short name
+	 * @param shortTitle
+	 */
 	public Course(String shortTitle) {
 		String[] split = shortTitle.split("\\s+");
 		subject = split[0];
 		courseNumber = split[1];
 	}
+	/**
+	 * Gets the short name of the Course
+	 * @return
+	 */
 	public String getShortName() {
 		return String.format("%s %s",subject, courseNumber);
 	}
+	//getters
 	public String getTitle() {
-		return String.format("%s",title);
+		return title;
 	}
-	
 	public String getCourseNumber(){
-		return String.format("%s",courseNumber);
+		return courseNumber;
 	}
 	public String getSubject(){
-		return String.format("%s",subject);
-	}
+		return subject;
+	}// end getters
 
 	/**
 	 * Compares two courses with each other.
@@ -76,6 +75,10 @@ public class Course implements Comparable<Course> {
 	public String toString() {
 		return String.format("%s - %s", getShortName(), title);
 	}
+	/**
+	 * To string for file saving
+	 * @return
+	 */
 	public String saveString() {
 		return String.format("%s|%s|%s", subject, title, courseNumber);
 	}

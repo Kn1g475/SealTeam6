@@ -10,16 +10,25 @@ import java.util.Map;
 import CourseData.Class;
 import Main.Constants;
 /**
- * 
+ * Handles getting data from certain sources
  * @author Sam Levy
  */
 public class Data {
+	/**
+	 * Connects to the Database and gets the Major Requirements for the specified major
+	 * @param major
+	 * @return
+	 */
 	public static Map<String, Requirement> readNewRequirementData(String major) {
+		//create storage for requirements
 		Map<String, Requirement> degreeRequirements = new HashMap<>();
+		//determine the Major table
 		String[] split = major.split(" ");
 		String use = Character.toString(split[0].charAt(0)) + Character.toString(split[1].charAt(0));
 		try{
+			//Connect to database
 			DatabaseConnector connector= new DatabaseConnector();
+			//Get all the requirements information from the table
 			degreeRequirements.putAll(connector.getRequrements("SELECT " + Constants.COLUMNS_IN_REQUIREMENTS + "FROM " + use + "_Requirements_2015_2016 WHERE 1"));
 			connector.close();
 		} catch(SQLTimeoutException e){
@@ -31,10 +40,18 @@ public class Data {
 		}
 		return degreeRequirements;
 	}
+	/**
+	 * Gets the Class information from the Specified Table
+	 * @param table
+	 * @return
+	 */
 	public static List<Class> readNewCourseData(String table) {
+		//Create Storage for the class information
 		List<Class> allClassList = new ArrayList<>();
 		try{
+			//connect to database
 			DatabaseConnector connector= new DatabaseConnector();
+			//get class information from the specified table
 			allClassList.addAll(connector.getClasses("SELECT " + Constants.COLUMNS_IN_DATABASE + "FROM " + table + " WHERE 1"));
 			connector.close();
 		} catch(SQLTimeoutException e){
@@ -46,6 +63,11 @@ public class Data {
 		}
 		return allClassList;
 	}
+	/**
+	 * Gets all the Courses available 
+	 * @param classes
+	 * @return
+	 */
 	public static List<Course> getCourses(List<Class> classes) {
 		List<Course> courses = new ArrayList<>();
 		for (Class c : classes)

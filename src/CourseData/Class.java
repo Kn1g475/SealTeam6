@@ -50,13 +50,19 @@ public class Class implements Comparable<Class> {
 			throw new IllegalArgumentException();
 		}
 	}
-
+	/**
+	 * Constructor for the database information
+	 * @param lineArgs
+	 */
 	public Class(String[] lineArgs) {
 		this(new Course(lineArgs[1], lineArgs[4], lineArgs[2]),lineArgs[9],lineArgs[0],
 				lineArgs[3],Integer.parseInt(lineArgs[6]),Integer.parseInt(lineArgs[7]),lineArgs[5]);
 	}
 	
-	
+	/**
+	 * Constructor for the file uploading
+	 * @param line
+	 */
 	public Class(String line) {
 		String[] args = line.split("\\|");
 		
@@ -84,13 +90,18 @@ public class Class implements Comparable<Class> {
 				keys += t;
 			}
 		}
-		//System.out.println(inter);
 		addTimes(inter);
 		this.instructor = args[6];
 		this.meetingDays = 0;
 		addMeetingDays(days);
 	}
-
+	
+	
+	/**
+	 * Checks to see if 2 classes happen at the same time
+	 * @param test
+	 * @return
+	 */
 	public boolean doesOverlap(Class test) {
 		for(char day : test.times.keySet()) {
 			if (times.containsKey(day)) {
@@ -100,12 +111,20 @@ public class Class implements Comparable<Class> {
 		}
 		return false;
 	}
-
+	/**
+	 * Adds lab information to the class
+	 * @param lab
+	 */
 	public void addLab(Class lab) {
 		addTimes(lab.times);
 		addMeetingDays(lab.getMeetingDays());
 	}
-
+	/**
+	 * adds the meetings days with there respective meeting times to the class
+	 * @param days
+	 * @param startTime
+	 * @param endTime
+	 */
 	private void addTimes(String days, int startTime, int endTime) {
 		for (char day : days.toCharArray()) {
 			if (!times.containsKey(day)) {
@@ -113,11 +132,20 @@ public class Class implements Comparable<Class> {
 			}
 		}
 	}
+	/**
+	 * adds the meetings days with there respective meeting times to the class
+	 * @param map
+	 */
 	private void addTimes(Map<Character,TimeInterval> map) {
 		for (char day : map.keySet()) {
 			addTimes(Character.toString(day),map.get(day).getStartTime(),map.get(day).getEndTime());
 		}
 	}
+	/**
+	 * converts the meeting times and days to a String for displaying purposes
+	 * @param meetingDays
+	 * @return
+	 */
 	private String getTimes(String meetingDays) {
 		StringBuilder br = new StringBuilder();
 		String checked = "";
@@ -140,7 +168,11 @@ public class Class implements Comparable<Class> {
 		return br.toString();
 	}
 	
-	
+	/**
+	 * converts the meeting times and days to a String for saving purposes
+	 * @param meetingDays
+	 * @return
+	 */
 	private String getSaveTimes (String meetingDays) {
 		StringBuilder br = new StringBuilder();
 		String checked = "";
@@ -221,6 +253,10 @@ public class Class implements Comparable<Class> {
 		return String.format("%s:\t\t%s\t\t%s\t\t%s", CRN_Number,
 				course.toString(section),instructor,getTimes(getMeetingDays()));
 	}
+	/**
+	 * Creates the String that the save file uses
+	 * @return
+	 */
 	public String fileSave() {
 		return String.format("%s|%s|%s|%s|%s", CRN_Number,course.saveString(), section,getSaveTimes(getMeetingDays()),instructor);
 	}
@@ -234,6 +270,10 @@ public class Class implements Comparable<Class> {
 				(hasConflict)?("<tr style=\"font-weight:bold;\"><td>***</td>"):("<tr><td></td>"),
 						course.getShortName(),section, getTimes(getMeetingDays()), instructor, CRN_Number);
 	}
+	/**
+	 * A to string that returns the course and section only
+	 * @return
+	 */
 	public String CoursenSection() {
 		return String.format("%s%s", course.getShortName(), section);
 	}
