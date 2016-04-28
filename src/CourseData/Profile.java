@@ -69,6 +69,10 @@ public class Profile {
 		if(!takenCourses.contains(course))
 			takenCourses.add(course);
 	}
+	public void addCourse(List<Course> courses) {
+		for (Course c: courses)
+			addCourse(c);
+	}
 	/**
 	 * Adds a Class to a schedule
 	 * @param clas
@@ -81,8 +85,21 @@ public class Profile {
 		} 
 		return check;
 	}
-
-
+	
+	public List<String> addClasses(List<Class> classes) {
+		List<String> errors = new ArrayList<>();
+		for (Class c : classes) {
+			if (checkTimeOverlap(c))
+				errors.add(String.format("Invalid: %s overlaps with a course you are taking", c.getCourse().toString(c.section)));
+			else if(checkAlreadyHave(c))
+				errors.add(String.format("Invalid: %s is already apart of your schedule Taking", c.getCourse().getShortName()));
+			else 
+				schedule.add(c);
+		}
+		
+		return errors;
+	}
+	
 	/**
 	 * Removes a Course that has been taken
 	 * @param course
@@ -92,6 +109,14 @@ public class Profile {
 		return takenCourses.remove(course);
 	}
 	/**
+	 * removes all the given courses
+	 * @param courses
+	 * @return
+	 */
+	public boolean removeCourse(List<Course> courses) {
+		return takenCourses.removeAll(courses);
+	}
+	/**
 	 * Removes a Class from the schedule
 	 * @param clas
 	 * @return
@@ -99,8 +124,15 @@ public class Profile {
 	public boolean removeClass(Class clas) {
 		return schedule.remove(clas);
 	}
-
-	//getters
+	/**
+	 * Removes all the given classes
+	 * @param classes
+	 * @return
+	 */
+	public boolean removeClass(List<Class> classes) {
+		return schedule.removeAll(classes);
+	}
+	//getters and setters
 	public String getUniqueID() {
 		return uniqueID;
 	}
@@ -124,7 +156,7 @@ public class Profile {
 	}
 	public void setCurYear(String curYear) {
 		this.curYear = curYear;
-	}//end getters
+	}//end getters and setters
 	/**
 	 * Saves all the information in the profile to a text file in the
 	 * folder of the .jar named uniqueIDMajor.prof

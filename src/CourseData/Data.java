@@ -71,6 +71,8 @@ public class Data {
 	 */
 	public static List<Course> getCourses(List<Class> classes, Set<Course> course) {
 		List<Course> courses = new ArrayList<>();
+		for (Course c : course)
+			courses.add(c);
 		for (Class c : classes)
 			if (!courses.contains(c.getCourse()))
 				courses.add(c.getCourse());

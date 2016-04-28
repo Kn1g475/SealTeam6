@@ -16,6 +16,8 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import CourseData.Course;
 import CourseData.Class;
@@ -65,6 +67,7 @@ public class Schedule extends JPanel{
 		for (Course c : prof.getCoursesTaken()) 
 			courseList.addElement(c);
 		coursesTakenList = new JList<>(courseList);
+		coursesTakenList.addListSelectionListener(new SelectionEvent());
 		JScrollPane coursePane = new JScrollPane(coursesTakenList);
 		coursePane.setBorder(new LineBorder(new Color(0, 0, 0)));
 		coursePane.setBounds(20, 51, 602, 106);
@@ -79,6 +82,7 @@ public class Schedule extends JPanel{
 		for (Class c : prof.getSchedule())
 			classList.addElement(c);
 		coursesDesiredList = new JList<>(classList);
+		coursesDesiredList.addListSelectionListener(new SelectionEvent());
 		JScrollPane classesPane = new JScrollPane(coursesDesiredList);
 		classesPane.setBorder(new LineBorder(new Color(0, 0, 0)));
 		classesPane.setBounds(20, 202, 601, 106);
@@ -119,16 +123,28 @@ public class Schedule extends JPanel{
 		saveButton.setBounds(463, 408, 117, 29);
 		saveButton.addActionListener(new ButtonEvent());
 		add(saveButton);
-		
+
 	}
-	
+	private class SelectionEvent implements ListSelectionListener {
+
+		@Override
+		public void valueChanged(ListSelectionEvent arg0) {
+			if (arg0.getSource().equals(coursesDesiredList)) {
+				coursesTakenList.clearSelection();
+			}
+			if (arg0.getSource().equals(coursesTakenList)) {
+				coursesDesiredList.clearSelection();
+			}
+		}
+
+	}
 	private class ButtonEvent implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(e.getActionCommand().equalsIgnoreCase("Add")){
 				if (desiredRadioButton.isSelected()){
 					AddClassWindow classWindow = new AddClassWindow(parent, ModalityType.APPLICATION_MODAL, classes);
-					
+
 					if (classWindow.selected != null && !profile.getCoursesTaken().contains(classWindow.selected) && !classList.contains(classWindow.selected)) {
 						if (!profile.addClass(classWindow.selected))
 							JOptionPane.showMessageDialog(parent,"Class overlaps with a course that you already want to take or\n you are already taking this course","Invalid" ,JOptionPane.ERROR_MESSAGE);
@@ -149,14 +165,10 @@ public class Schedule extends JPanel{
 				profile.saveProfile();
 			}
 			if (e.getActionCommand().equalsIgnoreCase("Remove")) {
-				if (desiredRadioButton.isSelected()) {
-					profile.removeClass(coursesDesiredList.getSelectedValue());
-					classList.removeElement(coursesDesiredList.getSelectedValue());
-				}
-				if (takenRadioButton.isSelected()) {
-					profile.removeCourse(coursesTakenList.getSelectedValue());
-					courseList.removeElement(coursesTakenList.getSelectedValue());
-				}
+				profile.removeClass(coursesDesiredList.getSelectedValuesList());
+				classList.removeElement(coursesDesiredList.getSelectedValuesList());
+				profile.removeCourse(coursesTakenList.getSelectedValuesList());
+				courseList.removeElement(coursesTakenList.getSelectedValuesList());
 			}
 		}
 	}
