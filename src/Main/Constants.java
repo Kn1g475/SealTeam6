@@ -65,7 +65,7 @@ public class Constants {
 			+ "This will generate a final report showing when the final exam times are scheduled, "
 			+ "as well their class schedule and class informantion."
 			+ "</p>"
-			+ "<br><br><p><b>Creators:</b><br>Nathan Patterson<br><b>Sam Levy</b><br>"
+			+ "<br><br><p><b>Creators:</b><br><i>Nathan Patterson</i><br><b>Sam Levy</b><br>"
 			+ "Amy Desai<br>Jordan Rigg</p>" + "<br><br><p>Spring 2016</p>"
 			+ "</html>";
 
