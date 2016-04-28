@@ -60,8 +60,8 @@ public class Constants {
 	public static final String PROFILE = "<html><h1>Profile</h1>"; // 
 	
 	public static final String ABOUT = "<html><h1>About</h1>"
-			+ "<p>This program allows users at Miami University to create a Schedule based off of "
-			+ "their courses they have taken and their information as a student. "
+			+ "<p>This program allows users at Miami University to create a Schedule based on "
+			+ "the courses they have taken and their information as a student. "
 			+ "This will generate a final report showing when the final exam times are scheduled, "
 			+ "as well their class schedule and class informantion."
 			+ "</p>"
@@ -70,13 +70,13 @@ public class Constants {
 			+ "</html>";
 
 	public static final String INSTRUCTIONS = "<html><h1>Instructions</h1>"
-			+ "<p><h3>How To Build Your Schedule</h3>"
+			+ "<p><h3>Making Your Dream Schedule</h3>"
 			+ "Fill out Profile with required information<br>"
 			+ "Add taken courses<br>"
 			+ "Select classes you wish to take<br>"
 			+ "Press check button to see the Report<br><br> </p>"
 			+ "<p><h3>Saving and You</h3>"
-			+ "After building you schedule press Save button to save<br>"
+			+ "After building your schedule press Save button to save<br>"
 			+ "To upload your saved schedule press Upload and find your saved schedule<br>"
 			+ "After that press Submit to load the schedule<br>"
 			+ "Or press Remove to unlink the file<br>"
