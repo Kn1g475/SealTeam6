@@ -154,7 +154,7 @@ public class Schedule extends JPanel{
 			if(e.getActionCommand().equalsIgnoreCase("Add")){
 				if (desiredRadioButton.isSelected()){
 					AddClassWindow classWindow = new AddClassWindow(parent, ModalityType.APPLICATION_MODAL, classes);
-
+					
 					if (classWindow.selected != null && !profile.getCoursesTaken().contains(classWindow.selected) && !classList.contains(classWindow.selected)) {
 						
 						java.util.List<String> errors = profile.addClasses(classWindow.selected);

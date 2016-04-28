@@ -189,7 +189,13 @@ public class MainGUI extends JFrame {
 		}
 
 	}
-
+	private void clearFile() {
+		selectedFile = null;
+		topBar.fileLabel.setText("");
+		topBar.deleteButton.setEnabled(false);
+		topBar.submitButton.setEnabled(false);
+	}
+	
 	/**
 	 * Listens for top bar button actions
 	 * @author matt
@@ -217,16 +223,16 @@ public class MainGUI extends JFrame {
 					topBar.fileLabel.setText(selectedFile.getName());
 					topBar.deleteButton.setEnabled(true);
 					topBar.submitButton.setEnabled(true);
-				} else
+				} else {
+					clearFile();
 					alert("No file was selected", false);
+				}
+					
 			}
 			// delete button selected, remove file and reset buttons
 
 			if (e.getActionCommand().equalsIgnoreCase("deleteButton")) {
-				selectedFile = null;
-				topBar.fileLabel.setText("");
-				topBar.deleteButton.setEnabled(false);
-				topBar.submitButton.setEnabled(false);
+				clearFile();
 			}
 			// submit button selected, check file, process file, and run report
 			if (e.getActionCommand().equalsIgnoreCase("submitButton")) {
@@ -243,10 +249,7 @@ public class MainGUI extends JFrame {
 					profileUpload();
 					alert(result, true);
 				}
-				selectedFile = null;
-				topBar.fileLabel.setText("");
-				topBar.deleteButton.setEnabled(false);
-				topBar.submitButton.setEnabled(false);
+				clearFile();
 			}
 		}
 	}
