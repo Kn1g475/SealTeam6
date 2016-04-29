@@ -32,7 +32,7 @@ public class WeekTable extends JTable {
 		int time = 800;
 		for (int i = 0; i < getRowCount(); i++) {
 			getModel().setValueAt(Constants.timeToString(time), i, 0);
-			time += (i % 2 == 1) ? 30 : 70; 
+			time += (i % 2 == 0) ? 30 : 70; 
 		}
 		// put class data in respective data row and column
 		for (CourseData.Class c : schedule) {
