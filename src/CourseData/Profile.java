@@ -96,7 +96,7 @@ public class Profile {
 			if (checkTimeOverlap(c))
 				errors.add(String.format("Invalid: %s overlaps with a course you are taking", c.getCourse().toString(c.section)));
 			else if(checkAlreadyHave(c))
-				errors.add(String.format("Invalid: %s is already apart of your schedule Taking", c.getCourse().getShortName()));
+				errors.add(String.format("Invalid: %s is already apart of your schedule taking", c.getCourse().getShortName()));
 			else 
 				schedule.add(c);
 		}
