@@ -42,6 +42,7 @@ public class WeekTable extends JTable {
 				getModel().setValueAt(c.CoursenSection(), row, column);
 			}
 		}
+		getTableHeader().setReorderingAllowed(false);
 		setDefaultRenderer(getColumnClass(2), new WeekRenderer());
 
 	}

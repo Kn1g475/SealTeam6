@@ -195,7 +195,7 @@ public class MainGUI extends JFrame {
 		topBar.deleteButton.setEnabled(false);
 		topBar.submitButton.setEnabled(false);
 	}
-	
+
 	/**
 	 * Listens for top bar button actions
 	 * @author matt
@@ -227,7 +227,7 @@ public class MainGUI extends JFrame {
 					clearFile();
 					alert("No file was selected", false);
 				}
-					
+
 			}
 			// delete button selected, remove file and reset buttons
 
