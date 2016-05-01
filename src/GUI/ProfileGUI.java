@@ -113,7 +113,7 @@ public class ProfileGUI extends JPanel {
 		semester = (String) currentSemesterBox.getSelectedItem();
 		hours = (int)spinner.getValue();
 		
-		if (uniqueId.equals("") || uniqueId.equals("uniqueID") || major.equals(majorBox.getItemAt(0)) ||
+		if (uniqueId.equals("") || uniqueId.equals("Unique ID") || major.equals(majorBox.getItemAt(0)) ||
 				curYear.equals(statusBox.getItemAt(0)) || semester.equals(currentSemesterBox.getItemAt(0))) 
 			return false;
 		else {
