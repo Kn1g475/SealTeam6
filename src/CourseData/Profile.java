@@ -237,7 +237,7 @@ public class Profile {
 				System.out.println(line);
 				Class tempClass = new Class(line);
 				if (!schedule.contains(tempClass))
-					schedule.add(tempClass);
+					addClass(tempClass);
 			}
 
 		} catch (IOException e) {
