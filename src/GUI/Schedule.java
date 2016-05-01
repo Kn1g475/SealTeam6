@@ -170,7 +170,8 @@ public class Schedule extends JPanel{
 					if (courseWindow.selected != null && !profile.getCoursesTaken().contains(courseWindow.selected)) {
 						profile.addCourse(courseWindow.selected);
 						for (Course c : courseWindow.selected)
-							courseList.addElement(c);
+							if (!courseList.contains(c))
+								courseList.addElement(c);
 					}
 				}
 			}
