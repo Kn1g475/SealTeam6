@@ -97,7 +97,7 @@ public class MainGUI extends JFrame {
 		contentPanel.setBorder(BorderFactory.createLineBorder(
 				Constants.CONTENT_BACKGROUND_COLOR, 10));
 
-		profilePanel = new ProfileGUI(profile);
+		profilePanel = new ProfileGUI(profile, new ToScheduleButtonListener());
 		schedulePanel = new Schedule(profile, new CheckButton()); 
 		aboutPanel = new About();
 		instructionsPanel = new Instructions();
@@ -256,7 +256,7 @@ public class MainGUI extends JFrame {
 	private void profileUpload() {
 		if (profilePanel != null)
 			contentSwitcher.removeLayoutComponent(profilePanel);
-		profilePanel = new ProfileGUI(profile);
+		profilePanel = new ProfileGUI(profile, new ToScheduleButtonListener());
 		contentPanel.add(profilePanel, "PROFILE");
 		if (schedulePanel != null)
 			contentSwitcher.removeLayoutComponent(schedulePanel);
@@ -302,6 +302,31 @@ public class MainGUI extends JFrame {
 				contentSwitcher.show(contentPanel, "INSTRUCTIONS");
 			if (e.getSource() == sideBar.reportButton)
 				contentSwitcher.show(contentPanel, "REPORT");
+		}
+			
+		}
+	public class ToScheduleButtonListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(e.getActionCommand().equalsIgnoreCase("toSchedule")){
+				if (profilePanel.allSelected()) {
+					profile.setCurYear(profilePanel.curYear);
+					profile.setUniqueID(profilePanel.uniqueId);
+					profile.setHours(profilePanel.hours);
+
+					if(schedulePanel.classes.isEmpty())
+						schedulePanel.classes = Data.readNewCourseData(profilePanel.semester);
+					if(profile.majorReq.isEmpty() || !profile.getMajor().equals(profilePanel.major)) {
+						profile.setMajor(profilePanel.major);
+						profile.majorReq = Data.readNewRequirementData(profile.getMajor());
+					}
+					schedulePanel.courses = Data.getCourses(schedulePanel.classes, profile.majorReq.keySet());
+					contentSwitcher.show(contentPanel, "SCHEDULE");
+				} else {
+					JOptionPane.showMessageDialog(schedulePanel.parent, "You need to fill out all the profile information", "Warning", JOptionPane.WARNING_MESSAGE);
+				}
+			}
 		}
 	}
 }

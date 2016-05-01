@@ -10,6 +10,7 @@ import java.awt.Label;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,6 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import CourseData.Profile;
+import GUI.MainGUI.ToScheduleButtonListener;
 
 /**
  * This panel one of the content windows that get switched by the Main GUI. Its
@@ -31,15 +33,17 @@ public class ProfileGUI extends JPanel {
 	
 	public String semester, major, uniqueId, curYear;
 	public int hours;
+	public JButton toSchedule;
 	private JTextField uniqueIDTextField;
 	private JComboBox<String> majorBox, statusBox, currentSemesterBox;
 	private JSpinner spinner;
 	private Label hoursLabel;
 	private JLabel profileTitleLabel;
+	
 	/**
 	 * Creates the profile panel
 	 */
-	public ProfileGUI(Profile profile) {
+	public ProfileGUI(Profile profile,ToScheduleButtonListener toScheduleButtonListener) {
 		setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		//Create a blank profile panel
 		setBackground(Constants.CONTENT_BACKGROUND_COLOR);
@@ -63,13 +67,21 @@ public class ProfileGUI extends JPanel {
 		
 		majorBox = new JComboBox<>();
 		majorBox.setBackground(Color.WHITE);
-		majorBox.setToolTipText("");
 		majorBox.setBounds(39, 147, 203, 27);
 		majorBox.addItem("Select Your Major");
 		majorBox.addItem("Computer Science");
 		majorBox.addItem("Software Engineering");
 		majorBox.setSelectedItem(profile.getMajor().equals("") ? "Select Your Major" : profile.getMajor());
 		add(majorBox);
+		
+		toSchedule = new JButton();
+		toSchedule.setText("Build Schedule");
+		toSchedule.setBounds(250, 300, 150, 50);
+		toSchedule.setActionCommand("toSchedule");
+		toSchedule.addActionListener(toScheduleButtonListener);
+		add(toSchedule);
+		
+		
 		
 		statusBox = new JComboBox<>();
 		statusBox.setBounds(400, 147, 140, 27);
@@ -83,7 +95,7 @@ public class ProfileGUI extends JPanel {
 		
 		spinner = new JSpinner();
 		spinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
-		spinner.setBounds(409, 233, 131, 28);
+		spinner.setBounds(400, 233, 140, 27);
 		spinner.setValue(profile.getHours());
 		add(spinner);
 		
@@ -91,7 +103,7 @@ public class ProfileGUI extends JPanel {
 		hoursLabel.setAlignment(Label.RIGHT);
 		hoursLabel.setFont(new Font("Arial", Font.PLAIN, 17));
 		
-		hoursLabel.setBounds(329, 237, 70, 28);
+		hoursLabel.setBounds(329, 233, 70, 28);
 		add(hoursLabel);
 		
 		currentSemesterBox = new JComboBox<>();
