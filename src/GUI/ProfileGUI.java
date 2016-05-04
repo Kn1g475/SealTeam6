@@ -22,8 +22,9 @@ import CourseData.Profile;
 import GUI.MainGUI.ToScheduleButtonListener;
 
 /**
- * This panel one of the content windows that get switched by the Main GUI. Its
- * only purpose is to display simple text.
+ * This panel is the default panel that is shown when the program start.
+ * Allows the user to add information. This panel is used for checking prerequisites
+ * and catching conflicts with a student's major and hours.
  * 
  * @author npatterson
  * 

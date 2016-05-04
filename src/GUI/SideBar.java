@@ -17,9 +17,10 @@ import java.awt.Dimension;
 import java.awt.Font;
 
 /**
- * The side bar of the GUI.
+ * The side bar of the GUI. Contains: Profile, Schedule, Report, About, Instructions 
+ * NOTE: Schedule cannot switch to 'Schedule' panel with out Profile filled out
  * 
- * @author matt
+ * @author npatterson
  * 
  */
 @SuppressWarnings("serial")

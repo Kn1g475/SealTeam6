@@ -34,6 +34,16 @@ import java.awt.event.ActionListener;
 
 import java.util.ArrayList;
 
+/**
+ * This panel contains AddClassWindow and AddCourseWindow and 
+ * allows the user to add and remove classes that they have take
+ * or that they want to take.
+ * 
+ * @author npatterson
+ *
+ */
+
+
 @SuppressWarnings("serial")
 public class Schedule extends JPanel{
 	JFrame parent;

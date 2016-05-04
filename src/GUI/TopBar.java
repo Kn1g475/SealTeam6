@@ -20,9 +20,11 @@ import Main.FileState;
 import javax.swing.border.LineBorder;
 
 /**
- * The top bar of the GUI.
+ * The top bar of the GUI. Used to Upload 
+ * the student's .Prof file
  * 
- * @author matt
+ * 
+ * @author npatterson
  * 
  */
 @SuppressWarnings("serial")
