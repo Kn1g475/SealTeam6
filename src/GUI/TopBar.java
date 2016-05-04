@@ -14,7 +14,7 @@ import GUI.MainGUI.ButtonListener;
 import Main.Constants;
 
 
-import Main.FileState;
+
 
 
 import javax.swing.border.LineBorder;
@@ -30,7 +30,7 @@ import javax.swing.border.LineBorder;
 @SuppressWarnings("serial")
 public class TopBar extends JPanel {
 	
-	public static FileState state = FileState.COURSE;
+	
 	
 	public JLabel fileLabel, errorLabel;
 	public JButton addButton, submitButton, deleteButton;
