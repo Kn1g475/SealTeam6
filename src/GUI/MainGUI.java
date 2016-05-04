@@ -165,7 +165,11 @@ public class MainGUI extends JFrame {
 		reportPanel = new Report(profile);
 		contentPanel.add(reportPanel, "REPORT");
 	}
-
+	/**
+	 * Converts all error strings into 1 string
+	 * @param err
+	 * @return
+	 */
 	private String errorDump(List<String> err) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Errors: \n");
@@ -189,6 +193,9 @@ public class MainGUI extends JFrame {
 		}
 
 	}
+	/**
+	 * Clears file selected file
+	 */
 	private void clearFile() {
 		selectedFile = null;
 		topBar.fileLabel.setText("");
@@ -253,6 +260,9 @@ public class MainGUI extends JFrame {
 			}
 		}
 	}
+	/**
+	 * Sets all the information from the saved file to the profile panel and the schedule panel
+	 */
 	private void profileUpload() {
 		if (profilePanel != null)
 			contentSwitcher.removeLayoutComponent(profilePanel);
@@ -308,6 +318,9 @@ public class MainGUI extends JFrame {
 	public class ToScheduleButtonListener implements ActionListener{
 
 		@Override
+		/**
+		 * action for to schedule button
+		 */
 		public void actionPerformed(ActionEvent e) {
 			if(e.getActionCommand().equalsIgnoreCase("toSchedule")){
 				if (profilePanel.allSelected()) {

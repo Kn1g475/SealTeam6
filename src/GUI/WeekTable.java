@@ -69,7 +69,7 @@ public class WeekTable extends JTable {
         return c;
       }
 	/**
-	 * 
+	 * colors in the cells for each class
 	 */
 	private class WeekRenderer extends DefaultTableCellRenderer {
 		public Component getTableCellRendererComponent (JTable table, Object value, boolean selected, boolean focused, int row, int column){
@@ -88,7 +88,11 @@ public class WeekTable extends JTable {
 			return this; 
 		}
 	}
-
+	/**
+	 * gets the row of the end time for a class
+	 * @param time
+	 * @return
+	 */
 	private int getLastRow (int time) {
 		int tempTime = time % 100;
 		time -= tempTime;
@@ -100,7 +104,11 @@ public class WeekTable extends JTable {
 			time += tempTime;
 		return getRow(time);
 	}
-	
+	/**
+	 * converts a day to a column number
+	 * @param day
+	 * @return
+	 */
 	private int getColumnInt(char day) {
 		switch (day) {
 		case 'M': return 1;
@@ -111,6 +119,11 @@ public class WeekTable extends JTable {
 		default: return 0;
 		}
 	}
+	/**
+	 * converts a time to a row number
+	 * @param time
+	 * @return
+	 */
 	private int getRow(int time) {
 		switch (time) {
 		case 800: return 0;

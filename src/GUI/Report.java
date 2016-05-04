@@ -71,6 +71,7 @@ public class Report extends JPanel {
 				weekSchedule.setRowHeight(i, 20);
 		}
 		weekSchedule.getColumnModel().getColumn(0).setPreferredWidth(35);
+		//sets column headers to days of week
 		for (int i = 0; i < weekSchedule.getColumnCount(); i++)
 			if(i == 0)
 				weekSchedule.getColumnModel().getColumn(i).setHeaderValue("");
@@ -111,7 +112,7 @@ public class Report extends JPanel {
 		finalSchedule.setBounds(0, 30, 630, 460);
 		finalSchedule.setCellSelectionEnabled(false);
 		finalSchedule.setBorder(new LineBorder(Color.BLACK,1));
-
+		//sets row heights
 		for (int i = 0; i < finalSchedule.getRowCount(); i++) {
 			if( i == 0)
 				finalSchedule.setRowHeight(i, 20);

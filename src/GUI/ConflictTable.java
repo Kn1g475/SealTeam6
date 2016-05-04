@@ -22,7 +22,7 @@ public class ConflictTable extends JTable{
 	public ConflictTable(TableModel arg0, List<Category> cats) {
 		super(arg0);
 		this.cats = cats;
-		
+		//sets time on side bar
 		int time = 800;
 		for (int i = 1; i < getRowCount(); i++) {
 			getModel().setValueAt(Constants.timeToString(time), i, 0);
@@ -42,7 +42,7 @@ public class ConflictTable extends JTable{
 			if (time % 100 == 90)
 				time += 10;
 		}
-		
+		// fill in classes to a finals day and time
 		for (Category cat : cats) {
 
 			Collections.sort(cat.classesInThisCategory);
@@ -58,14 +58,11 @@ public class ConflictTable extends JTable{
 	public boolean isCellEditable(int rowIndex, int vColIndex) {
 		return false;
 	}
-	public Component prepareRenderer(TableCellRenderer renderer, int rowIndex, int vColIndex) {
-        Component c = super.prepareRenderer(renderer, rowIndex, vColIndex);
-        if (c instanceof JComponent) {
-          JComponent jc = (JComponent) c;
-          jc.setToolTipText(null);
-        }
-        return c;
-      }
+	/**
+	 * Sets conflicting finals cells to be red
+	 * @author Skippy
+	 *
+	 */
 	private class WeekRenderer extends DefaultTableCellRenderer {
 		public Component getTableCellRendererComponent (JTable table, Object value, boolean selected, boolean focused, int row, int column){
 			super.getTableCellRendererComponent(table, value, selected, focused, row, column);
@@ -85,7 +82,11 @@ public class ConflictTable extends JTable{
 		}
 	}
 	
-	
+	/**
+	 * Converts a day to a column
+	 * @param day
+	 * @return
+	 */
 	private int getColumnInt(char day) {
 		switch (day) {
 		case 'M': return 1;
@@ -96,7 +97,11 @@ public class ConflictTable extends JTable{
 		default: return 0;
 		}
 	}
-
+	/**
+	 * converts a category to a row number
+	 * @param cat
+	 * @return
+	 */
 	private int getRow(Category cat) {
 		switch (cat.finalTime) {
 		case 800: return 1;
