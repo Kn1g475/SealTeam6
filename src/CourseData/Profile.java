@@ -230,8 +230,7 @@ public class Profile {
 				System.out.println(line);
 				temp = line.split("\\|");
 				Course tempCourse = new Course(temp[0],temp[1],temp[2]);
-				if (!takenCourses.contains(tempCourse))
-					takenCourses.add(tempCourse);
+				addCourse(tempCourse);
 			}
 			while((line = br.readLine()) != null) {
 				System.out.println(line);
